@@ -30,7 +30,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
    - observability seams: where tests enter the system, where mocks/fixtures are injected
    - integration seams: which existing modules the spec touches, which existing public surfaces the new code hangs on, compatibility/migration constraints
 
-5. Review the architecture doc yourself. On approval, release **both sides at once** (test side and implementer side). If the spec introduces public APIs or data models - high irreversibility - pause and get user sign-off first. While reviewing, designate a **foundational ticket**: topologically early with the most dependents.
+5. Review the architecture doc yourself. On approval, release **both sides at once** (test side and implementer side). If the design introduces highly irreversible surfaces - public APIs, data models, or other cross-service interfaces - do not pause for sign-off; instead record them in an **irreversibility report** in the notes directory, to be surfaced to the user in the final PR report (step 11). While reviewing, designate a **foundational ticket**: topologically early with the most dependents.
 
 6. Dispatch the **test side**. By default a single **test implementer subagent**; split by architectural module only if the architecture doc shows >= 2 modules with clean boundaries and small public faces AND there are more than 6 tickets. Test implementers work in their own worktree(s), on a dedicated **test branch**. They write tests derived **only from the spec and the architecture doc - they never read implementation code**. Shared helpers: the first test implementer produces them, later ones reuse them, never duplicates. Deliverables: the tests on the test branch, and a **ticket -> test file mapping table** saved in the out-of-repo notes directory.
 
@@ -42,7 +42,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 10. Once all tickets are complete: merge the test branch into the PR branch with a merger subagent, then run the full test suite for the first time. Apply the ownership rules below with a **single fixer subagent**, up to 3 rounds of run -> fix -> rerun, then escalate to yourself. Once the suite is green, run /code-review on the PR branch and fix all issues raised in a single implementer subagent.
 
-11. Mark the PR as ready for review.
+11. Mark the PR as ready for review, then report to the user. If step 5 produced an **irreversibility report**, it leads the report: each highly irreversible public API, data model, or interface the architecture introduced, with its final signature and a one-line rationale, so the user can review the decisions now that they are implemented.
 
 12. Clean up all subagent worktrees, including the test side's.
 
