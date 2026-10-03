@@ -14,6 +14,30 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 **Implementer subagents** should be run in the background where possible for **maximum concurrency**.
 
+## Subagent model selection
+
+At the start of each invocation, before step 1 or any subagent dispatch, collect the user's explicit model selections for the roles below. Ask for any selections not already supplied with this invocation, presenting all five categories together and the current runtime's available model choices when known. Offer both category-wide selections and individual role selections; leave unanswered selections unset.
+
+| Category | Roles |
+| --- | --- |
+| 1 | Exploration |
+| 2 | Architect |
+| 3 | Test implementer, Implementer |
+| 4 | Coverage audit, Standards reviewer, Spec reviewer |
+| 5 | Merger, Checkpoint, Fixer |
+
+Accept category numbers, role names, or both in one reply. A category selection applies to every role in that category; an individual role selection overrides the category selection for that role. The same model may be selected for multiple categories or roles.
+
+Honor explicit selections supplied for this invocation and ask only for missing or ambiguous selections. Wait for the user's answer until all ten roles have an explicit model. A partial reply, no reply, or elapsed time leaves the remaining roles unassigned. Never fill them from the main conversation's model, runtime defaults, or a previous invocation. The user may explicitly choose the main conversation's model for any role.
+
+Check that the selected models are supported by the current runtime and that its dispatch tool can select them. If a model is unavailable or explicit selection cannot be honored, explain the limitation and ask for a supported choice or a workflow change; do not silently substitute a model. Once all ten assignments are resolved, show the role-to-model mapping and proceed without another confirmation.
+
+Retain this mapping for the invocation and save it in the shared notes directory once that directory exists. Every instance, retry, replacement, and nested delegation must use its role's selected model. A user-requested change updates future dispatches for the affected roles.
+
+Pass the selected model explicitly through the dispatch tool's model parameter or supported equivalent; a model name written only in the task prompt does not select the model. When model overrides require a fresh or bounded context instead of a full-history fork, use that mode and provide the task's context pointers, preserving the test side's independent inputs.
+
+For `/code-review` in steps 8 and 10, a **coverage-audit subagent** coordinates the review using the Coverage audit model. Give it the resolved mapping and require it to explicitly select the Standards reviewer and Spec reviewer models when dispatching those reviewers. This includes nested retries and replacements. All review file work is delegated under the existing steps 6-10 rules.
+
 ## Steps
 
 1. Read the spec and tickets. Read enough to understand the task graph.
@@ -38,11 +62,11 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 7. Dispatch the **implementer side**: one **implementer subagent** per ticket, each in its own worktree, on its own branch. Implementers MUST read the architecture doc; cross-ticket seams (module boundaries, public APIs, data contracts) are bound by it, while in-ticket implementation details are their own call. Implementers do not commit tests - they may write throwaway tests for themselves, but those never enter the repo. Once an implementer completes, merge its work to the PR branch with a **merger subagent**. If this changes the **frontier** of available tickets, kick off more implementer subagents to work on the new tickets. The same delegation rule applies: implementer and merger subagents do all file queries and modifications; you dispatch them and query status/results on completion, failure, or timeout.
 
-8. Once all tests are implemented, run /code-review on the test branch and fix all issues there. Then dispatch a **coverage-audit subagent** to verify **spec coverage**: it checks that every requirement and acceptance criterion in the spec has at least one test per the mapping table, and reports the gaps to you. Gaps go back to the test implementers. Only then are the tests **blessed**. The test branch does not merge into the PR branch before step 10.
+8. Once all tests are implemented, dispatch a **coverage-audit subagent** to run /code-review on the test branch with the selected reviewer models, and send its findings to the test implementer(s) to fix all issues there. Then dispatch a **coverage-audit subagent** to verify **spec coverage**: it checks that every requirement and acceptance criterion in the spec has at least one test per the mapping table, and reports the gaps to you. Gaps go back to the test implementers. Only then are the tests **blessed**. The test branch does not merge into the PR branch before step 10.
 
 9. Run the **integration checkpoint**, once: when the foundational ticket is merged AND the tests are blessed, dispatch a **one-off checkpoint subagent** to open a **scratch worktree**, union-merge the PR branch and the test branch in it, run the test subset mapped to the foundational ticket, then discard the worktree - no permanent merge - and report the results. The commands are mechanical, but they are still file work: the subagent runs them, you adjudicate from its report. Fix contract mismatches per the ownership rules below: implementation-side mismatches are fixed by a fixer subagent directly on the PR branch (that ticket's worktree is already merged and gone); test-side mismatches are fixed by the test implementer on the test branch. Budget 1-2 rounds, then adjudicate yourself. If the tests are not yet blessed, defer the checkpoint until they are; if every ticket merges before that, the checkpoint degenerates into step 10.
 
-10. Once all tickets are complete: merge the test branch into the PR branch with a merger subagent, and have it run the full test suite for the first time and report the results. Apply the ownership rules below with a **single fixer subagent** that runs the suite, fixes, and reruns itself, reporting after each round - up to 3 rounds of run -> fix -> rerun, then escalate to yourself. Once the suite is green, run /code-review on the PR branch and fix all issues raised in a single implementer subagent.
+10. Once all tickets are complete: merge the test branch into the PR branch with a merger subagent, and have it run the full test suite for the first time and report the results. Apply the ownership rules below with a **single fixer subagent** that runs the suite, fixes, and reruns itself, reporting after each round - up to 3 rounds of run -> fix -> rerun, then escalate to yourself. Once the suite is green, dispatch a **coverage-audit subagent** to run /code-review on the PR branch with the selected reviewer models, and fix all issues raised in a single implementer subagent.
 
 11. Mark the PR as ready for review, then report to the user. If step 5 produced an **irreversibility report**, it leads the report: each highly irreversible public API, data model, or interface the architecture introduced, with its final signature and a one-line rationale, so the user can review the decisions now that they are implemented.
 
