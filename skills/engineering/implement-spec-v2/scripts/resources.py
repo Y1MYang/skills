@@ -22,12 +22,16 @@ import subprocess
 import sys
 import threading
 import uuid
+from urllib.parse import urlparse
 
 
 VERSION = 1
 MARKER = ".implement-spec-resource"
 MAX_SUMMARY = 65536
 ID_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}\Z")
+CLEANUP_PROTOCOL = "cleanup-spec-v2/1"
+NOTES_MARKER = ".implement-spec-notes"
+OID_PATTERN = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
 
 
 class Refusal(Exception):
@@ -153,6 +157,362 @@ def save(path, state):
     atomic_json(path / "state.json", state)
 
 
+def require_open(state):
+    if state.get("sealed_at"):
+        raise Refusal("invocation is sealed; reuse or release existing resources without new allocations")
+
+
+def require_cleanup_protocol(state):
+    if state.get("cleanup_protocol") != CLEANUP_PROTOCOL or not state.get("notes"):
+        raise Refusal("historical ledger has no cleanup handoff protocol; audit only")
+
+
+def verify_notes(state):
+    require_cleanup_protocol(state)
+    notes = state["notes"]
+    path = plain_path(notes["path"])
+    if identity(path) != notes["identity"] or load_json(path / NOTES_MARKER, 4096) != notes["marker"]:
+        raise Refusal("invocation notes ownership changed")
+    return path
+
+
+def default_index_root():
+    base = os.environ.get("XDG_STATE_HOME") or str(Path.home() / ".local" / "state")
+    return plain_path(str(Path(base) / "implement-spec-v2"))
+
+
+def validate_index_root(value, state):
+    path = plain_path(value)
+    for value in [state["repo"], state["common_git"], state["notes"]["path"]]:
+        protected = Path(value)
+        if within(path, protected) or within(protected, path):
+            raise Refusal("index root must be separate from notes, repository and Git metadata")
+    return path
+
+
+def file_identity(path):
+    info = os.lstat(path)
+    if not stat.S_ISREG(info.st_mode):
+        raise Refusal("not an ordinary file: {}".format(path))
+    return [info.st_dev, info.st_ino]
+
+
+def refresh_index(state, override=None):
+    root = validate_index_root(override or state["index_root"], state)
+    if override and str(root) != state["index_root"] and state.get("index_path"):
+        raise Refusal("bound invocation index cannot be relocated")
+    group = hashlib.sha256(state["common_git"].encode("utf-8")).hexdigest()
+    directory = root / group
+    directory.mkdir(parents=True, exist_ok=True)
+    plain_path(str(directory))
+    target = directory / (state["invocation"] + ".json")
+    if target.exists():
+        previous = load_json(target)
+        if previous.get("invocation") != state["invocation"] or previous.get("protocol") != CLEANUP_PROTOCOL:
+            raise Refusal("index entry ownership changed")
+    value = {"protocol": CLEANUP_PROTOCOL, "invocation": state["invocation"],
+             "repo": state["repo"], "common_git": state["common_git"], "pr": state["pr"],
+             "state": {"path": state["state_path"], "identity": state["identity"]},
+             "notes": state["notes"], "handoff": state.get("handoff")}
+    atomic_json(target, value)
+    state["index_root"], state["index_path"] = str(root), str(target)
+    return target
+
+
+def checked_oid(value):
+    if not isinstance(value, str) or not OID_PATTERN.fullmatch(value):
+        raise Refusal("expected a full Git object ID")
+    return value
+
+
+def native_pr(value):
+    """Select stable identity fields from a fresh native REST PR response."""
+    if not isinstance(value, dict):
+        raise Refusal("PR input must be a native REST object")
+    try:
+        number, pr_id, url = value["number"], value["id"], value["html_url"]
+        if type(number) is not int or number <= 0 or type(pr_id) is not int or pr_id <= 0:
+            raise Refusal("PR id/number must be positive integers")
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+            raise Refusal("PR html_url must be an HTTPS repository URL")
+        repos = {}
+        for side in ["base", "head"]:
+            source = value[side]["repo"]
+            item = {key: source[key] for key in ["id", "full_name", "clone_url"]}
+            if type(item["id"]) is not int or item["id"] <= 0:
+                raise Refusal("PR repository id must be a positive integer")
+            if not isinstance(item["full_name"], str) or not re.fullmatch(r"[^/\s]+/[^/\s]+", item["full_name"]):
+                raise Refusal("PR repository full_name must be owner/name")
+            if not isinstance(item["clone_url"], str) or not item["clone_url"].strip():
+                raise Refusal("PR repository clone_url is required")
+            if not isinstance(value[side]["ref"], str) or not value[side]["ref"].strip():
+                raise Refusal("PR branch ref is required")
+            checked_oid(value[side]["sha"])
+            repos[side] = item
+        expected_path = "/{}/pull/{}".format(repos["base"]["full_name"], number)
+        if parsed.path.rstrip("/").casefold() != expected_path.casefold():
+            raise Refusal("PR URL disagrees with base repository or number")
+        return {"id": pr_id, "number": number, "url": url, "host": parsed.hostname.lower(),
+                "base_repo": repos["base"], "head_repo": repos["head"],
+                "base_ref": value["base"]["ref"], "base_oid": value["base"]["sha"],
+                "head_ref": value["head"]["ref"], "head_oid": value["head"]["sha"]}
+    except (KeyError, TypeError, ValueError) as error:
+        raise Refusal("incomplete native REST PR object: {}".format(error))
+
+
+def remote_oid(repo, destination, ref):
+    output = git_text(repo, "ls-remote", "--refs", "--", destination, ref)
+    rows = [line.split("\t") for line in output.splitlines() if line]
+    if not rows:
+        return None
+    if len(rows) != 1 or len(rows[0]) != 2 or rows[0][1] != ref:
+        raise Refusal("remote reference result is ambiguous")
+    return checked_oid(rows[0][0])
+
+
+def publish_branch(args):
+    with locked(args.state) as (state_path, state):
+        require_cleanup_protocol(state)
+        verify_notes(state)
+        require_open(state)
+        item = resource(state, args.resource)
+        if item["kind"] != "worktree" or not item.get("branch"):
+            raise Refusal("publication requires an invocation-created worktree branch")
+        verify_resource(state, item)
+        if item.get("publication"):
+            raise Refusal("publication was already attempted; retain uncertain outcomes for audit")
+        ref = "refs/heads/" + item["branch"]
+        oid = git_text(state["repo"], "rev-parse", "--verify", ref + "^{commit}")
+        destination = args.remote_url
+        if not destination.strip() or any(ord(char) < 32 for char in destination):
+            raise Refusal("remote URL must be a nonempty destination without control characters")
+        if remote_oid(state["repo"], destination, ref) is not None:
+            raise Refusal("remote branch already exists; first publication cannot adopt it")
+        publication = {"status": "creating", "remote_url": destination, "remote_ref": ref,
+                       "created_oid": oid, "created_at": now()}
+        item["publication"] = publication
+        save(state_path, state)
+        repo = state["repo"]
+    try:
+        # An empty lease expectation means the destination ref must not exist.
+        result = git(repo, "push", "--porcelain", "--force-with-lease=" + ref + ":", "--", destination, ref + ":" + ref)
+        updates = [line.split("\t") for line in result.stdout.decode(errors="replace").splitlines()]
+        if not any(len(fields) == 3 and fields[0] == "*" and fields[1] == ref + ":" + ref for fields in updates):
+            raise Refusal("push did not confirm new remote reference creation; retain uncertain publication")
+        if remote_oid(repo, destination, ref) != oid:
+            raise Refusal("published branch changed during creation; retain uncertain publication")
+    except BaseException as error:
+        with locked(args.state) as (state_path, state):
+            state["resources"][args.resource]["publication"]["error"] = str(error) or type(error).__name__
+            save(state_path, state)
+        raise
+    with locked(args.state) as (state_path, state):
+        publication = state["resources"][args.resource]["publication"]
+        if publication["status"] != "creating":
+            raise Refusal("publication changed during creation; retain and investigate")
+        publication.update(status="created", published_at=now())
+        save(state_path, state)
+        return {"resource": args.resource, "publication": publication}
+
+
+def bind_pr(args):
+    pr = native_pr(load_json(plain_path(args.pr_json), 1048576))
+    with locked(args.state) as (state_path, state):
+        require_cleanup_protocol(state)
+        verify_notes(state)
+        require_open(state)
+        if state.get("pr"):
+            raise Refusal("invocation is already bound to a PR")
+        item = resource(state, args.pr_resource)
+        verify_resource(state, item)
+        publication = item.get("publication", {})
+        if item["kind"] != "worktree" or publication.get("status") != "created":
+            raise Refusal("PR branch must have a completed first publication")
+        if item.get("branch") != pr["head_ref"] or publication["remote_ref"] != "refs/heads/" + pr["head_ref"]:
+            raise Refusal("PR head branch disagrees with owned publication")
+        if publication["remote_url"] != pr["head_repo"]["clone_url"]:
+            raise Refusal("publish using the native head repository clone_url before binding")
+        current = git_text(state["repo"], "rev-parse", "--verify", publication["remote_ref"] + "^{commit}")
+        if current != pr["head_oid"] or publication["created_oid"] != pr["head_oid"]:
+            raise Refusal("fresh PR head does not match the first owned publication")
+        pr["resource"] = args.pr_resource
+        state["pr"] = pr
+        target = refresh_index(state, getattr(args, "index_root", None))
+        save(state_path, state)
+        return {"pr": pr, "index": str(target)}
+
+
+def mount_points():
+    """Include same-device bind mounts, which st_dev and ismount can miss."""
+    if not sys.platform.startswith("linux"):
+        return set()
+    try:
+        with open("/proc/self/mountinfo", encoding="utf-8", errors="surrogateescape") as stream:
+            rows = [line.split() for line in stream]
+    except OSError as error:
+        raise Refusal("cannot inspect Linux mount ownership; retain directories: {}".format(error))
+    result = set()
+    for row in rows:
+        if len(row) < 6:
+            raise Refusal("incomplete mount ownership information")
+        decoded = re.sub(r"\\([0-7]{3})", lambda match: chr(int(match.group(1), 8)), row[4])
+        result.add(Path(decoded))
+    return result
+
+
+def is_mount_path(path, mounts):
+    return Path(path) in mounts or os.path.ismount(path)
+
+
+def data_fingerprint(state, item):
+    """Fingerprint owned contents without following links or absorbing children."""
+    if item["kind"] != "data":
+        raise Refusal("contents fingerprint requires an owned data resource")
+    root = verify_resource(state, item)
+    excluded = []
+    for other in state["resources"].values():
+        path = Path(other["path"])
+        if path != root and within(path, root):
+            if other["status"] == "released" and os.path.lexists(path):
+                raise Refusal("released child resource path is present; retain unknown replacement: " + str(path))
+            excluded.append(path)
+    device = os.lstat(root).st_dev
+    mounts = mount_points()
+    entries = []
+
+    def visit(directory):
+        for path in directory.iterdir():
+            if any(within(path, parent) for parent in excluded):
+                continue
+            info = os.lstat(path)
+            entry = {"path": str(path.relative_to(root)), "identity": [info.st_dev, info.st_ino]}
+            if stat.S_ISLNK(info.st_mode):
+                entry.update(type="symlink", sha256=hashlib.sha256(os.readlink(os.fsencode(path))).hexdigest())
+            elif info.st_dev != device or is_mount_path(path, mounts):
+                raise Refusal("data contains a nested mount; retain and review manually")
+            elif stat.S_ISDIR(info.st_mode):
+                entry["type"] = "directory"
+                visit(path)
+            elif stat.S_ISREG(info.st_mode):
+                entry.update(type="file", sha256=digest(path))
+            else:
+                raise Refusal("data contains a special file; retain and review manually")
+            entries.append(entry)
+    visit(root)
+    return hashlib.sha256(encode(sorted(entries, key=lambda entry: entry["path"]))).hexdigest()
+
+
+def notes_snapshot(state):
+    root = verify_notes(state)
+    excluded = [Path(state["state_path"])]
+    excluded += [Path(item["path"]) for item in state["resources"].values() if item["status"] != "released"]
+    entries, blockers = [], []
+    device = os.lstat(root).st_dev
+    mounts = mount_points()
+
+    def visit(directory):
+        for path in sorted(directory.iterdir()):
+            if any(within(path, value) for value in excluded):
+                continue
+            relative = str(path.relative_to(root))
+            info = os.lstat(path)
+            if stat.S_ISLNK(info.st_mode):
+                blockers.append({"path": relative, "reason": "notes contain a symlink"})
+            elif info.st_dev != device or is_mount_path(path, mounts):
+                blockers.append({"path": relative, "reason": "notes contain a nested mount"})
+            elif stat.S_ISDIR(info.st_mode):
+                entries.append({"path": relative, "type": "directory", "identity": [info.st_dev, info.st_ino]})
+                visit(path)
+            elif stat.S_ISREG(info.st_mode):
+                entries.append({"path": relative, "type": "file", "identity": [info.st_dev, info.st_ino],
+                                "sha256": digest(path)})
+            else:
+                blockers.append({"path": relative, "reason": "notes contain a special file"})
+    visit(root)
+    return {"entries": entries, "blockers": blockers}
+
+
+def seal(args):
+    pr = native_pr(load_json(plain_path(args.pr_json), 1048576))
+    with locked(args.state) as (state_path, state):
+        require_cleanup_protocol(state)
+        verify_notes(state)
+        require_open(state)
+        bound = state.get("pr")
+        if not bound:
+            raise Refusal("bind the PR before sealing")
+        for key in ["id", "number", "url", "host", "base_repo", "head_repo", "base_ref", "head_ref"]:
+            if pr[key] != bound[key]:
+                raise Refusal("fresh PR identity disagrees with bound invocation: " + key)
+        pr["resource"] = bound["resource"]
+        branches, anchors, worktrees, data = [], [], [], []
+        for item in state["resources"].values():
+            if item["kind"] == "data":
+                snapshot = {"resource": item["id"], "path": item["path"],
+                            "status": item["status"], "contents_sha256": None}
+                if item["status"] == "active":
+                    try:
+                        snapshot["contents_sha256"] = data_fingerprint(state, item)
+                    except (OSError, Refusal, ValueError) as error:
+                        snapshot["blocker"] = str(error)
+                data.append(snapshot)
+            if item["kind"] != "worktree":
+                continue
+            if item["status"] == "active":
+                path = verify_resource(state, item)
+                head = git_text(path, "rev-parse", "HEAD")
+            else:
+                head = item.get("preserved_revision") or item.get("revision")
+            worktrees.append({"resource": item["id"], "path": item["path"],
+                              "expected_oid": head, "status": item["status"]})
+            if item.get("branch"):
+                ref = "refs/heads/" + item["branch"]
+                oid = git_text(state["repo"], "rev-parse", "--verify", ref + "^{commit}")
+                publication = item.get("publication")
+                if publication:
+                    if publication["status"] != "created":
+                        raise Refusal("uncertain publication must be investigated before sealing")
+                    if remote_oid(state["repo"], publication["remote_url"], publication["remote_ref"]) != oid:
+                        raise Refusal("owned remote branch does not match final local branch")
+                    publication["expected_oid"] = oid
+                branches.append({"resource": item["id"], "ref": ref, "expected_oid": oid,
+                                 "publication": publication})
+                if item["id"] == bound["resource"] and oid != pr["head_oid"]:
+                    raise Refusal("final PR head differs from delivered local branch")
+            if item.get("preserved_ref"):
+                ref = item["preserved_ref"]
+                oid = git_text(state["repo"], "rev-parse", "--verify", ref + "^{commit}")
+                if oid != item["preserved_revision"]:
+                    raise Refusal("preserved revision anchor changed")
+                anchors.append({"resource": item["id"], "ref": ref, "expected_oid": oid})
+            elif item["status"] == "active":
+                # release() creates this anchor, even when cleanup performs the release.
+                anchors.append({"resource": item["id"],
+                                "ref": "refs/implement-spec-runs/{}/{}".format(state["invocation"], item["id"]),
+                                "expected_oid": head, "anticipated": True})
+        sealed_at = now()
+        handoff = {"protocol": CLEANUP_PROTOCOL, "invocation": state["invocation"], "sealed_at": sealed_at,
+                   "repo": state["repo"], "common_git": state["common_git"],
+                   "state_path": state["state_path"], "state_identity": state["identity"],
+                   "notes": state["notes"], "pr": pr, "delivery_oid": pr["head_oid"],
+                   "branches": branches, "internal_refs": anchors, "worktrees": worktrees, "data": data,
+                   "notes_snapshot": notes_snapshot(state)}
+        path = state_path / "handoff.json"
+        if path.exists():
+            raise Refusal("handoff already exists; investigate an interrupted seal")
+        atomic_json(path, handoff)
+        state.update(sealed_at=sealed_at, pr=pr, delivery_oid=pr["head_oid"],
+                     handoff={"path": str(path), "identity": file_identity(path), "sha256": digest(path)})
+        save(state_path, state)
+        target = refresh_index(state)
+        save(state_path, state)
+        return {"sealed_at": sealed_at, "handoff": state["handoff"], "index": str(target),
+                "blockers": handoff["notes_snapshot"]["blockers"] +
+                    [{"resource": item["resource"], "path": item["path"], "reason": item["blocker"]}
+                     for item in data if item.get("blocker")]}
+
+
 def resource(state, name):
     checked_id(name)
     if name not in state["resources"]:
@@ -164,7 +524,10 @@ def resource(state, name):
 
 
 def guard_scope(state, path):
-    for value in [state["repo"], state["common_git"], state["state_path"]]:
+    protected_paths = [state["repo"], state["common_git"], state["state_path"]]
+    if state.get("notes"):
+        protected_paths.append(state["notes"]["path"])
+    for value in protected_paths:
         protected = Path(value)
         if within(protected, path):
             raise Refusal("resource would contain protected path: {}".format(protected))
@@ -277,14 +640,38 @@ def init(args):
         raise Refusal("state must be outside repository and Git metadata")
     if path.exists() and (not path.is_dir() or any(path.iterdir())):
         raise Refusal("init requires a new or empty state directory")
+    notes = None
+    invocation = uuid.uuid4().hex
+    if getattr(args, "notes_root", None):
+        notes_path = plain_path(args.notes_root)
+        if not within(path, notes_path) or path == notes_path:
+            raise Refusal("state directory must be a child of the invocation notes root")
+        for protected in [repo, common]:
+            if within(notes_path, protected) or within(protected, notes_path):
+                raise Refusal("notes root must be outside repository and Git metadata")
+        if notes_path.exists() and (not notes_path.is_dir() or any(notes_path.iterdir())):
+            raise Refusal("notes root must be new or empty; historical notes cannot be adopted")
+        marker = {"protocol": CLEANUP_PROTOCOL, "invocation": invocation, "nonce": uuid.uuid4().hex}
+        # Check index separation before creating any notes-owned files.
+        index_root = validate_index_root(getattr(args, "index_root", None) or str(default_index_root()),
+                                         {"repo": str(repo), "common_git": str(common),
+                                          "notes": {"path": str(notes_path)}})
+        notes_path.mkdir(parents=True, exist_ok=True)
+        with open(notes_path / NOTES_MARKER, "xb") as stream:
+            stream.write(encode(marker))
+        notes = {"path": str(notes_path), "identity": identity(notes_path), "marker": marker}
+    elif getattr(args, "index_root", None):
+        raise Refusal("--index-root requires --notes-root")
     path.mkdir(parents=True, exist_ok=True)
     # Exclusive creation prevents two initializers adopting the same directory.
     with open(path / "lock", "xb") as lock:
         lock.write(b"0")
     (path / "records").mkdir()
-    state = {"version": VERSION, "invocation": uuid.uuid4().hex,
+    state = {"version": VERSION, "invocation": invocation,
              "created_at": now(), "state_path": str(path), "identity": identity(path),
              "repo": str(repo), "common_git": str(common), "resources": {}, "runs": {}}
+    if notes:
+        state.update(cleanup_protocol=CLEANUP_PROTOCOL, notes=notes, index_root=str(index_root))
     save(path, state)
     return {"state": str(path), "invocation": state["invocation"]}
 
@@ -292,6 +679,7 @@ def init(args):
 def create(args):
     checked_id(args.id)
     with locked(args.state) as (state_path, state):
+        require_open(state)
         if args.id in state["resources"]:
             raise Refusal("resource ID already used")
         path = plain_path(args.path)
@@ -375,6 +763,7 @@ def run_command(args):
     extra = [item for group in args.uses for item in group]
     uses = list(dict.fromkeys([args.cwd_resource, args.output_resource, *extra]))
     with locked(args.state) as (state_path, state):
+        require_open(state)
         if args.id in state["runs"]:
             raise Refusal("command ID already used")
         for name in uses:
@@ -560,10 +949,11 @@ def handoff(args):
 
 def check_data_tree(path):
     device = os.lstat(path).st_dev
+    mounts = mount_points()
     for current, dirs, files in os.walk(path, followlinks=False):
         for name in [*dirs, *files]:
             info = os.lstat(Path(current) / name)
-            if info.st_dev != device and not stat.S_ISLNK(info.st_mode):
+            if not stat.S_ISLNK(info.st_mode) and (info.st_dev != device or is_mount_path(Path(current) / name, mounts)):
                 raise Refusal("data contains a nested mount; retain and review manually")
 
 
@@ -715,8 +1105,18 @@ def parser():
     command = commands.add_parser("init")
     command.add_argument("--state-dir", required=True)
     command.add_argument("--repo", required=True)
-    for name in ["create", "run", "record-test", "resolve", "recover-run", "handoff", "release", "status", "capacity"]:
+    command.add_argument("--notes-root", help="new or empty invocation notes root containing the state directory")
+    command.add_argument("--index-root", help="cleanup discovery index outside the notes root")
+    for name in ["create", "run", "record-test", "resolve", "recover-run", "handoff", "release", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
         commands.add_parser(name).add_argument("--state", required=True)
+    command = commands.choices["publish-branch"]
+    command.add_argument("--resource", required=True)
+    command.add_argument("--remote-url", required=True, help="exact native REST head.repo.clone_url")
+    command = commands.choices["bind-pr"]
+    command.add_argument("--pr-json", required=True, help="fresh native REST PR JSON")
+    command.add_argument("--pr-resource", required=True)
+    command.add_argument("--index-root")
+    commands.choices["seal"].add_argument("--pr-json", required=True, help="fresh native REST PR JSON with final head")
     command = commands.choices["create"]
     command.add_argument("--id", required=True)
     command.add_argument("--kind", choices=["worktree", "data"], required=True)
@@ -761,7 +1161,8 @@ def main():
     args = parser().parse_args()
     actions = {"init": init, "create": create, "run": run_command,
                "record-test": record_test, "resolve": resolve, "recover-run": recover_run, "handoff": handoff,
-               "release": release, "status": status, "capacity": capacity}
+               "release": release, "status": status, "capacity": capacity,
+               "publish-branch": publish_branch, "bind-pr": bind_pr, "seal": seal}
     try:
         result = actions[args.action](args)
         print(json.dumps(result, ensure_ascii=False, indent=2))

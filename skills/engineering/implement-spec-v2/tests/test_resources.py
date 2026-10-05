@@ -1,13 +1,17 @@
 """Exercise the public CLI in small, isolated repositories."""
 
 import concurrent.futures
+import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import time
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 
 TOOL = Path(__file__).resolve().parents[1] / "scripts" / "resources.py"
@@ -96,6 +100,292 @@ class ResourceLifecycleTests(unittest.TestCase):
         if merged:
             args += ["--merged-into", merged]
         return self.cli("release", *args, ok=ok)
+
+    def cleanup_invocation(self):
+        self.notes = self.root / "notes"
+        self.state = self.notes / "ledger"
+        self.index_root = self.root / "index"
+        self.cli("init", "--state-dir", self.state, "--repo", self.repo,
+                 "--notes-root", self.notes, "--index-root", self.index_root)
+
+    def publish_pr(self):
+        tree = self.tree("pr", role="merger")
+        self.remote = self.root / "remote.git"
+        self.git("init", "--bare", self.remote)
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", self.remote)
+        oid = self.git("rev-parse", "codex/pr")
+        repo = {"id": 7, "full_name": "team/project", "clone_url": str(self.remote)}
+        self.pr_json = self.root / "pr.json"
+        self.pr = {"id": 101, "number": 42, "html_url": "https://github.example/team/project/pull/42",
+                   "base": {"repo": repo, "ref": "main", "sha": oid},
+                   "head": {"repo": repo, "ref": "codex/pr", "sha": oid}}
+        self.pr_json.write_text(json.dumps(self.pr))
+        self.cli("bind-pr", "--pr-resource", "pr", "--pr-json", self.pr_json)
+        return tree
+
+    def test_notes_root_ownership_and_index_separation(self):
+        self.cleanup_invocation()
+        ledger = json.loads((self.state / "state.json").read_text())
+        marker = json.loads((self.notes / ".implement-spec-notes").read_text())
+        self.assertEqual(marker["invocation"], ledger["invocation"])
+        self.assertEqual(marker, ledger["notes"]["marker"])
+        self.assertEqual(ledger["cleanup_protocol"], "cleanup-spec-v2/1")
+        foreign = self.root / "foreign-notes"
+        foreign.mkdir()
+        (foreign / "keep.txt").write_text("not owned")
+        self.cli("init", "--repo", self.repo, "--state-dir", foreign / "ledger",
+                 "--notes-root", foreign, ok=False)
+        self.assertEqual((foreign / "keep.txt").read_text(), "not owned")
+        separate = self.root / "separate"
+        self.cli("init", "--repo", self.repo, "--state-dir", separate / "ledger",
+                 "--notes-root", separate, "--index-root", separate / "index", ok=False)
+        self.assertFalse(separate.exists(), "invalid index allocation changed notes")
+
+    def test_first_publication_cannot_overwrite_existing_remote_ref(self):
+        self.cleanup_invocation()
+        tree = self.tree("pr", role="merger")
+        remote = self.root / "existing.git"
+        self.git("init", "--bare", remote)
+        baseline = self.git("rev-parse", "main")
+        self.git("push", remote, "main:refs/heads/codex/pr")
+        (tree / "source.txt").write_text("new delivery\n")
+        self.git("add", "source.txt", cwd=tree)
+        self.git("commit", "-m", "new delivery", cwd=tree)
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", remote, ok=False)
+        self.assertEqual(self.git("rev-parse", "refs/heads/codex/pr", cwd=remote), baseline)
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertNotIn("publication", ledger["resources"]["pr"])
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", remote, ok=False)
+
+    def test_first_publication_cannot_adopt_existing_same_oid_remote_ref(self):
+        self.cleanup_invocation()
+        self.tree("pr", role="merger")
+        remote = self.root / "same-oid.git"
+        self.git("init", "--bare", remote)
+        oid = self.git("rev-parse", "codex/pr")
+        self.git("push", remote, "codex/pr")
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", remote, ok=False)
+        self.assertEqual(self.git("rev-parse", "refs/heads/codex/pr", cwd=remote), oid)
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertNotIn("publication", ledger["resources"]["pr"])
+
+    def test_same_oid_noop_race_remains_uncertain_not_owned(self):
+        self.cleanup_invocation()
+        self.tree("pr", role="merger")
+        remote = self.root / "racing.git"
+        self.git("init", "--bare", remote)
+        oid = self.git("rev-parse", "codex/pr")
+        spec = importlib.util.spec_from_file_location("resource_publication_race_test", TOOL)
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        inspect_remote = helper.remote_oid
+        raced = []
+
+        def competing_create(repo, destination, ref):
+            if not raced:
+                self.assertIsNone(inspect_remote(repo, destination, ref))
+                # Another actor creates the identical ref after the absence read.
+                self.git("push", remote, "codex/pr")
+                raced.append(True)
+                return None
+            return inspect_remote(repo, destination, ref)
+
+        with patch.object(helper, "remote_oid", side_effect=competing_create):
+            with self.assertRaisesRegex(helper.Refusal, "did not confirm new remote reference creation"):
+                helper.publish_branch(SimpleNamespace(state=str(self.state), resource="pr", remote_url=str(remote)))
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertEqual(ledger["resources"]["pr"]["publication"]["status"], "creating")
+        self.assertEqual(self.git("rev-parse", "refs/heads/codex/pr", cwd=remote), oid)
+
+    def test_bind_and_seal_export_exact_delivery_and_owned_index(self):
+        self.cleanup_invocation()
+        tree = self.publish_pr()
+        (self.notes / "architecture.md").write_text("one module\n")
+        output = self.data("owned-output", path=self.notes / "output")
+        (output / "raw.log").write_text("large project output not a notes record\n")
+        self.release("pr", merged="codex/pr")
+        self.cli("seal", "--pr-json", self.pr_json)
+        ledger = json.loads((self.state / "state.json").read_text())
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        index = json.loads(Path(ledger["index_path"]).read_text())
+        self.assertEqual(index["handoff"], ledger["handoff"])
+        self.assertEqual(index["pr"]["number"], 42)
+        self.assertEqual(handoff["delivery_oid"], self.pr["head"]["sha"])
+        self.assertEqual(handoff["branches"][0]["publication"]["expected_oid"], self.pr["head"]["sha"])
+        self.assertEqual(handoff["internal_refs"][0]["expected_oid"], self.pr["head"]["sha"])
+        paths = {entry["path"] for entry in handoff["notes_snapshot"]["entries"]}
+        self.assertIn("architecture.md", paths)
+        self.assertFalse(any(path.startswith("ledger/") or path.startswith("output/") for path in paths))
+        self.assertFalse(tree.exists())
+        self.cli("create", "--id", "late", "--kind", "data", "--role", "fixer",
+                 "--path", self.root / "late", ok=False)
+        self.assertFalse((self.root / "late").exists())
+        # Safe release remains available after sealing.
+        self.release("owned-output")
+
+    def test_sealed_active_worktree_exports_future_anchor_and_blocks_new_runs(self):
+        self.cleanup_invocation()
+        self.publish_pr()
+        self.data()
+        self.cli("seal", "--pr-json", self.pr_json)
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        self.assertEqual(handoff["worktrees"][0]["status"], "active")
+        self.assertTrue(handoff["internal_refs"][0]["anticipated"])
+        self.cli("run", "--id", "late-command", "--cwd-resource", "pr", "--output-resource", "output",
+                 "--", sys.executable, "-c", "raise SystemExit(0)", ok=False)
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertNotIn("late-command", ledger["runs"])
+        self.release("pr", merged="codex/pr")
+        self.assertEqual(self.git("rev-parse", handoff["internal_refs"][0]["ref"]), self.pr["head"]["sha"])
+
+    def test_binding_rejects_wrong_native_pr_identity_and_notes_replacement(self):
+        self.cleanup_invocation()
+        self.tree("pr", role="merger")
+        remote = self.root / "native.git"
+        self.git("init", "--bare", remote)
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", remote)
+        oid = self.git("rev-parse", "codex/pr")
+        repo = {"id": 9, "full_name": "team/project", "clone_url": str(self.root / "foreign.git")}
+        pr = {"id": 21, "number": 42, "html_url": "https://github.example/team/project/pull/42",
+              "base": {"repo": repo, "ref": "main", "sha": oid},
+              "head": {"repo": repo, "ref": "codex/pr", "sha": oid}}
+        source = self.root / "wrong-pr.json"
+        source.write_text(json.dumps(pr))
+        self.cli("bind-pr", "--pr-resource", "pr", "--pr-json", source, ok=False)
+        self.assertFalse(list(self.index_root.rglob("*.json")) if self.index_root.exists() else [])
+        (self.notes / ".implement-spec-notes").write_text('{"foreign":true}')
+        pr["head"]["repo"]["clone_url"] = str(remote)
+        source.write_text(json.dumps(pr))
+        self.cli("bind-pr", "--pr-resource", "pr", "--pr-json", source, ok=False)
+
+    def test_seal_notes_symlink_is_a_blocker_and_never_followed(self):
+        self.cleanup_invocation()
+        self.publish_pr()
+        foreign = self.root / "foreign"
+        foreign.mkdir()
+        (foreign / "keep.txt").write_text("keep")
+        try:
+            (self.notes / "escape").symlink_to(foreign, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlinks unavailable")
+        self.cli("seal", "--pr-json", self.pr_json)
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        self.assertEqual(handoff["notes_snapshot"]["blockers"][0]["path"], "escape")
+        self.assertFalse(any(entry["path"].startswith("escape/") for entry in handoff["notes_snapshot"]["entries"]))
+        self.assertEqual((foreign / "keep.txt").read_text(), "keep")
+
+    def test_historical_ledger_is_compatible_but_cannot_publish_cleanup_handoff(self):
+        self.tree("pr", role="merger")
+        self.cli("publish-branch", "--resource", "pr", "--remote-url", self.root / "never-used.git", ok=False)
+        self.assertFalse((self.root / "never-used.git").exists())
+
+    def test_seal_uses_final_pushed_head_and_existing_runs_can_be_recorded(self):
+        self.cleanup_invocation()
+        tree = self.publish_pr()
+        first = self.pr["head"]["sha"]
+        (tree / "source.txt").write_text("final delivery\n")
+        self.git("add", "source.txt", cwd=tree)
+        self.git("commit", "-m", "final delivery", cwd=tree)
+        final = self.git("rev-parse", "HEAD", cwd=tree)
+        self.git("push", self.remote, "codex/pr")
+        # A stale REST head cannot seal a later local/remote delivery.
+        self.cli("seal", "--pr-json", self.pr_json, ok=False)
+        self.pr["head"]["sha"] = final
+        self.pr_json.write_text(json.dumps(self.pr))
+        self.data()
+        self.run_test(tree="pr")
+        self.cli("seal", "--pr-json", self.pr_json)
+        self.record()
+        self.release("output")
+        self.release("pr", merged="codex/pr")
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        self.assertEqual(handoff["delivery_oid"], final)
+        publication = handoff["branches"][0]["publication"]
+        self.assertEqual(publication["created_oid"], first)
+        self.assertEqual(publication["expected_oid"], final)
+
+    def test_same_device_mount_is_blocked_before_data_deletion(self):
+        owned = self.data()
+        child = owned / "mounted"
+        child.mkdir()
+        sentinel = child / "keep.txt"
+        sentinel.write_text("mounted data")
+        spec = importlib.util.spec_from_file_location("resource_mount_test", TOOL)
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        helper.check_data_tree(owned)
+        # Mount metadata identifies a bind mount even though st_dev is unchanged.
+        with patch.object(helper, "mount_points", return_value={child}):
+            with self.assertRaises(helper.Refusal):
+                helper.check_data_tree(owned)
+            ledger = json.loads((self.state / "state.json").read_text())
+            with self.assertRaises(helper.Refusal):
+                helper.data_fingerprint(ledger, ledger["resources"]["output"])
+        self.assertEqual(sentinel.read_text(), "mounted data")
+
+    def test_sealed_data_fingerprint_detects_added_files_without_following_links(self):
+        self.cleanup_invocation()
+        self.publish_pr()
+        output = self.data()
+        (output / "owned.log").write_text("test output\n")
+        foreign = self.root / "foreign-personal.txt"
+        foreign.write_text("foreign contents\n")
+        try:
+            (output / "pointer").symlink_to(foreign)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlinks unavailable")
+        self.cli("seal", "--pr-json", self.pr_json)
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        ledger = json.loads((self.state / "state.json").read_text())
+        spec = importlib.util.spec_from_file_location("resource_data_fingerprint_test", TOOL)
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        baseline = handoff["data"][0]["contents_sha256"]
+        self.assertEqual(helper.data_fingerprint(ledger, ledger["resources"]["output"]), baseline)
+        foreign.write_text("updated foreign contents\n")
+        self.assertEqual(helper.data_fingerprint(ledger, ledger["resources"]["output"]), baseline,
+                         "fingerprint followed a symlink into foreign data")
+        (output / "personal.txt").write_text("new personal work\n")
+        self.assertNotEqual(helper.data_fingerprint(ledger, ledger["resources"]["output"]), baseline)
+        self.assertEqual(foreign.read_text(), "updated foreign contents\n")
+
+    def test_data_fingerprint_excludes_registered_child_and_blocks_replacement(self):
+        self.cleanup_invocation()
+        self.publish_pr()
+        output = self.data(path=self.notes / "output")
+        child = self.data("child", path=output / "child", parent="output")
+        (child / "child.log").write_text("child test output\n")
+        self.cli("seal", "--pr-json", self.pr_json)
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        rows = {row["resource"]: row for row in handoff["data"]}
+        self.assertNotEqual(rows["output"]["contents_sha256"], rows["child"]["contents_sha256"])
+        self.release("child")
+        ledger = json.loads((self.state / "state.json").read_text())
+        spec = importlib.util.spec_from_file_location("resource_nested_fingerprint_test", TOOL)
+        helper = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        self.assertEqual(helper.data_fingerprint(ledger, ledger["resources"]["output"]),
+                         rows["output"]["contents_sha256"], "child release changed the parent baseline")
+        child.mkdir()
+        personal = child / "personal.txt"
+        personal.write_text("replacement belongs to someone else\n")
+        with self.assertRaises(helper.Refusal):
+            helper.data_fingerprint(ledger, ledger["resources"]["output"])
+        self.assertEqual(personal.read_text(), "replacement belongs to someone else\n")
+
+    def test_data_fingerprint_blocker_does_not_prevent_other_seal_metadata(self):
+        if not hasattr(os, "mkfifo"):
+            self.skipTest("named pipes unavailable")
+        self.cleanup_invocation()
+        self.publish_pr()
+        output = self.data()
+        os.mkfifo(output / "active.pipe")
+        self.cli("seal", "--pr-json", self.pr_json)
+        handoff = json.loads((self.state / "handoff.json").read_text())
+        self.assertIsNone(handoff["data"][0]["contents_sha256"])
+        self.assertIn("special file", handoff["data"][0]["blocker"])
+        self.assertEqual(handoff["delivery_oid"], self.pr["head"]["sha"])
+        self.assertTrue(handoff["branches"])
 
     def test_existing_resources_and_state_cannot_be_adopted(self):
         existing = self.root / "old-data"

@@ -4,7 +4,7 @@ Read this protocol when creating resources, running tests, handing a task to a r
 
 ## Invocation scope and ownership
 
-The exploration agent initializes a fresh state directory inside this invocation's out-of-repository notes directory. Pass the state and helper paths as context pointers. The state contains resource metadata and compact run records, not source-tree archives. Keep each author's access to evidence within the existing test/implementation input boundaries; resource bookkeeping grants no additional access to code, tests, or another role's records.
+The exploration agent uses `init --notes-root` before writing notes. The notes root must be new or empty, outside the repository and Git metadata, and contain the ledger as a strict child directory. The helper records its directory identity and `.implement-spec-notes` marker. Pass the notes, state and helper paths as context pointers. The state contains resource metadata and compact run records, not source-tree archives. Keep each author's access to evidence within the existing test/implementation input boundaries; resource bookkeeping grants no additional access to code, tests, or another role's records.
 
 Use `create` to acquire an empty data directory or a Git worktree at a previously nonexistent path; its parent directory must already exist. The helper creates and registers it in one workflow. Existing directories cannot be adopted; this protocol does not scan or clean historical tasks. Record the role and owner, revision, parent resource if physically contained, command usage, and eventual disposition. Keep the state outside every resource it manages. Generated results go outside the source repository; required fixtures remain governed by the project.
 
@@ -36,6 +36,22 @@ Counts are nonnegative integers and `total` equals their sum. `acceptance` and `
 After a passing attempt's record is validated, release its regenerable raw outputs. Compact updates create small immutable record generations; the ledger references a completed generation and its checksum, so interruption during an update does not overwrite the previous evidence. For a failure, preserve the necessary diagnostic scene until the issue is explained and resolved. `resolve` requires the justification and changes the retention state; it does not delete files. A later passing run alone is insufficient justification for deleting an unexplained intermittent failure. Final acceptance follows the same compact-record policy; retain no separate final acceptance archive.
 
 Store failure evidence outside scratch worktrees before releasing them. Preserve source revisions or saved changes needed to reconstruct the experiment; a path into a deleted checkout is not a durable context pointer. Do not copy an entire environment into an archive merely to delete the original.
+
+## PR handoff for later cleanup
+
+New invocations use the owned notes-root protocol. Historical ledgers created without it retain their existing development/release behavior but cannot publish a cleanup handoff; `cleanup-spec-v2` audits those tasks only.
+
+Before creating the draft PR, use `publish-branch --resource PR_ID --remote-url URL` for the PR branch's first remote publication. Use the intended head repository's native REST `clone_url` exactly. The helper first verifies the remote ref is absent, persists `creating`, pushes with an empty expected-ref lease, and requires Git's porcelain result to confirm a new ref was created. An existing same-OID ref or a concurrent no-op is not creation evidence. Only a verified first publication becomes `created`; an interruption or uncertain push remains retained and cannot be automatically retried or adopted. Subsequent development pushes target this same destination and branch. If another invocation-created branch is published remotely, register its first publication with this helper too.
+
+After creating the draft PR, fetch its fresh native REST response and pass the saved JSON to `bind-pr --pr-resource PR_ID --pr-json FILE`. It binds the PR's host, ID, number, base/head repository identities, refs and SHA to the invocation-created, first-published branch. This input establishes a delivery pointer, not cleanup permission or proof that the PR is merged. The helper writes one discovery index JSON per invocation, grouped by the SHA-256 of the common Git directory, under `${XDG_STATE_HOME:-~/.local/state}/implement-spec-v2`; use `--index-root` at initialization for another location outside notes/repository/Git metadata.
+
+Save native REST JSON in the notes root outside the ledger, for example `$NOTES_DIR/pr.json`, so the sealed notes snapshot records it; the ledger subtree contains only `lock`, `state.json`, `handoff.json` and `records`.
+
+After final pushes, integration/review repairs, resource reconciliation and final note writing, fetch another fresh native REST PR response and use `seal --pr-json FILE`. It verifies the final PR head against the local branch and the live owned remote ref, records expected local/remote OIDs, active worktree HEADs and existing or anticipated release-anchor refs, and writes `state/handoff.json` plus its identity/checksum into the index. The notes snapshot hashes ordinary files outside the ledger and still-registered resource subtrees; symlinks, mounts and special files become explicit blockers. Later unexplained additions or changes must not be swept into cleanup.
+
+The handoff also fingerprints every active data resource's relative contents, entry types, identities, file hashes and symlink-target bytes without following links. Each registered child subtree has its own fingerprint and is excluded from its parent's fingerprint, so safely releasing a child does not change the parent baseline. Mounts, special files, or an unknown replacement at a released child path become blockers. Cleanup compares data both with this sealed baseline and the user's confirmed inventory; personal files added after sealing are retained. If an existing command finishes after sealing and changes its output, the original owner can validate its record and safely release the output under this protocol before another cleanup plan. Cleanup does not rebaseline changed output or invent a failure resolution.
+
+Sealing closes new allocations, command runs and publications. Existing runs can still be recorded, recovered or resolved, and existing resources can still be safely released. Release may create an anticipated revision anchor after sealing; later cleanup rechecks it after releasing its worktree. Keep the sealed handoff, index, compact records and delivered branches available until the user explicitly invokes `cleanup-spec-v2 <PR number>` after merge and confirms its complete list. That separate workflow can then delete all invocation-owned local/remote branches, refs, notes and records; a partial cleanup retains the ledger and evidence needed for the remaining resources.
 
 ## Release boundaries
 
@@ -72,7 +88,7 @@ The variables below are invocation-specific context pointers. Paths must be new 
 ```sh
 RESOURCE_TOOL="$SKILL_DIR/scripts/resources.py"
 STATE_DIR="$NOTES_DIR/resource-state"
-python3 "$RESOURCE_TOOL" init --state-dir "$STATE_DIR" --repo "$REPO"
+python3 "$RESOURCE_TOOL" init --state-dir "$STATE_DIR" --repo "$REPO" --notes-root "$NOTES_DIR"
 python3 "$RESOURCE_TOOL" create --state "$STATE_DIR" --id pr \
   --kind worktree --role merger --path "$WORKTREE_ROOT/pr" \
   --ref "$BASE_REF" --branch "$PR_BRANCH"

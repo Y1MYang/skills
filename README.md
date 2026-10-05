@@ -10,7 +10,9 @@
 │   └── marketplace.json        # 技能清单：按插件（分类）分组，供安装界面分组勾选
 ├── skills/
 │   └── engineering/
-│       └── implement-spec-v2/  # 每个技能一个文件夹
+│       ├── implement-spec-v2/  # 每个技能一个文件夹
+│       │   └── SKILL.md
+│       └── cleanup-spec-v2/
 │           └── SKILL.md
 ├── CONTEXT.md
 ├── LICENSE
@@ -45,6 +47,7 @@ npx skills update                        # 更新已安装的技能
 | 技能 | 说明 |
 | --- | --- |
 | `implement-spec-v2` | 按 spec 实现：架构先行 + 独立测试神谕，任务图驱动并行子代理，最终产出单个 PR。 |
+| `cleanup-spec-v2` | PR 合并后显式调用 `cleanup-spec-v2 <PR 编号>`，确认完整清单后清理本次开发的本地资源、远端分支和记录。需同时安装 `implement-spec-v2`。 |
 
 ## 许可
 
