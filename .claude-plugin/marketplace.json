@@ -5,7 +5,7 @@
       "name": "engineering",
       "description": "Engineering workflow skills, such as spec-driven implementation with an independent test oracle.",
       "source": "./skills/engineering",
-      "skills": ["./implement-spec-v2"],
+      "skills": ["./implement-spec-v2", "./adopt-spec-v2"],
       "strict": false
     }
   ]
