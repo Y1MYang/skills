@@ -8,7 +8,7 @@ The exploration agent uses `init --notes-root` before writing notes. The notes r
 
 Use `create` to acquire an empty data directory or a Git worktree at a previously nonexistent path; its parent directory must already exist. The helper creates and registers it in one workflow. Existing directories cannot be adopted; this protocol does not scan or clean historical tasks. Record the role and owner, revision, parent resource if physically contained, command usage, and eventual disposition. Keep the state outside every resource it manages. Generated results go outside the source repository; required fixtures remain governed by the project.
 
-Use allocated data directories for test temporary files, logs, generated reports, disposable databases, and necessary diagnostic inputs. Configure the project's runner to place these files there. A directory's name or `.gitignore` entry is not evidence that its contents are disposable. Dependencies and build outputs created inside a worktree must be accounted for before release. Prefer the project's supported external package cache; keep mutable environments and role-specific outputs isolated.
+Use allocated data directories for test temporary files, logs, generated reports, disposable databases, and necessary diagnostic inputs. Configure the project's runner to place these files there. A directory's name or `.gitignore` entry is not evidence that its contents are disposable. Dependencies and build outputs created inside a worktree must be accounted for before release. Reuse dependencies and caches through the package manager or build tool's native concurrency-safe mechanism; keep mutable environments, databases, build outputs, and role-specific results isolated. Shared caches outside this invocation remain outside its cleanup scope.
 
 Step 3 creates the PR branch in a new registered PR working copy. Mergers and fixers use that resource as their `--cwd-resource`; an existing primary checkout cannot be adopted. Keep the PR working copy through integration and review repairs, then release it against the delivered PR branch while retaining that branch and its commits.
 
@@ -16,7 +16,7 @@ Prefer a revision pointer and necessary uncommitted diff to another complete sou
 
 ## Running commands and keeping evidence
 
-Run commands using registered resources through `run`, listing every resource they use. The helper records activity before starting, releases its short ledger lock while the command runs, and records completion afterward. It streams stdout and stderr into compressed files in the allocated output directory, avoiding a second full-sized log copy. Configure additional test outputs into that directory too; the helper cannot discover every file a project-specific runner creates.
+Run commands using registered resources through `run`, listing every resource they use and supplying the capacity reservations described below. The helper records activity before starting, releases its short ledger lock while the command runs, and records completion afterward. It streams stdout and stderr into compressed files in the allocated output directory, avoiding a second full-sized log copy. Configure additional test outputs into that directory too; the helper cannot discover every file a project-specific runner creates.
 
 For a test attempt, pass `--test`, then use `record-test` with a compact JSON summary. The helper retains the command, working directory, source revision, timestamps, exit code, and Git/Python/OS information. The owner supplies the project's runtime and dependency versions or lockfile fingerprints, random seeds, relevant input revisions, failure explanation, and reproducible command in the summary. Keep these records small; reference large inputs by immutable revision and fingerprint, retaining necessary non-regenerable inputs in an owned data directory.
 
@@ -47,7 +47,7 @@ After creating the draft PR, fetch its fresh native REST response and pass the s
 
 Save native REST JSON in the notes root outside the ledger, for example `$NOTES_DIR/pr.json`, so the sealed notes snapshot records it; the ledger subtree contains only `lock`, `state.json`, `handoff.json` and `records`.
 
-After final pushes, integration/review repairs, resource reconciliation and final note writing, fetch another fresh native REST PR response and use `seal --pr-json FILE`. It verifies the final PR head against the local branch and the live owned remote ref, records expected local/remote OIDs, active worktree HEADs and existing or anticipated release-anchor refs, and writes `state/handoff.json` plus its identity/checksum into the index. The notes snapshot hashes ordinary files outside the ledger and still-registered resource subtrees; symlinks, mounts and special files become explicit blockers. Later unexplained additions or changes must not be swept into cleanup.
+After final pushes, integration/review repairs, resource reconciliation and final note writing, stop the invocation watch and verify its recorded completion under [resource-audit.md](resource-audit.md). Then fetch another fresh native REST PR response and use `seal --pr-json FILE`. It verifies the final PR head against the local branch and the live owned remote ref, records expected local/remote OIDs, active worktree HEADs and existing or anticipated release-anchor refs, and writes `state/handoff.json` plus its identity/checksum into the index. The notes snapshot hashes ordinary files outside the ledger and still-registered resource subtrees; symlinks, mounts and special files become explicit blockers. Later unexplained additions or changes must not be swept into cleanup.
 
 The handoff also fingerprints every active data resource's relative contents, entry types, identities, file hashes and symlink-target bytes without following links. Each registered child subtree has its own fingerprint and is excluded from its parent's fingerprint, so safely releasing a child does not change the parent baseline. Mounts, special files, or an unknown replacement at a released child path become blockers. Cleanup compares data both with this sealed baseline and the user's confirmed inventory; personal files added after sealing are retained. If an existing command finishes after sealing and changes its output, the original owner can validate its record and safely release the output under this protocol before another cleanup plan. Cleanup does not rebaseline changed output or invent a failure resolution.
 
@@ -65,7 +65,9 @@ Sealing closes new allocations, command runs and publications. Existing runs can
 | Failed test output | Run owner, after diagnosis/resolution is recorded and necessary evidence remains accessible. |
 | Failed, interrupted, or replaced task environment | Original or replacement owner; reuse and hand off first, retain active commands and unsaved work. |
 
-`release` only acts on registered resources whose identity still matches. It blocks active or unknown command outcomes, unvalidated evidence, unresolved failures affecting the resource, and unreleased contained resources. A normal worktree also needs a `--merged-into` target containing its current commit, and clean tracked/untracked state. Ignored contents are reviewed by the owner and accounted for separately before release; the helper does not force-remove them. For `checkpoint`/`scratch` worktrees, a completed failed attempt may release the clean checkout after its compact record and externally owned failure scene are verified; the unresolved data stays retained. This exception preserves a reconstruction revision and does not require falsely declaring the failure resolved. Code refs and branches remain available.
+Each reached boundary creates an obligation and requires a handling receipt in the corresponding delivery report. Read [resource-audit.md](resource-audit.md) when reaching a boundary, receiving a resource alert, or checking stage completion; it defines candidates, owner verification, receipts, and the 30-minute fallback.
+
+Use `preflight` to distinguish machine blockers from checks still requiring the owner; supply its confirmation flags only after actually checking. Its assessment is a snapshot. `release` repeats preflight against current state and only acts on registered resources whose identity still matches. It blocks active or unknown command outcomes, unvalidated evidence, unresolved failures affecting the resource, and unreleased contained resources. A normal worktree also needs a `--merged-into` target containing its current commit, and clean tracked/untracked state. Ignored contents are reviewed by the owner and accounted for separately before release; the helper does not force-remove them. For `checkpoint`/`scratch` worktrees, a completed failed attempt may release the clean checkout after its compact record and externally owned failure scene are verified; the unresolved data stays retained. This exception preserves a reconstruction revision and does not require falsely declaring the failure resolved. Code refs and branches remain available.
 
 `--idle-confirmed` is the responsible owner's confirmation that commands outside the wrapper also no longer use the resource. It does not authorize stopping processes. If inactivity cannot be established, retain the resource and report why. A killed wrapper or missing completion record remains active/unknown for cleanup purposes, even if its PID disappears. Follow the task's existing monitoring/recovery protocol and preserve normally advancing CLI work. Only after independently verifying that the original wrapper, child, and descendant workloads have all stopped, use `recover-run --run ID --stopped-confirmed --reason TEXT` to record an interrupted outcome. This still needs test evidence and a justified `resolve` before cleanup. No age-based or timeout-based deletion is performed.
 
@@ -75,30 +77,41 @@ If release is blocked by generated ignored/untracked files, inspect only the own
 
 ## Space admission and reporting
 
-Use `capacity` before allocating work that can materially grow disk usage. Supply the next task's measured or conservatively estimated additional bytes and a configurable reserve covering machine needs and remaining growth of active tasks. Pass `--path` with an existing destination parent to check the filesystem receiving those resources; the default checks the state directory's filesystem. Account separately for output locations on other filesystems. Samples come from this invocation's relevant resource directories and phase reports, without repeated full-disk scans. With no reliable sample, state the estimate and uncertainty rather than treating it as a guaranteed peak bound.
+New invocations enable capacity reservations. Before creating resources or running a command that uses them, use `reserve` with an ID, the owning agent, an existing destination parent, estimated remaining growth (`--next-bytes`), and a machine safety floor (`--reserve-bytes`). Give `create` and `run` the matching `--owner` and `--reservation` IDs; repeat the latter to cover every used resource's filesystem. Each active task has its own reservation. Admission is checked under the ledger lock against actual free space on each destination filesystem, the sum of this invocation's remaining reservations there, and the largest applicable safety floor, counted once. `capacity` reports the same shared budget for planning; it does not reserve space. Historical ledgers explicitly report capacity enforcement disabled rather than silently acquiring a new policy.
+
+A reservation permits one active allocation/command at a time. Completion returns the claim but keeps the remaining growth estimate reserved for later work. At an idle phase boundary, the owner can use `reservation --remaining-bytes` to update that estimate or `reservation --release` when no further growth is expected; changes require `--owner`, `--idle-confirmed`, and a reason, and increases undergo admission again. Active or unknown commands retain their claims. Estimates are not filesystem quotas: keep them conservative, state uncertainty, and reestimate from this invocation's relevant directories or phase results. The helper cannot reserve space against unrelated applications or stop a running command from exceeding its estimate.
 
 When capacity suffices, keep normal concurrency. Under pressure, release eligible resources first, then temporarily start fewer new tasks while existing tests/builds continue. If one task still cannot fit, report the deficit and required capacity. Do not change acceptance coverage or retry the same overflowing allocation indefinitely.
 
-Before the final user report, the existing owners reconcile `status`: each resource is released or retained with a reason and recovery pointer. Default status avoids directory-size traversal; use `status --measure` for a deliberate phase measurement. Sizes are logical bytes rather than guaranteed recoverable disk blocks. Report observed space usage, release outcomes, and remaining resources. Reconcile this same invocation on failure/cancellation/recovery; a hard process kill can prevent automatic finalization, so its durable ledger is the checkpoint. Ledger reconciliation does not expand into scanning old tasks.
+Before the final user report, the existing owners reconcile `status`, handling receipts, and remaining reservations: each resource or reservation is released or retained with a reason and recovery pointer. Default status avoids directory-size traversal; use `status --measure` for a deliberate phase measurement. Sizes are logical bytes rather than guaranteed recoverable disk blocks. Report observed space usage, release outcomes, and remaining resources. Reconcile this same invocation on failure/cancellation/recovery; a hard process kill can prevent automatic finalization, so its durable ledger is the checkpoint. Ledger reconciliation does not expand into scanning old tasks.
 
 ## Example: one ticket attempt
 
-The variables below are invocation-specific context pointers. Paths must be new where `init` and `create` require them. Adapt the test command to the project; these shell examples are not a dependency of the Python helper.
+The variables below are invocation-specific context pointers, agent IDs, and byte estimates. This example keeps the worktrees and notes on one filesystem; use separate reservations when their destinations differ. Paths must be new where `init` and `create` require them. Configure the watch as described in [resource-audit.md](resource-audit.md) after initialization. Adapt the test command to the project; these shell examples are not a dependency of the Python helper.
 
 ```sh
 RESOURCE_TOOL="$SKILL_DIR/scripts/resources.py"
 STATE_DIR="$NOTES_DIR/resource-state"
 python3 "$RESOURCE_TOOL" init --state-dir "$STATE_DIR" --repo "$REPO" --notes-root "$NOTES_DIR"
+python3 "$RESOURCE_TOOL" reserve --state "$STATE_DIR" --id pr-budget \
+  --path "$WORKTREE_ROOT" --next-bytes "$PR_GROWTH_BYTES" \
+  --reserve-bytes "$MACHINE_RESERVE_BYTES" --owner "$PR_OWNER"
 python3 "$RESOURCE_TOOL" create --state "$STATE_DIR" --id pr \
   --kind worktree --role merger --path "$WORKTREE_ROOT/pr" \
-  --ref "$BASE_REF" --branch "$PR_BRANCH"
+  --ref "$BASE_REF" --branch "$PR_BRANCH" --owner "$PR_OWNER" --reservation pr-budget
+python3 "$RESOURCE_TOOL" reserve --state "$STATE_DIR" --id ticket-42-budget \
+  --path "$WORKTREE_ROOT" --next-bytes "$TICKET_GROWTH_BYTES" \
+  --reserve-bytes "$MACHINE_RESERVE_BYTES" --owner "$TICKET_OWNER"
 python3 "$RESOURCE_TOOL" create --state "$STATE_DIR" --id ticket-42 \
   --kind worktree --role implementer --path "$WORKTREE_ROOT/ticket-42" \
-  --ref "$PR_BRANCH" --branch "codex/ticket-42-$RUN_KEY"
+  --ref "$PR_BRANCH" --branch "codex/ticket-42-$RUN_KEY" \
+  --owner "$TICKET_OWNER" --reservation ticket-42-budget
 python3 "$RESOURCE_TOOL" create --state "$STATE_DIR" --id ticket-42-output \
-  --kind data --role implementer --path "$NOTES_DIR/ticket-42-output"
+  --kind data --role implementer --path "$NOTES_DIR/ticket-42-output" \
+  --owner "$TICKET_OWNER" --reservation ticket-42-budget
 python3 "$RESOURCE_TOOL" run --state "$STATE_DIR" --id ticket-42-attempt-1 \
-  --cwd-resource ticket-42 --output-resource ticket-42-output --test -- \
+  --cwd-resource ticket-42 --output-resource ticket-42-output \
+  --owner "$TICKET_OWNER" --reservation ticket-42-budget --test -- \
   python3 -m unittest discover
 python3 "$RESOURCE_TOOL" record-test --state "$STATE_DIR" \
   --run ticket-42-attempt-1 --summary "$NOTES_DIR/ticket-42-summary.json"
@@ -118,8 +131,14 @@ python3 "$RESOURCE_TOOL" release --state "$STATE_DIR" \
 After the merger verifies the delivery and all worktree users finish:
 
 ```sh
+python3 "$RESOURCE_TOOL" due --state "$STATE_DIR" --resource ticket-42 \
+  --event-id ticket-42-integrated --stage ticket-integrated \
+  --evidence "$PR_BRANCH@$DELIVERY_SHA" --owner "$MERGER_OWNER"
 python3 "$RESOURCE_TOOL" release --state "$STATE_DIR" \
   --resource ticket-42 --merged-into "$PR_BRANCH" --idle-confirmed
+python3 "$RESOURCE_TOOL" reservation --state "$STATE_DIR" --id ticket-42-budget \
+  --owner "$TICKET_OWNER" --release --idle-confirmed \
+  --reason "Ticket delivery is merged; its commands and further growth are finished."
 python3 "$RESOURCE_TOOL" status --state "$STATE_DIR"
 ```
 

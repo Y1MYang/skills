@@ -137,17 +137,19 @@ class CleanupBehaviorTests(unittest.TestCase):
     def fixture(self, method="merge", fork=False, seal=True):
         self.producer("init", "--state-dir", self.state, "--repo", self.repo,
                       "--notes-root", self.notes, "--index-root", self.index)
+        self.producer("reserve", "--id", "fixture", "--path", self.root,
+                      "--next-bytes", 1048576, "--reserve-bytes", 0, "--owner", "merger")
         (self.notes / "architecture.md").write_text("Disposable invocation notes.\n")
         self.producer("create", "--id", "pr", "--kind", "worktree", "--role", "merger",
-                      "--path", self.pr_tree, "--ref", "main", "--branch", BRANCH)
+                      "--path", self.pr_tree, "--ref", "main", "--branch", BRANCH, "--reservation", "fixture")
         (self.pr_tree / "source.txt").write_text("delivered implementation\n")
         self.git("add", "source.txt", cwd=self.pr_tree)
         self.git("commit", "-m", "delivery", cwd=self.pr_tree)
         self.delivered = self.git("rev-parse", "HEAD", cwd=self.pr_tree)
         self.producer("create", "--id", "output", "--kind", "data", "--role", "merger",
-                      "--path", self.output)
+                      "--path", self.output, "--reservation", "fixture")
         self.producer("run", "--id", "acceptance", "--cwd-resource", "pr",
-                      "--output-resource", "output", "--test", "--", sys.executable,
+                      "--output-resource", "output", "--reservation", "fixture", "--test", "--", sys.executable,
                       "-c", "print('one passing acceptance case')")
         summary = self.notes / "acceptance.json"
         summary.write_text(json.dumps({
@@ -516,7 +518,7 @@ class CleanupBehaviorTests(unittest.TestCase):
                 "\nwhile not stop.exists(): time.sleep(0.02)\n")
         command = [sys.executable, RESOURCE_TOOL, "run", "--state", self.state,
                    "--id", "active", "--cwd-resource", "pr", "--output-resource", "output",
-                   "--", sys.executable, "-c", code, ready, stop]
+                   "--reservation", "fixture", "--", sys.executable, "-c", code, ready, stop]
         process = subprocess.Popen(list(map(str, command)), cwd=self.repo, env=self.env,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:

@@ -11,6 +11,7 @@ import contextlib
 import datetime
 import gzip
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -22,6 +23,7 @@ import subprocess
 import sys
 import threading
 import uuid
+from types import SimpleNamespace
 from urllib.parse import urlparse
 
 
@@ -32,6 +34,22 @@ ID_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}\Z")
 CLEANUP_PROTOCOL = "cleanup-spec-v2/1"
 NOTES_MARKER = ".implement-spec-notes"
 OID_PATTERN = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
+_COMPANIONS = {}
+
+
+def companion(name):
+    """Load bundled helpers by location, including when cleanup imports this file."""
+    if name not in _COMPANIONS:
+        path = Path(__file__).with_name(name + ".py")
+        spec = importlib.util.spec_from_file_location("implement_spec_" + name, path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _COMPANIONS[name] = module
+    return _COMPANIONS[name]
+
+
+def helper_api():
+    return SimpleNamespace(**globals())
 
 
 class Refusal(Exception):
@@ -439,6 +457,9 @@ def seal(args):
         require_cleanup_protocol(state)
         verify_notes(state)
         require_open(state)
+        watcher = state.get("resource_audit", {}).get("watch", {})
+        if watcher and watcher.get("status") != "stopped":
+            raise Refusal("stop the invocation watcher and confirm its completion before sealing")
         bound = state.get("pr")
         if not bound:
             raise Refusal("bind the PR before sealing")
@@ -670,6 +691,7 @@ def init(args):
     state = {"version": VERSION, "invocation": invocation,
              "created_at": now(), "state_path": str(path), "identity": identity(path),
              "repo": str(repo), "common_git": str(common), "resources": {}, "runs": {}}
+    companion("resource_capacity").initialize(state)
     if notes:
         state.update(cleanup_protocol=CLEANUP_PROTOCOL, notes=notes, index_root=str(index_root))
     save(path, state)
@@ -716,10 +738,13 @@ def create(args):
         marker = {"invocation": state["invocation"], "resource": args.id,
                   "nonce": uuid.uuid4().hex}
         pending = {"id": args.id, "kind": args.kind, "path": str(path),
-                   "role": args.role, "owner": args.role, "parent": args.parent,
+                   "role": args.role, "owner": getattr(args, "owner", None) or args.role, "parent": args.parent,
                    "created_at": now(), "marker": marker, "status": "creating",
                    "release_condition": ("merged into target, clean, evidence complete, idle"
                        if args.kind == "worktree" else "evidence complete, failures resolved, idle")}
+        pending["reservations"] = companion("resource_capacity").claim(
+            state, getattr(args, "reservation", []) or [], [path.parent],
+            "create", args.id, helper_api(), owner=pending["owner"])
         # Persist before Git/filesystem mutation: a crash leaves an explicit refusal,
         # never an automatically adoptable or deletable resource.
         state["resources"][args.id] = pending
@@ -751,6 +776,7 @@ def create(args):
         raise
     with locked(args.state) as (state_path, state):
         state["resources"][args.id] = pending
+        companion("resource_capacity").finish(state, "create", args.id, helper_api())
         save(state_path, state)
         return pending
 
@@ -778,7 +804,14 @@ def run_command(args):
                 for name in ["stdout", "stderr"]}
         if any(os.path.lexists(value) for value in logs.values()):
             raise Refusal("raw output path already exists")
+        owner = getattr(args, "owner", None) or cwd_item["owner"]
+        reservations = companion("resource_capacity").claim(
+            state, getattr(args, "reservation", []) or [],
+            [Path(state["resources"][name]["path"]) for name in uses],
+            "run", args.id, helper_api(), owner=owner)
+        companion("resource_audit").note_usage(state, uses, args.id)
         run = {"id": args.id, "status": "running", "uses": uses,
+               "owner": owner, "reservations": reservations,
                "cwd_resource": args.cwd_resource, "output_resource": args.output_resource,
                "command": command, "cwd": str(cwd), "started_at": now(),
                "pid": None, "wrapper_pid": os.getpid(), "test": args.test, "revision": revision,
@@ -829,6 +862,7 @@ def run_command(args):
         else:
             run["log_sha256"] = log_hashes
             write_record(state_path, run)
+            companion("resource_capacity").finish(state, "run", args.id, helper_api())
         save(state_path, state)
         return {"run": args.id, "status": run["status"], "exit_code": exit_code,
                 "record": str(record_path(state_path, run)) if not errors else None,
@@ -875,8 +909,14 @@ def record_test(args):
         run["summary"] = summary
         run["summary_recorded_at"] = now()
         write_record(state_path, run)
+        due = None
+        if run["exit_code"] == 0:
+            due = companion("resource_audit").mark_due(
+                state, run["output_resource"], "record-" + hashlib.sha256(args.run.encode()).hexdigest()[:32],
+                "test-record-validated", str(record_path(state_path, run)),
+                owner=run.get("owner"))
         save(state_path, state)
-        return {"run": args.run, "summary_recorded": True}
+        return {"run": args.run, "summary_recorded": True, "release_due": due}
 
 
 def resolve(args):
@@ -893,8 +933,11 @@ def resolve(args):
             raise Refusal("command has no recorded failure to resolve")
         run["resolution"] = {"reason": args.reason, "at": now()}
         write_record(state_path, run)
+        due = companion("resource_audit").mark_due(
+            state, run["output_resource"], "resolve-" + hashlib.sha256(args.run.encode()).hexdigest()[:32],
+            "failure-resolved", str(record_path(state_path, run)), owner=run.get("owner"))
         save(state_path, state)
-        return {"run": args.run, "resolved": True}
+        return {"run": args.run, "resolved": True, "release_due": due}
 
 
 def recover_run(args):
@@ -930,6 +973,7 @@ def recover_run(args):
         run["log_sha256"] = log_hashes
         run["logs_may_be_incomplete"] = True
         write_record(state_path, run)
+        companion("resource_capacity").finish(state, "run", args.run, helper_api())
         save(state_path, state)
         return {"run": args.run, "status": "completed", "outcome": "interrupted",
                 "next": "record-test if applicable, then resolve before release"}
@@ -941,6 +985,8 @@ def handoff(args):
     with locked(args.state) as (state_path, state):
         item = resource(state, args.resource)
         verify_resource(state, item)
+        if item.get("resource_audit", {}).get("due"):
+            raise Refusal("resource has a release obligation; use disposition handoff and accept for that event")
         item.setdefault("handoffs", []).append({"from": item["owner"], "to": args.owner, "at": now()})
         item["owner"] = args.owner
         save(state_path, state)
@@ -986,49 +1032,102 @@ def check_external_failure_scenes(state, item):
                 raise Refusal("failed scratch raw evidence hash changed; retain checkout")
 
 
-def release(args):
-    if not args.idle_confirmed:
-        raise Refusal("owner must check external processes and supply --idle-confirmed")
-    with locked(args.state) as (state_path, state):
-        item = resource(state, args.resource)
+def release_preflight(state_path, state, name, merged_into=None,
+                      idle_confirmed=False, evidence_confirmed=False):
+    """One checker for explicit inspection and deletion; no deletion permission is cached."""
+    result = {"resource": name, "checked_at": now(), "machine_blockers": [],
+              "owner_checks_required": [], "merged_into": merged_into}
+    if not idle_confirmed:
+        result["owner_checks_required"].append("confirm all external users and descendant processes are idle")
+    if not evidence_confirmed:
+        result["owner_checks_required"].append("validate saved delivery and sufficient diagnostic/reproduction evidence")
+    try:
+        item = resource(state, name)
         path = verify_resource(state, item)
         scratch = item["kind"] == "worktree" and item["role"] in ["scratch", "checkpoint"]
-        reasons = release_blockers(state_path, state, args.resource, allow_scratch_failure=scratch)
-        if reasons:
-            raise Refusal("; ".join(reasons))
-        item["status"] = "releasing"
-        item["release_started_at"] = now()
-        save(state_path, state)
-    try:
+        result["machine_blockers"].extend(release_blockers(
+            state_path, state, name, allow_scratch_failure=scratch))
+        result["usage_generation"] = item.get("resource_audit", {}).get("usage_generation", 0)
+        if result["machine_blockers"]:
+            return result
         if scratch:
             check_external_failure_scenes(state, item)
-        released_bytes = tree_size(path)
         if item["kind"] == "worktree":
-            changes = git(path, "status", "--porcelain", "--untracked-files=all").stdout
-            if changes:
+            if git(path, "status", "--porcelain", "--untracked-files=all").stdout:
                 raise Refusal("worktree has dirty/untracked files; save them before release")
             ignored = git(path, "ls-files", "--others", "--ignored", "--exclude-standard", "-z").stdout
             if any(entry for entry in ignored.split(b"\0")):
                 raise Refusal("worktree has ignored files; review and clean exact generated paths first")
             head = git_text(path, "rev-parse", "HEAD")
-            if args.merged_into:
-                target = git_text(state["repo"], "rev-parse", "--verify", args.merged_into + "^{commit}")
+            result["head"] = head
+            if merged_into:
+                target = git_text(state["repo"], "rev-parse", "--verify", merged_into + "^{commit}")
                 if git(state["repo"], "merge-base", "--is-ancestor", head, target, check=False).returncode:
                     raise Refusal("worktree HEAD is not an ancestor of --merged-into")
-                item["merged_into"] = {"ref": args.merged_into, "revision": target}
-            elif item["role"] not in ["scratch", "checkpoint"]:
+                result["target_revision"] = target
+            elif not scratch:
                 raise Refusal("non-scratch worktree requires --merged-into")
+        else:
+            if merged_into:
+                raise Refusal("--merged-into applies only to worktrees")
+            check_data_tree(path)
+            if not shutil.rmtree.avoids_symlink_attacks:
+                raise Refusal("platform lacks safe descriptor-relative deletion; retain data")
+    except (Refusal, OSError, ValueError) as error:
+        result["machine_blockers"].append(str(error))
+    return result
+
+
+def preflight(args):
+    with locked(args.state) as (state_path, state):
+        checked_id(args.resource)
+        if args.resource not in state["resources"]:
+            raise Refusal("unknown resource: " + args.resource)
+        assessment = release_preflight(state_path, state, args.resource,
+            getattr(args, "merged_into", None), getattr(args, "idle_confirmed", False),
+            getattr(args, "evidence_confirmed", False))
+        companion("resource_audit").record_assessment(state, args.resource, assessment)
+        save(state_path, state)
+        return assessment
+
+
+def release(args):
+    with locked(args.state) as (state_path, state):
+        checked_id(args.resource)
+        if args.resource not in state["resources"]:
+            raise Refusal("unknown resource: " + args.resource)
+        audit = companion("resource_audit")
+        assessment = release_preflight(state_path, state, args.resource,
+            args.merged_into, args.idle_confirmed, evidence_confirmed=True)
+        audit.record_assessment(state, args.resource, assessment)
+        reasons = assessment["machine_blockers"] + assessment["owner_checks_required"]
+        if reasons:
+            audit.record_release(state, args.resource, "blocked", reason="; ".join(reasons))
+            save(state_path, state)
+            raise Refusal("; ".join(reasons))
+        item = state["resources"][args.resource]
+        path = Path(item["path"])
+        item["status"] = "releasing"
+        item["release_started_at"] = now()
+        save(state_path, state)
+    try:
+        # Wrapped users cannot start once the resource is marked releasing.
+        verify_resource(state, item)
+        released_bytes = tree_size(path)
+        if item["kind"] == "worktree":
+            head = assessment["head"]
+            if args.merged_into:
+                item["merged_into"] = {"ref": args.merged_into, "revision": assessment["target_revision"]}
             anchor = "refs/implement-spec-runs/{}/{}".format(state["invocation"], item["id"])
             git(state["repo"], "update-ref", anchor, head)
             item["preserved_revision"] = head
             item["preserved_ref"] = anchor
             with locked(args.state) as (state_path, latest):
+                item["resource_audit"] = latest["resources"][args.resource].get("resource_audit", {})
                 latest["resources"][args.resource] = item
                 save(state_path, latest)
             git(state["repo"], "worktree", "remove", "--", str(path))
         else:
-            if args.merged_into:
-                raise Refusal("--merged-into applies only to worktrees")
             check_data_tree(path)
             # CPython uses descriptor-relative traversal where the OS supports it;
             # refuse destructive operation when it cannot resist symlink swaps.
@@ -1037,16 +1136,19 @@ def release(args):
             shutil.rmtree(path)
     except BaseException as error:
         with locked(args.state) as (state_path, latest):
-            item["status"] = "releasing" if isinstance(error, KeyboardInterrupt) else "active"
-            item["release_error"] = str(error) or type(error).__name__
-            latest["resources"][args.resource] = item
+            current = latest["resources"][args.resource]
+            current["status"] = "releasing" if isinstance(error, KeyboardInterrupt) else "active"
+            current["release_error"] = str(error) or type(error).__name__
+            audit.record_release(latest, args.resource, "error", reason=current["release_error"])
             save(state_path, latest)
         raise
     with locked(args.state) as (state_path, state):
+        item = state["resources"][args.resource]
         item.update(status="released", released_at=now(), released_bytes=released_bytes,
                     idle_confirmed_at=now())
         item.pop("release_error", None)
         state["resources"][args.resource] = item
+        audit.record_release(state, args.resource, "released")
         save(state_path, state)
         return {"resource": args.resource, "released": True, "logical_bytes": released_bytes}
 
@@ -1056,8 +1158,9 @@ def status(args):
         snapshot_at = now()
     output = []
     for item in state["resources"].values():
-        row = {key: item.get(key) for key in ["id", "kind", "path", "role", "owner", "status", "parent"]}
-        row["reasons"] = release_blockers(state_path, state, item["id"]) if item["status"] != "released" else []
+        row = {key: item.get(key) for key in ["id", "kind", "path", "role", "owner", "status", "parent", "resource_audit", "reservations"]}
+        scratch = item["kind"] == "worktree" and item["role"] in ["scratch", "checkpoint"]
+        row["reasons"] = release_blockers(state_path, state, item["id"], allow_scratch_failure=scratch) if item["status"] != "released" else []
         for field in ["creation_error", "release_error"]:
             if item.get(field) and item["status"] != "released":
                 row["reasons"].append(item[field])
@@ -1081,22 +1184,37 @@ def status(args):
             "remaining_bytes": sum(row["logical_bytes"] or 0 for row in top_level) if complete_measurement else None,
             "released_bytes": sum(item.get("released_bytes", 0) for item in state["resources"].values()),
             "runs": [{key: run.get(key) for key in ["id", "status", "pid", "exit_code", "test"]}
-                     for run in state["runs"].values()], "bytes_are": "logical, not allocated blocks"}
+                     for run in state["runs"].values()], "bytes_are": "logical, not allocated blocks",
+            "capacity": companion("resource_capacity").report(state),
+            "audit": state.get("resource_audit", {}),
+            "release_checks": "reasons are partial ledger checks; use preflight for an explicit shared release check"}
 
 
 def capacity(args):
-    if args.next_bytes < 0 or args.reserve_bytes < 0:
-        raise Refusal("space estimates must be nonnegative")
-    with locked(args.state) as (state_path, state):
-        measured = plain_path(args.path) if args.path else state_path
-        if not measured.is_dir():
-            raise Refusal("capacity --path must be an existing destination directory")
-        free = shutil.disk_usage(measured).free
-        required = args.next_bytes + args.reserve_bytes
-        return {"measured_path": str(measured), "available_bytes": free, "required_bytes": required,
-                "shortfall_bytes": max(0, required - free), "admit": free >= required,
-                "recommendation": ("keep normal concurrency" if free >= required else
-                  "release eligible owned resources first; then temporarily reduce newly started tasks; keep existing commands")}
+    return companion("resource_capacity").dispatch("capacity", args, helper_api())
+
+
+def capacity_snapshot(state):
+    """At most one free-space probe per registered filesystem, without tree scans."""
+    module = companion("resource_capacity")
+    summary = module.report(state)
+    samples = []
+    seen = set()
+    for item in state.get("reservations", {}).values():
+        if item["status"] != "open" or item["filesystem"] in seen:
+            continue
+        seen.add(item["filesystem"])
+        try:
+            path = plain_path(item["path"])
+            if identity(path) != item["identity"]:
+                raise Refusal("reservation destination identity changed")
+            sample = module._capacity(state, path, 0, 0, helper_api())
+            sample["action"] = "none" if sample["admit"] else "reconcile_owned_capacity"
+        except (Refusal, OSError, ValueError) as error:
+            sample = {"filesystem": item["filesystem"], "action": "verify_capacity", "error": str(error)}
+        samples.append(sample)
+    return {"enabled": summary["enabled"], "filesystems": samples,
+            "scope": "registered destinations in this invocation; no global reservation or quota"}
 
 
 def parser():
@@ -1107,7 +1225,7 @@ def parser():
     command.add_argument("--repo", required=True)
     command.add_argument("--notes-root", help="new or empty invocation notes root containing the state directory")
     command.add_argument("--index-root", help="cleanup discovery index outside the notes root")
-    for name in ["create", "run", "record-test", "resolve", "recover-run", "handoff", "release", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
+    for name in ["create", "run", "record-test", "resolve", "recover-run", "handoff", "release", "preflight", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
         commands.add_parser(name).add_argument("--state", required=True)
     command = commands.choices["publish-branch"]
     command.add_argument("--resource", required=True)
@@ -1122,6 +1240,7 @@ def parser():
     command.add_argument("--kind", choices=["worktree", "data"], required=True)
     command.add_argument("--path", required=True)
     command.add_argument("--role", required=True)
+    command.add_argument("--owner", help="concrete agent/task owner; defaults to role for older callers")
     command.add_argument("--ref")
     command.add_argument("--branch")
     command.add_argument("--parent")
@@ -1131,6 +1250,7 @@ def parser():
     command.add_argument("--output-resource", required=True)
     command.add_argument("--uses", action="append", nargs="+", default=[])
     command.add_argument("--test", action="store_true")
+    command.add_argument("--owner", help="reservation owner for this command; defaults to cwd resource owner")
     command.add_argument("command", nargs=argparse.REMAINDER)
     command = commands.choices["record-test"]
     command.add_argument("--run", required=True)
@@ -1149,11 +1269,18 @@ def parser():
     command.add_argument("--resource", required=True)
     command.add_argument("--idle-confirmed", action="store_true")
     command.add_argument("--merged-into")
+    command = commands.choices["preflight"]
+    command.add_argument("--resource", required=True)
+    command.add_argument("--merged-into")
+    command.add_argument("--idle-confirmed", action="store_true")
+    command.add_argument("--evidence-confirmed", action="store_true")
     command = commands.choices["capacity"]
     command.add_argument("--next-bytes", type=int, required=True)
     command.add_argument("--reserve-bytes", type=int, required=True)
     command.add_argument("--path", help="existing parent directory on the next resource's filesystem")
     commands.choices["status"].add_argument("--measure", action="store_true", help="measure owned directories once; logical bytes")
+    companion("resource_capacity").add_commands(commands)
+    companion("resource_audit").add_commands(commands)
     return result
 
 
@@ -1161,10 +1288,15 @@ def main():
     args = parser().parse_args()
     actions = {"init": init, "create": create, "run": run_command,
                "record-test": record_test, "resolve": resolve, "recover-run": recover_run, "handoff": handoff,
-               "release": release, "status": status, "capacity": capacity,
+               "release": release, "preflight": preflight, "status": status, "capacity": capacity,
                "publish-branch": publish_branch, "bind-pr": bind_pr, "seal": seal}
     try:
-        result = actions[args.action](args)
+        if args.action in ["reserve", "reservation"]:
+            result = companion("resource_capacity").dispatch(args.action, args, helper_api())
+        elif args.action in companion("resource_audit").ACTIONS:
+            result = companion("resource_audit").dispatch(args.action, args, helper_api())
+        else:
+            result = actions[args.action](args)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         if args.action == "run":
             return 1 if result["status"] != "completed" else (0 if result["exit_code"] == 0 else 1)

@@ -43,6 +43,23 @@ class ResourceLifecycleTests(unittest.TestCase):
         return result.stdout.strip()
 
     def command(self, *args):
+        args = list(args)
+        if args and args[0] in ["create", "run"] and "--reservation" not in args:
+            ledger = json.loads((self.state / "state.json").read_text())
+            if ledger.get("capacity_protocol") and not ledger.get("sealed_at"):
+                if "--owner" in args:
+                    owner = str(args[args.index("--owner") + 1])
+                elif args[0] == "create":
+                    owner = str(args[args.index("--role") + 1])
+                else:
+                    name = str(args[args.index("--cwd-resource") + 1])
+                    owner = ledger["resources"][name]["owner"]
+                budget = "fixture-" + args[0] + "-" + str(args[args.index("--id") + 1])
+                if budget not in ledger.get("reservations", {}):
+                    self.cli("reserve", "--id", budget, "--path", self.root,
+                             "--next-bytes", 1048576, "--reserve-bytes", 0, "--owner", owner)
+                position = args.index("--") if "--" in args else len(args)
+                args[position:position] = ["--reservation", budget]
         return [sys.executable, str(TOOL), *map(str, args)]
 
     def cli(self, subcommand, *args, ok=True):
