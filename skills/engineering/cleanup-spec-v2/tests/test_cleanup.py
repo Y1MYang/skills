@@ -172,7 +172,7 @@ class CleanupBehaviorTests(unittest.TestCase):
                              clone_url=str(self.head_remote), ssh_url=str(self.head_remote),
                              html_url="https://github.com/contributor/project")
         self.pr = {"id": 7001, "node_id": "PR_fixture", "number": PR_NUMBER,
-                   "html_url": "https://github.com/acme/project/pull/71", "state": "open",
+                   "html_url": "https://github.com/acme/project/pull/71", "state": "open", "draft": True,
                    "merged": False, "merged_at": None, "merge_commit_sha": None,
                    "head": {"ref": BRANCH, "sha": self.delivered, "repo": head_repo},
                    "base": {"ref": "main", "sha": self.git("rev-parse", "main"),

@@ -13,6 +13,7 @@ import gzip
 import hashlib
 import importlib.util
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -21,7 +22,9 @@ import shutil
 import stat
 import subprocess
 import sys
+import tempfile
 import threading
+import time
 import uuid
 from types import SimpleNamespace
 from urllib.parse import urlparse
@@ -77,6 +80,54 @@ def git(repo, *args, check=True):
 
 def git_text(repo, *args):
     return git(repo, *args).stdout.decode(errors="replace").strip()
+
+
+def execution_source(repo, timeout, evidence_root):
+    """Check the committed candidate without adding an unbounded post-run wait."""
+    deadline = time.monotonic() + timeout
+    supervisor = companion("execution_supervisor")
+    evidence = Path(tempfile.mkdtemp(prefix="source-identity-", dir=str(evidence_root)))
+    values = []
+    for index, arguments in enumerate([("rev-parse", "HEAD"), ("status", "--porcelain", "--untracked-files=normal")]):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise Refusal("source identity check exceeded its finite allowance; evidence: " + str(evidence))
+        allowance = {"seconds": remaining, "source": "Declared finite source identity allowance"}
+        configuration = {"version": 1, "budgets": {
+            "total": allowance, "shutdown": {"seconds": remaining / 3, "source": allowance["source"]},
+            "case": allowance, "phase": {phase: allowance for phase in ["setup", "run", "cleanup"]},
+            "stall": allowance}, "long_cases": {}, "case_profiles": {}, "progress_kinds": [],
+            "adapter": {"files": [__file__], "environment": []}}
+        logs = {name: str(evidence / (str(index) + "." + name + ".gz")) for name in ["stdout", "stderr"]}
+        try:
+            result = supervisor.supervise(["git", "--no-optional-locks", "-c", "core.fsmonitor=false",
+                "-C", str(repo), *arguments], repo, logs, configuration, "source-" + uuid.uuid4().hex,
+                events_path=evidence / (str(index) + ".events.jsonl"),
+                alerts_path=evidence / (str(index) + ".alerts.jsonl"))
+        except (OSError, ValueError, supervisor.Refusal) as error:
+            raise Refusal("source identity check failed; retained evidence: {}: {}".format(evidence, error))
+        if (result["exit_code"] != 0 or not result["stopped"] or not result["capture_complete"] or
+                result["outcome"] not in ["completed", "coverage_unverified"]):
+            raise Refusal("cannot verify acceptance source identity; retained evidence: " + str(evidence))
+        with gzip.open(logs["stdout"], "rb") as stream:
+            output = stream.read(MAX_SUMMARY + 1)
+        if len(output) > MAX_SUMMARY:
+            raise Refusal("source metadata exceeds bounded output; retained evidence: " + str(evidence))
+        values.append(output.decode(errors="replace").strip())
+    shutil.rmtree(evidence)
+    return {"revision": values[0], "clean": not values[1]}
+
+
+def execution_failed(run):
+    observed = run.get("supervision", {})
+    return (run.get("exit_code") != 0 or observed.get("outcome") != "completed" or
+            not observed.get("coverage_verified") or not observed.get("capture_complete") or
+            not observed.get("stopped") or
+            (run.get("formal_acceptance") and not run.get("acceptance_qualified")))
+
+
+def execution_policy(contract):
+    return {key: contract.get(key) for key in ["budgets", "long_cases", "case_profiles", "progress_kinds"]}
 
 
 def identity(path):
@@ -141,16 +192,20 @@ def load_json(path, limit=None):
 
 
 @contextlib.contextmanager
-def locked(state_dir):
+def locked(state_dir, timeout=None):
+    if timeout is not None and (not math.isfinite(timeout) or timeout <= 0):
+        raise Refusal("ledger lock allowance must be positive and finite")
     path = plain_path(state_dir)
     lock_path = path / "lock"
     if not path.is_dir() or lock_path.is_symlink():
         raise Refusal("missing or unsafe state directory/lock")
     with open(lock_path, "r+b") as lock:
+        deadline = time.monotonic() + timeout if timeout is not None else None
         if os.name == "nt":
             import msvcrt
             lock.seek(0)
-            msvcrt.locking(lock.fileno(), msvcrt.LK_LOCK, 1)
+            acquire = lambda: (lock.seek(0), msvcrt.locking(lock.fileno(),
+                msvcrt.LK_LOCK if deadline is None else msvcrt.LK_NBLCK, 1))
             unlock = lambda: (lock.seek(0), msvcrt.locking(
                 lock.fileno(), msvcrt.LK_UNLCK, 1))
         else:
@@ -158,8 +213,17 @@ def locked(state_dir):
                 import fcntl
             except ImportError:
                 raise Refusal("platform has no supported advisory lock")
-            fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+            acquire = lambda: fcntl.flock(lock.fileno(), fcntl.LOCK_EX |
+                                        (fcntl.LOCK_NB if deadline is not None else 0))
             unlock = lambda: fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+        while True:
+            try:
+                acquire()
+                break
+            except BlockingIOError:
+                if deadline is None or time.monotonic() >= deadline:
+                    raise Refusal("ledger lock deadline exceeded; terminal evidence and resources retained")
+                time.sleep(min(0.02, max(0, deadline - time.monotonic())))
         try:
             state = load_json(path / "state.json")
             if state.get("version") != VERSION or state.get("state_path") != str(path):
@@ -274,7 +338,8 @@ def native_pr(value):
         return {"id": pr_id, "number": number, "url": url, "host": parsed.hostname.lower(),
                 "base_repo": repos["base"], "head_repo": repos["head"],
                 "base_ref": value["base"]["ref"], "base_oid": value["base"]["sha"],
-                "head_ref": value["head"]["ref"], "head_oid": value["head"]["sha"]}
+                "head_ref": value["head"]["ref"], "head_oid": value["head"]["sha"],
+                "draft": value.get("draft") if type(value.get("draft")) is bool else None}
     except (KeyError, TypeError, ValueError) as error:
         raise Refusal("incomplete native REST PR object: {}".format(error))
 
@@ -453,6 +518,7 @@ def notes_snapshot(state):
 
 def seal(args):
     pr = native_pr(load_json(plain_path(args.pr_json), 1048576))
+    required_scope = acceptance_scope(getattr(args, "acceptance_scope", None))
     with locked(args.state) as (state_path, state):
         require_cleanup_protocol(state)
         verify_notes(state)
@@ -466,6 +532,11 @@ def seal(args):
         for key in ["id", "number", "url", "host", "base_repo", "head_repo", "base_ref", "head_ref"]:
             if pr[key] != bound[key]:
                 raise Refusal("fresh PR identity disagrees with bound invocation: " + key)
+        assessment = acceptance_assessment(state_path, state,
+            final_run=getattr(args, "acceptance_run", None), revision=pr["head_oid"],
+            required_scope=required_scope, final=True)
+        if assessment["status"] != "verified" and pr["draft"] is not True:
+            raise Refusal("unverified acceptance requires fresh native REST draft: true before sealing")
         pr["resource"] = bound["resource"]
         branches, anchors, worktrees, data = [], [], [], []
         for item in state["resources"].values():
@@ -518,6 +589,7 @@ def seal(args):
                    "state_path": state["state_path"], "state_identity": state["identity"],
                    "notes": state["notes"], "pr": pr, "delivery_oid": pr["head_oid"],
                    "branches": branches, "internal_refs": anchors, "worktrees": worktrees, "data": data,
+                   "acceptance": assessment,
                    "notes_snapshot": notes_snapshot(state)}
         path = state_path / "handoff.json"
         if path.exists():
@@ -625,7 +697,7 @@ def release_blockers(state_path, state, name, allow_scratch_failure=False):
             reasons.append(str(error))
         if run["test"] and "summary" not in run:
             reasons.append("test summary not recorded: " + run["id"])
-        failed = run["exit_code"] != 0 or (
+        failed = (bool(run.get("execution_contract")) and execution_failed(run)) or run["exit_code"] != 0 or (
             "summary" in run and (run["summary"]["tests"]["failed"] or
                                  run["summary"]["tests"]["errors"]))
         if failed and not run.get("resolution") and not allow_scratch_failure:
@@ -786,9 +858,36 @@ def run_command(args):
     command = args.command[1:] if args.command[:1] == ["--"] else args.command
     if not command:
         raise Refusal("run requires a command after --")
+    formal = getattr(args, "acceptance", False)
+    contract_path = getattr(args, "execution_contract", None)
+    gate_path = getattr(args, "execution_gate", None)
+    retry_of = getattr(args, "retry_of", None)
+    validate_after = getattr(args, "validate_after", None)
+    failure_key = getattr(args, "failure_key", None)
+    if formal and (not args.test or not contract_path or not gate_path or not failure_key):
+        raise Refusal("formal acceptance requires --test --execution-contract --execution-gate --failure-key")
+    if gate_path and not contract_path:
+        raise Refusal("--execution-gate requires --execution-contract")
+    if retry_of and validate_after:
+        raise Refusal("automatic recovery and repair validation are separate actions")
+    if (retry_of or validate_after) and not formal:
+        raise Refusal("recovery and repair validation require a formal acceptance configuration")
+    if not validate_after and (getattr(args, "repair_round", None) is not None or
+                               getattr(args, "repair_evidence", None)):
+        raise Refusal("repair round/evidence requires --validate-after")
+    if not retry_of and getattr(args, "recovery_evidence", None):
+        raise Refusal("recovery evidence requires --retry-of")
+    if getattr(args, "contract_change_evidence", None) and not validate_after:
+        raise Refusal("contract adjudication requires --validate-after")
+    if contract_path:
+        contract_path = plain_path(contract_path)
+        supervisor = companion("execution_supervisor")
+        contract = supervisor.read_contract(contract_path)
+    else:
+        contract = None
     extra = [item for group in args.uses for item in group]
     uses = list(dict.fromkeys([args.cwd_resource, args.output_resource, *extra]))
-    with locked(args.state) as (state_path, state):
+    with locked(args.state, timeout=contract["budgets"]["shutdown"]["seconds"] if contract else None) as (state_path, state):
         require_open(state)
         if args.id in state["runs"]:
             raise Refusal("command ID already used")
@@ -799,7 +898,59 @@ def run_command(args):
         if output["kind"] != "data":
             raise Refusal("output resource must be owned data")
         cwd = Path(cwd_item["path"])
-        revision = git_text(cwd, "rev-parse", "HEAD") if cwd_item["kind"] == "worktree" else None
+        source = None
+        if formal:
+            if cwd_item["kind"] != "worktree":
+                raise Refusal("formal acceptance requires a committed owned worktree")
+            source = execution_source(cwd, contract["budgets"]["shutdown"]["seconds"], output["path"])
+            if not source["clean"]:
+                raise Refusal("formal acceptance requires a clean committed worktree")
+        gate = supervisor.validate_gate(plain_path(gate_path), command, cwd, contract) if gate_path else None
+        chain = None
+        if formal:
+            checked_id(failure_key)
+            chains = state.setdefault("execution_chains", {})
+            chain = chains.get(failure_key)
+            predecessor = retry_of or validate_after
+            if predecessor:
+                previous = state["runs"].get(predecessor)
+                if not previous or previous.get("failure_key") != failure_key or not chain:
+                    raise Refusal("recovery must reference the existing failure chain")
+                if chain["attempts"][-1] != predecessor:
+                    raise Refusal("continuation must reference the latest attempt in this failure chain")
+                if retry_of and chain.get("recovery_used"):
+                    raise Refusal("this failure chain already used its one automatic recovery")
+                if getattr(args, "repair_limit", None) not in [None, chain.get("repair_limit", 3)]:
+                    raise Refusal("continuation cannot change the original round limit")
+                previous_policy = chain.get("execution_policy", execution_policy(previous["execution_contract"]["value"]))
+                if execution_policy(contract) != previous_policy:
+                    if not validate_after or not (getattr(args, "contract_change_evidence", "") or "").strip():
+                        raise Refusal("execution policy changed; retain the original contract or record adjudication evidence")
+                check_record(state_path, previous)
+                observed = previous.get("supervision", {})
+                classification = previous.get("classification", {})
+                recovered = previous.get("recovery", {}).get("stopped_confirmed_at")
+                if (previous["status"] != "completed" or
+                        (not (observed.get("stopped") and observed.get("capture_complete")) and
+                         not (validate_after and recovered)) or
+                        (retry_of and not execution_failed(previous))):
+                    raise Refusal("verify stopped owned processes and preserved first failure before recovery")
+                if execution_failed(previous) and classification.get("kind") not in ["business", "evidence", "harness", "environment"]:
+                    raise Refusal("classify the first interruption before automatic recovery")
+                if retry_of and not (getattr(args, "recovery_evidence", "") or "").strip():
+                    raise Refusal("recovery requires evidence of isolation, fixture reset and repeatability")
+                if validate_after:
+                    limit = chain.get("repair_limit", 3)
+                    if getattr(args, "repair_limit", None) not in [None, limit]:
+                        raise Refusal("repair validation cannot change the original round limit")
+                    round_number = getattr(args, "repair_round", None)
+                    if round_number != chain.get("repair_rounds", 0) + 1 or round_number > limit:
+                        raise Refusal("repair round must advance once within the original fixed limit")
+                    if not (getattr(args, "repair_evidence", "") or "").strip():
+                        raise Refusal("repair validation requires evidence of a new justified repair")
+            elif chain:
+                raise Refusal("failure key already exists; changing run IDs does not reset recovery")
+        revision = source["revision"] if source else (git_text(cwd, "rev-parse", "HEAD") if cwd_item["kind"] == "worktree" else None)
         logs = {name: str(Path(output["path"]) / (args.id + "." + name + ".gz"))
                 for name in ["stdout", "stderr"]}
         if any(os.path.lexists(value) for value in logs.values()):
@@ -817,8 +968,41 @@ def run_command(args):
                "pid": None, "wrapper_pid": os.getpid(), "test": args.test, "revision": revision,
                "environment": {"python": platform.python_version(), "os": platform.platform(),
                                "git": git_text(state["repo"], "--version")}, "logs": logs}
+        if contract:
+            run["execution_contract"] = {"path": str(contract_path), "sha256": digest(contract_path),
+                                         "value": contract}
+            run["formal_acceptance"] = formal
+            if gate:
+                run["execution_gate"] = {"path": str(plain_path(gate_path)),
+                                         "sha256": digest(plain_path(gate_path)), "value": gate}
+        if formal:
+            if chain is None:
+                chain = {"attempts": [], "recovery_used": False, "repair_rounds": 0,
+                         "repair_limit": getattr(args, "repair_limit", None) or 3,
+                         "execution_policy": execution_policy(contract)}
+                state["execution_chains"][failure_key] = chain
+            chain["attempts"].append(args.id)
+            if retry_of:
+                chain["recovery_used"] = True
+                run["retry_of"] = retry_of
+                run["recovery_evidence"] = args.recovery_evidence
+            if validate_after:
+                chain["repair_rounds"] = args.repair_round
+                run.update(validate_after=validate_after, repair_round=args.repair_round,
+                           repair_evidence=args.repair_evidence)
+                if execution_policy(contract) != previous_policy:
+                    change = {"run": args.id, "before": previous_policy, "after": execution_policy(contract),
+                              "evidence": args.contract_change_evidence}
+                    chain.setdefault("policy_history", []).append(change)
+                    chain["execution_policy"] = execution_policy(contract)
+                    run["contract_adjudication"] = change
+            run["failure_key"] = failure_key
+            run["source_initial"] = source
         state["runs"][args.id] = run
         save(state_path, state)
+    if contract:
+        return run_supervised(args, command, cwd, logs, contract, supervisor,
+                              run.get("execution_gate", {}).get("sha256"))
     errors = []
 
     def copy_pipe(pipe, filename):
@@ -869,6 +1053,171 @@ def run_command(args):
                 "capture_errors": errors}
 
 
+def run_supervised(args, command, cwd, logs, contract, supervisor, gate_sha256=None):
+    output = Path(logs["stdout"]).parent
+    lock_budget = contract["budgets"]["shutdown"]["seconds"]
+
+    def started(process_identity):
+        with locked(args.state, timeout=lock_budget) as (state_path, state):
+            state["runs"][args.id].update(pid=process_identity.get("pid"),
+                                         process_identity=process_identity)
+            save(state_path, state)
+
+    try:
+        result = supervisor.supervise(command, cwd, logs, contract, args.id,
+            events_path=output / (args.id + ".events.jsonl"),
+            alerts_path=output / (args.id + ".alerts.jsonl"), on_start=started)
+    except BaseException as error:
+        with locked(args.state, timeout=lock_budget) as (state_path, state):
+            run = state["runs"][args.id]
+            run.update(status="unknown", interruption=str(error) or type(error).__name__, last_event_at=now())
+            save(state_path, state)
+        raise Refusal("supervision did not return reliable terminal evidence; retain resources: {}".format(error))
+    source_final = None
+    gate_final = None
+    if getattr(args, "acceptance", False):
+        try:
+            source_final = execution_source(cwd, lock_budget, output)
+        except Refusal as error:
+            source_final = {"clean": False, "error": str(error)}
+        verification_started = time.monotonic()
+        try:
+            verification = subprocess.run([sys.executable, str(supervisor.__file__), "validate-gate",
+                "--contract", str(args.execution_contract), "--receipt", str(args.execution_gate),
+                "--receipt-sha256", gate_sha256, "--cwd", str(cwd), "--", *command],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=lock_budget)
+            gate_final = {"verified": verification.returncode == 0,
+                          "reason": "" if verification.returncode == 0 else
+                                    "execution proof or bound inputs changed or could not be verified"}
+        except (subprocess.TimeoutExpired, OSError) as error:
+            gate_final = {"verified": False, "reason": str(error)[:1024]}
+        gate_final["elapsed_seconds"] = time.monotonic() - verification_started
+    with locked(args.state, timeout=lock_budget) as (state_path, state):
+        run = state["runs"][args.id]
+        if run["status"] != "running":
+            raise Refusal("command ledger changed during supervision; retain and investigate")
+        reliable = result["stopped"] and result["capture_complete"]
+        run.update(status="completed" if reliable else "unknown", ended_at=now(),
+                   exit_code=result["exit_code"], outcome=result["outcome"], supervision=result,
+                   log_sha256=result.get("log_sha256", {}))
+        run["acceptance_qualified"] = bool(run.get("formal_acceptance") and reliable and
+            result["exit_code"] == 0 and result["outcome"] == "completed" and result["coverage_verified"])
+        if run.get("formal_acceptance"):
+            run["source_final"] = source_final
+            run["gate_final"] = gate_final
+            run["acceptance_qualified"] = bool(run["acceptance_qualified"] and source_final.get("clean") and
+                                               source_final.get("revision") == run["revision"] and gate_final["verified"])
+        write_record(state_path, run)
+        if reliable:
+            companion("resource_capacity").finish(state, "run", args.id, helper_api())
+        save(state_path, state)
+        return {"run": args.id, "status": run["status"], "exit_code": run["exit_code"],
+                "outcome": run["outcome"], "acceptance_qualified": run["acceptance_qualified"],
+                "source_final": source_final, "gate_final": gate_final,
+                "record": str(record_path(state_path, run)),
+                "alerts": str(output / (args.id + ".alerts.jsonl")),
+                "capture_errors": result.get("capture_errors", [])}
+
+
+def classify_run(args):
+    if not args.evidence.strip():
+        raise Refusal("classification needs neutral evidence pointers")
+    with locked(args.state) as (state_path, state):
+        run = completed_run(state_path, state, args.run)
+        if not run.get("execution_contract") or not execution_failed(run):
+            raise Refusal("classify-run requires an interrupted or failed supervised attempt")
+        if run.get("classification"):
+            run.setdefault("classification_history", []).append(run["classification"])
+        run["classification"] = {"kind": args.classification, "evidence": args.evidence, "at": now()}
+        write_record(state_path, run)
+        save(state_path, state)
+        return {"run": args.run, "classification": run["classification"]}
+
+
+def acceptance_scope(path):
+    if path is None:
+        return None
+    scope = load_json(plain_path(path), MAX_SUMMARY)
+    if (not isinstance(scope, dict) or set(scope) != {"acceptance", "source"} or
+            not isinstance(scope["source"], str) or not scope["source"].strip() or
+            not isinstance(scope["acceptance"], list) or not scope["acceptance"] or
+            any(not isinstance(item, str) or not item.strip() for item in scope["acceptance"])):
+        raise Refusal("acceptance scope requires approved source and nonempty acceptance pointers")
+    return scope
+
+
+def acceptance_assessment(state_path, state, final_run=None, revision=None, required_scope=None, final=False):
+    qualified, blockers, stale = [], [], []
+    for run in state["runs"].values():
+        if not run.get("execution_contract"):
+            continue
+        if run["status"] != "completed":
+            blockers.append({"run": run["id"], "reason": "execution state is unknown or still active"})
+            continue
+        try:
+            check_record(state_path, run)
+        except Refusal as error:
+            blockers.append({"run": run["id"], "reason": str(error)})
+            continue
+        if execution_failed(run) and not run.get("resolution"):
+            blockers.append({"run": run["id"], "reason": "first failure needs classification and validation"})
+        if run.get("acceptance_qualified") and run.get("summary"):
+            expected = revision
+            if expected is None:
+                item = state["resources"][run["cwd_resource"]]
+                if item["kind"] == "worktree" and item["status"] == "active":
+                    try:
+                        expected = git_text(verify_resource(state, item), "rev-parse", "HEAD")
+                    except (Refusal, OSError):
+                        expected = "unverified-source"
+                else:
+                    expected = item.get("preserved_revision") or item.get("revision")
+            if not expected or run.get("revision") != expected:
+                stale.append({"run": run["id"], "reason": "recorded source differs from candidate revision"})
+            else:
+                qualified.append(run["id"])
+    if final:
+        if final_run not in qualified:
+            blockers.append({"run": final_run, "reason": "designate a qualified final run at the delivery revision"})
+        if required_scope is None:
+            blockers.append({"run": final_run, "reason": "approved final acceptance scope is missing"})
+        elif final_run in qualified and not set(required_scope["acceptance"]).issubset(
+                state["runs"][final_run]["summary"]["acceptance"]):
+            blockers.append({"run": final_run, "reason": "selected run does not cover the approved final scope"})
+    return {"status": "verified" if qualified and not blockers else "unverified",
+            "qualified_runs": qualified, "blockers": blockers, "qualification_gaps": stale,
+            "final_run": final_run, "delivery_revision": revision, "required_scope": required_scope,
+            "limits": "qualified runs cover only their recorded acceptance scope and source revision"}
+
+
+def acceptance_status(args):
+    with locked(args.state) as (state_path, state):
+        return acceptance_assessment(state_path, state)
+
+
+def execution_status(args):
+    """Bounded ledger-only owner metadata; qualification uses acceptance-status."""
+    if not math.isfinite(args.lock_timeout) or not 0 < args.lock_timeout <= 60:
+        raise Refusal("execution-status lock allowance must be positive, finite and at most 60 seconds")
+    with locked(args.state, timeout=args.lock_timeout) as (_, state):
+        checked_id(args.run)
+        if args.run not in state["runs"]:
+            raise Refusal("unknown command ID")
+        run = state["runs"][args.run]
+        if not run.get("execution_contract"):
+            raise Refusal("execution-status requires a supervised attempt")
+        output = Path(run["logs"]["stdout"]).parent
+        return {"invocation": state["invocation"], "snapshot_at": now(),
+                **{key: run.get(key) for key in ["id", "owner", "status", "pid", "wrapper_pid",
+                   "started_at", "ended_at", "process_identity", "outcome", "exit_code",
+                   "acceptance_qualified", "failure_key", "retry_of", "validate_after", "repair_round"]},
+                "budgets": run["execution_contract"]["value"]["budgets"],
+                "events": str(output / (args.run + ".events.jsonl")),
+                "alerts": str(output / (args.run + ".alerts.jsonl")),
+                "terminal": str(output / (args.run + ".events.jsonl.terminal.json")),
+                "limits": "registered metadata only; no process or evidence inspection"}
+
+
 def completed_run(state_path, state, name):
     checked_id(name)
     if name not in state["runs"]:
@@ -906,11 +1255,16 @@ def record_test(args):
             raise Refusal("command is not an unrecorded --test run")
         if run["exit_code"] == 0 and (counts["failed"] or counts["errors"]):
             raise Refusal("zero-exit command contradicts failed/error test counts")
+        if run.get("formal_acceptance") and run.get("acceptance_qualified"):
+            if not counts["passed"] or counts["failed"] or counts["errors"]:
+                raise Refusal("qualified acceptance requires observed passing tests")
+        if run.get("execution_contract") and execution_failed(run) and not counts["failed"] and not counts["errors"]:
+            summary.setdefault("notes", "Execution interrupted; no product failure asserted by the supervisor.")
         run["summary"] = summary
         run["summary_recorded_at"] = now()
         write_record(state_path, run)
         due = None
-        if run["exit_code"] == 0:
+        if run["exit_code"] == 0 and not (run.get("execution_contract") and execution_failed(run)):
             due = companion("resource_audit").mark_due(
                 state, run["output_resource"], "record-" + hashlib.sha256(args.run.encode()).hexdigest()[:32],
                 "test-record-validated", str(record_path(state_path, run)),
@@ -928,10 +1282,18 @@ def resolve(args):
             raise Refusal("record test evidence before resolving failure")
         if run.get("resolution"):
             raise Refusal("failure already resolved; evidence is immutable")
-        if run["exit_code"] == 0 and not ("summary" in run and (
-                run["summary"]["tests"]["failed"] or run["summary"]["tests"]["errors"])):
+        if run.get("execution_contract"):
+            classification = run.get("classification", {})
+            if classification.get("kind") not in ["business", "evidence", "harness", "environment"]:
+                raise Refusal("classify the interruption before resolving its acceptance blocker")
+            if not (getattr(args, "validation", "") or "").strip():
+                raise Refusal("supervised failures require --validation evidence before resolution")
+        if (run["exit_code"] == 0 and not (run.get("execution_contract") and execution_failed(run)) and
+                not ("summary" in run and (run["summary"]["tests"]["failed"] or run["summary"]["tests"]["errors"]))):
             raise Refusal("command has no recorded failure to resolve")
         run["resolution"] = {"reason": args.reason, "at": now()}
+        if run.get("execution_contract"):
+            run["resolution"]["validation"] = args.validation
         write_record(state_path, run)
         due = companion("resource_audit").mark_due(
             state, run["output_resource"], "resolve-" + hashlib.sha256(args.run.encode()).hexdigest()[:32],
@@ -1009,7 +1371,7 @@ def check_external_failure_scenes(state, item):
     for run in state["runs"].values():
         if item["id"] not in run["uses"] or run.get("resolution"):
             continue
-        failed = run["exit_code"] != 0 or ("summary" in run and (
+        failed = (bool(run.get("execution_contract")) and execution_failed(run)) or run["exit_code"] != 0 or ("summary" in run and (
             run["summary"]["tests"]["failed"] or run["summary"]["tests"]["errors"]))
         if not failed:
             continue
@@ -1183,8 +1545,10 @@ def status(args):
     return {"invocation": state["invocation"], "snapshot_at": snapshot_at, "resources": output,
             "remaining_bytes": sum(row["logical_bytes"] or 0 for row in top_level) if complete_measurement else None,
             "released_bytes": sum(item.get("released_bytes", 0) for item in state["resources"].values()),
-            "runs": [{key: run.get(key) for key in ["id", "status", "pid", "exit_code", "test"]}
+            "runs": [{key: run.get(key) for key in ["id", "status", "pid", "exit_code", "test",
+                       "formal_acceptance", "outcome", "acceptance_qualified", "failure_key", "retry_of"]}
                      for run in state["runs"].values()], "bytes_are": "logical, not allocated blocks",
+            "acceptance": acceptance_assessment(state_path, state),
             "capacity": companion("resource_capacity").report(state),
             "audit": state.get("resource_audit", {}),
             "release_checks": "reasons are partial ledger checks; use preflight for an explicit shared release check"}
@@ -1225,7 +1589,7 @@ def parser():
     command.add_argument("--repo", required=True)
     command.add_argument("--notes-root", help="new or empty invocation notes root containing the state directory")
     command.add_argument("--index-root", help="cleanup discovery index outside the notes root")
-    for name in ["create", "run", "record-test", "resolve", "recover-run", "handoff", "release", "preflight", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
+    for name in ["create", "run", "record-test", "resolve", "classify-run", "acceptance-status", "execution-status", "recover-run", "handoff", "release", "preflight", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
         commands.add_parser(name).add_argument("--state", required=True)
     command = commands.choices["publish-branch"]
     command.add_argument("--resource", required=True)
@@ -1235,6 +1599,8 @@ def parser():
     command.add_argument("--pr-resource", required=True)
     command.add_argument("--index-root")
     commands.choices["seal"].add_argument("--pr-json", required=True, help="fresh native REST PR JSON with final head")
+    commands.choices["seal"].add_argument("--acceptance-run", help="qualified run at the delivered revision")
+    commands.choices["seal"].add_argument("--acceptance-scope", help="approved complete acceptance scope JSON")
     command = commands.choices["create"]
     command.add_argument("--id", required=True)
     command.add_argument("--kind", choices=["worktree", "data"], required=True)
@@ -1250,6 +1616,17 @@ def parser():
     command.add_argument("--output-resource", required=True)
     command.add_argument("--uses", action="append", nargs="+", default=[])
     command.add_argument("--test", action="store_true")
+    command.add_argument("--acceptance", action="store_true", help="formal acceptance; requires verified external supervision")
+    command.add_argument("--execution-contract", help="sourced finite execution budgets and adapter contract")
+    command.add_argument("--execution-gate", help="verified supervisor and actual runner gate receipt")
+    command.add_argument("--failure-key", help="stable logical failure chain; survives run IDs and agent replacement")
+    command.add_argument("--retry-of", help="prior classified run; at most one automatic recovery per failure chain")
+    command.add_argument("--recovery-evidence", help="proof pointers for isolation, fixture reset and repeatability")
+    command.add_argument("--validate-after", help="latest attempt followed by a justified repair and new verification")
+    command.add_argument("--repair-evidence", help="new repair/review findings supporting this validation")
+    command.add_argument("--repair-round", type=int, help="next consecutive repair round in the original budget")
+    command.add_argument("--repair-limit", type=int, choices=[1, 2, 3], help="fixed initial repair budget; checkpoint 1-2, final default 3")
+    command.add_argument("--contract-change-evidence", help="authoritative adjudication and test-review pointers for a changed execution policy")
     command.add_argument("--owner", help="reservation owner for this command; defaults to cwd resource owner")
     command.add_argument("command", nargs=argparse.REMAINDER)
     command = commands.choices["record-test"]
@@ -1258,6 +1635,14 @@ def parser():
     command = commands.choices["resolve"]
     command.add_argument("--run", required=True)
     command.add_argument("--reason", required=True)
+    command.add_argument("--validation", help="required validation evidence for supervised failure resolution")
+    command = commands.choices["classify-run"]
+    command.add_argument("--run", required=True)
+    command.add_argument("--classification", choices=["business", "evidence", "harness", "environment", "unknown"], required=True)
+    command.add_argument("--evidence", required=True)
+    command = commands.choices["execution-status"]
+    command.add_argument("--run", required=True)
+    command.add_argument("--lock-timeout", type=float, default=5, help="finite metadata lock allowance, default 5 seconds")
     command = commands.choices["recover-run"]
     command.add_argument("--run", required=True)
     command.add_argument("--stopped-confirmed", action="store_true")
@@ -1287,7 +1672,9 @@ def parser():
 def main():
     args = parser().parse_args()
     actions = {"init": init, "create": create, "run": run_command,
-               "record-test": record_test, "resolve": resolve, "recover-run": recover_run, "handoff": handoff,
+               "record-test": record_test, "resolve": resolve, "classify-run": classify_run,
+               "acceptance-status": acceptance_status, "execution-status": execution_status,
+               "recover-run": recover_run, "handoff": handoff,
                "release": release, "preflight": preflight, "status": status, "capacity": capacity,
                "publish-branch": publish_branch, "bind-pr": bind_pr, "seal": seal}
     try:
@@ -1299,7 +1686,8 @@ def main():
             result = actions[args.action](args)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         if args.action == "run":
-            return 1 if result["status"] != "completed" else (0 if result["exit_code"] == 0 else 1)
+            return 1 if (result["status"] != "completed" or result["exit_code"] != 0 or
+                         (getattr(args, "acceptance", False) and not result.get("acceptance_qualified"))) else 0
         return 0
     except (Refusal, OSError, ValueError) as error:
         print(json.dumps({"error": str(error), "ledger_not_released": True}, ensure_ascii=False), file=sys.stderr)

@@ -133,7 +133,7 @@ class ResourceLifecycleTests(unittest.TestCase):
         oid = self.git("rev-parse", "codex/pr")
         repo = {"id": 7, "full_name": "team/project", "clone_url": str(self.remote)}
         self.pr_json = self.root / "pr.json"
-        self.pr = {"id": 101, "number": 42, "html_url": "https://github.example/team/project/pull/42",
+        self.pr = {"id": 101, "number": 42, "html_url": "https://github.example/team/project/pull/42", "draft": True,
                    "base": {"repo": repo, "ref": "main", "sha": oid},
                    "head": {"repo": repo, "ref": "codex/pr", "sha": oid}}
         self.pr_json.write_text(json.dumps(self.pr))

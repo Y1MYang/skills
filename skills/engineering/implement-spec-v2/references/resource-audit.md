@@ -24,6 +24,8 @@ The exploration agent starts one invocation-scoped helper `watch --state STATE` 
 
 The watch reads only this invocation's ledger metadata and destination-filesystem free space. It neither traverses source/output trees nor diagnoses tests, deletes resources, terminates business commands, or scans older tasks. Missing PIDs, old timestamps, and unknown command outcomes require owner investigation; they are never cleanup permission.
 
+Acceptance execution has a separate process-external supervisor and `execution-alert` route under [test-execution.md](test-execution.md). This 30-minute resource watch cannot qualify test progress or replace bounded worker/case/phase supervision.
+
 The script persists a report every 30 minutes while it is running and emits changed action items; unchanged healthy checks do not add repeated output. That does not guarantee platform notification or model wakeup. The scheduler handles delivered notifications when available; otherwise it obtains the watch's report through a responsible subagent at the next completion or timeout boundary. If the runtime cannot keep the watch alive or expose its output, report that limitation explicitly and continue the event-driven checks; do not claim the periodic fallback is active.
 
 Use `watch-stop --state STATE` when the invocation finishes, then confirm the watch's exit and recorded `stopped` state before `seal`. A `stop_requested` state is insufficient. On recovery, inherit the existing watch registration and inspect its real CLI state before starting a replacement. An uncertain or missing process is not evidence that it is safe to replace the registration. Preserve all normally advancing test/build processes.
