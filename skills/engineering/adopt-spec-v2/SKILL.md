@@ -8,7 +8,7 @@ Take over a spec already under construction, whether or not it started with impl
 
 ## Rule source and delegation
 
-Resolve [implement-spec-v2](../implement-spec-v2/SKILL.md) from the sibling skill directory, or locate the installed skill by name. Keep the resolved entry as `V2_SKILL`. Read it as the **rule source**, not as a second invocation starting at its step 1. Keep that skill unchanged. Resolve its `references/resources.md`, `scripts/resources.py`, and `references/expert.md` against its actual directory; pass these accessible pointers as `V2_RESOURCE_PROTOCOL`, `V2_RESOURCE_HELPER`, and `V2_EXPERT_PROTOCOL` to the responsible agents. Record their revisions or fingerprints; if they change during adoption, delegate an impact check and adjudicate affected gates before using the changed rules.
+Resolve [implement-spec-v2](../implement-spec-v2/SKILL.md) from the sibling skill directory, or locate the installed skill by name. Keep the resolved entry as `V2_SKILL`. Read it as the **rule source**, not as a second invocation starting at its step 1. Keep that skill unchanged. Resolve its `references/resources.md`, `scripts/resources.py`, and `references/expert.md` against its actual directory; pass these accessible pointers as `V2_RESOURCE_PROTOCOL`, `V2_RESOURCE_HELPER`, and `V2_EXPERT_PROTOCOL` to the responsible agents. Resolve v2's test-review dependency and acceptance-contract reference before exploration as well. Record their revisions or fingerprints; if they change during adoption, delegate an impact check and adjudicate affected gates before using the changed rules.
 
 This skill owns the continuation schedule below. Its conditional exceptions are defined in [the takeover protocol](references/takeover.md); inherit all other v2 model-selection, role, architecture, ownership, review, Expert, and resource rules. If the dependency is unavailable or its rules cannot be reconciled with this protocol, report the concrete limitation and obtain a supported workflow choice instead of silently substituting a weaker process.
 
@@ -66,7 +66,7 @@ Stages 5 and 6 **overlap**: start coverage review as soon as oracle authoring is
 
 ### 6. Bless coverage, checkpoint, integrate, and review
 
-Follow v2 steps **8–10** and their selected reviewer models. Coverage audit reviews the oracle, including reused tests, and verifies every requirement and acceptance criterion before blessing it; passing legacy tests alone cannot satisfy this gate.
+Follow v2 steps **8–10** and their selected reviewer models. Fresh, implementation-blind Coverage audit invokes `/test-review` on fixed oracle and contract revisions, including admitted reused tests; its contract axis verifies every requirement and acceptance criterion before blessing. This replaces the former test-branch code-review and separate coverage pass; passing legacy tests alone cannot satisfy the gate. Preserve v2's failure-scoped review and dependency-aware delta review after test repairs.
 
 Apply the protocol's **checkpoint and repair continuity** rules to validated historical checkpoints and consumed rounds. Otherwise run v2's foundational checkpoint after blessing when remaining work makes it useful; when every ticket is already delivered, it degenerates into final integration. Model changes, replacement agents, and renamed invocations do not renew the budget for the same unresolved failure. Unknown history goes to main-conversation adjudication, not an invented zero count.
 

@@ -14,7 +14,9 @@
 │       │   └── SKILL.md
 │       ├── adopt-spec-v2/
 │       │   └── SKILL.md
-│       └── cleanup-spec-v2/
+│       ├── cleanup-spec-v2/
+│       │   └── SKILL.md
+│       └── test-review/
 │           └── SKILL.md
 ├── CONTEXT.md
 ├── LICENSE
@@ -48,9 +50,10 @@ npx skills update                        # 更新已安装的技能
 
 | 技能 | 说明 |
 | --- | --- |
-| `implement-spec-v2` | 按 spec 实现：架构先行 + 独立测试神谕，任务图驱动并行子代理，最终产出单个 PR。 |
+| `implement-spec-v2` | 按 spec 实现：架构先行 + 独立测试神谕，调用 `test-review` 审查测试后再集成，最终产出单个 PR。需同时安装 `test-review`。 |
 | `cleanup-spec-v2` | PR 合并后显式调用 `cleanup-spec-v2 <PR 编号>`，确认完整清单后清理本次开发的本地资源、远端分支和记录。需同时安装 `implement-spec-v2`。 |
 | `adopt-spec-v2` | 主动调用以接管已开工的 spec：按证据复用成果、补齐独立验证，遵循 v2 规则继续到 PR 可供评审。依赖 `implement-spec-v2`。 |
+| `test-review` | 不读取实现的双轴测试审查：需求与覆盖、判定可靠性。支持完整审查、失败诊断和变更复核，检查真实执行证据及时间预算。 |
 
 ## 许可
 
