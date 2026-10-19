@@ -37,6 +37,9 @@ ID_PATTERN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}\Z")
 CLEANUP_PROTOCOL = "cleanup-spec-v2/1"
 NOTES_MARKER = ".implement-spec-notes"
 OID_PATTERN = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
+# Unconsumed frontier verifications between required main-conversation
+# confirmations; consumed rounds stay bounded by the chain's repair_limit.
+FRONTIER_ACK_LIMIT = 10
 _COMPANIONS = {}
 
 
@@ -879,6 +882,8 @@ def run_command(args):
         raise Refusal("recovery evidence requires --retry-of")
     if getattr(args, "contract_change_evidence", None) and not validate_after:
         raise Refusal("contract adjudication requires --validate-after")
+    if getattr(args, "continuation_ack", None) and not validate_after:
+        raise Refusal("frontier confirmation requires --validate-after")
     if contract_path:
         contract_path = plain_path(contract_path)
         supervisor = companion("execution_supervisor")
@@ -943,11 +948,22 @@ def run_command(args):
                     limit = chain.get("repair_limit", 3)
                     if getattr(args, "repair_limit", None) not in [None, limit]:
                         raise Refusal("repair validation cannot change the original round limit")
+                    ordinals = chain.setdefault("verifications", chain.get("repair_rounds", 0))
                     round_number = getattr(args, "repair_round", None)
-                    if round_number != chain.get("repair_rounds", 0) + 1 or round_number > limit:
-                        raise Refusal("repair round must advance once within the original fixed limit")
+                    if type(round_number) is not int or round_number != ordinals + 1:
+                        raise Refusal("verification ordinal must advance exactly once in this failure chain")
                     if not (getattr(args, "repair_evidence", "") or "").strip():
                         raise Refusal("repair validation requires evidence of a new justified repair")
+                    confirmation = (getattr(args, "continuation_ack", None) or "").strip()
+                    if chain.get("free_rounds_since_ack", 0) >= FRONTIER_ACK_LIMIT:
+                        if not confirmation:
+                            raise Refusal("frontier progress requires the main conversation's recorded confirmation; supply --continuation-ack before the next verification")
+                    elif confirmation:
+                        raise Refusal("a continuation confirmation is only accepted when the frontier batch requires one")
+                    if confirmation:
+                        chain.setdefault("confirmations", []).append(
+                            {"run": args.id, "evidence": confirmation, "at": now()})
+                        chain["free_rounds_since_ack"] = 0
             elif chain:
                 raise Refusal("failure key already exists; changing run IDs does not reset recovery")
         revision = source["revision"] if source else (git_text(cwd, "rev-parse", "HEAD") if cwd_item["kind"] == "worktree" else None)
@@ -978,6 +994,7 @@ def run_command(args):
         if formal:
             if chain is None:
                 chain = {"attempts": [], "recovery_used": False, "repair_rounds": 0,
+                         "verifications": 0, "free_rounds": 0, "free_rounds_since_ack": 0,
                          "repair_limit": getattr(args, "repair_limit", None) or 3,
                          "execution_policy": execution_policy(contract)}
                 state["execution_chains"][failure_key] = chain
@@ -987,7 +1004,7 @@ def run_command(args):
                 run["retry_of"] = retry_of
                 run["recovery_evidence"] = args.recovery_evidence
             if validate_after:
-                chain["repair_rounds"] = args.repair_round
+                chain["verifications"] = args.repair_round
                 run.update(validate_after=validate_after, repair_round=args.repair_round,
                            repair_evidence=args.repair_evidence)
                 if execution_policy(contract) != previous_policy:
@@ -1053,6 +1070,47 @@ def run_command(args):
                 "capture_errors": errors}
 
 
+def frontier_ledger(state, chain, exclude):
+    """Case IDs executed in the chain's formal attempts, or None when unknown."""
+    executed = set()
+    for attempt in chain["attempts"]:
+        if attempt == exclude:
+            continue
+        diagnostics = (state["runs"].get(attempt, {}).get("supervision") or {}).get("diagnostics") or {}
+        cases = diagnostics.get("executed_cases")
+        if cases is None:
+            return None
+        executed.update(cases)
+    return executed
+
+
+def adjudicate_repair_round(state, run):
+    """Post-run round accounting; the ledger, never the fixer, decides consumption.
+
+    A verification whose failures all carry a failed verdict on cases never
+    executed in this chain is frontier progress and consumes no budget. A
+    repeat failure, a green attempt, or an attempt without a bounded case
+    index consumes the next round. Chains never inherit each other's ledger.
+    """
+    chain = state.get("execution_chains", {}).get(run.get("failure_key"))
+    if not chain or not run.get("validate_after"):
+        return None
+    diagnostics = (run.get("supervision") or {}).get("diagnostics") or {}
+    failed = list(diagnostics.get("failed_cases") or [])
+    executed = frontier_ledger(state, chain, run["id"])
+    frontier = [] if executed is None else [case for case in failed if case not in executed]
+    free = bool(failed) and executed is not None and len(frontier) == len(failed)
+    record = {"failing_cases": failed, "frontier_cases": frontier, "repair_consumed": not free}
+    if free:
+        chain["free_rounds"] = chain.get("free_rounds", 0) + 1
+        chain["free_rounds_since_ack"] = chain.get("free_rounds_since_ack", 0) + 1
+    elif chain.get("repair_rounds", 0) >= chain.get("repair_limit", 3):
+        record["budget_exhausted"] = True
+    else:
+        chain["repair_rounds"] = chain.get("repair_rounds", 0) + 1
+    return record
+
+
 def run_supervised(args, command, cwd, logs, contract, supervisor, gate_sha256=None):
     output = Path(logs["stdout"]).parent
     lock_budget = contract["budgets"]["shutdown"]["seconds"]
@@ -1100,6 +1158,9 @@ def run_supervised(args, command, cwd, logs, contract, supervisor, gate_sha256=N
         run.update(status="completed" if reliable else "unknown", ended_at=now(),
                    exit_code=result["exit_code"], outcome=result["outcome"], supervision=result,
                    log_sha256=result.get("log_sha256", {}))
+        adjudication = adjudicate_repair_round(state, run) if run.get("validate_after") else None
+        if adjudication:
+            run.update(adjudication)
         run["acceptance_qualified"] = bool(run.get("formal_acceptance") and reliable and
             result["exit_code"] == 0 and result["outcome"] == "completed" and result["coverage_verified"])
         if run.get("formal_acceptance"):
@@ -1111,6 +1172,9 @@ def run_supervised(args, command, cwd, logs, contract, supervisor, gate_sha256=N
         if reliable:
             companion("resource_capacity").finish(state, "run", args.id, helper_api())
         save(state_path, state)
+        if adjudication and adjudication.get("budget_exhausted"):
+            raise Refusal("repair round budget is exhausted; only frontier verifications may "
+                          "continue; escalate with the retained evidence")
         return {"run": args.id, "status": run["status"], "exit_code": run["exit_code"],
                 "outcome": run["outcome"], "acceptance_qualified": run["acceptance_qualified"],
                 "source_final": source_final, "gate_final": gate_final,
@@ -1207,10 +1271,14 @@ def execution_status(args):
         if not run.get("execution_contract"):
             raise Refusal("execution-status requires a supervised attempt")
         output = Path(run["logs"]["stdout"]).parent
+        chain = state.get("execution_chains", {}).get(run.get("failure_key")) if run.get("failure_key") else None
         return {"invocation": state["invocation"], "snapshot_at": now(),
                 **{key: run.get(key) for key in ["id", "owner", "status", "pid", "wrapper_pid",
                    "started_at", "ended_at", "process_identity", "outcome", "exit_code",
-                   "acceptance_qualified", "failure_key", "retry_of", "validate_after", "repair_round"]},
+                   "acceptance_qualified", "failure_key", "retry_of", "validate_after", "repair_round",
+                   "repair_consumed"]},
+                "chain": {key: chain.get(key) for key in ["repair_rounds", "repair_limit",
+                          "verifications", "free_rounds", "free_rounds_since_ack"]} if chain else None,
                 "budgets": run["execution_contract"]["value"]["budgets"],
                 "events": str(output / (args.run + ".events.jsonl")),
                 "alerts": str(output / (args.run + ".alerts.jsonl")),
@@ -1624,8 +1692,9 @@ def parser():
     command.add_argument("--recovery-evidence", help="proof pointers for isolation, fixture reset and repeatability")
     command.add_argument("--validate-after", help="latest attempt followed by a justified repair and new verification")
     command.add_argument("--repair-evidence", help="new repair/review findings supporting this validation")
-    command.add_argument("--repair-round", type=int, help="next consecutive repair round in the original budget")
+    command.add_argument("--repair-round", type=int, help="next consecutive verification ordinal in the failure chain")
     command.add_argument("--repair-limit", type=int, choices=[1, 2, 3], help="fixed initial repair budget; checkpoint 1-2, final default 3")
+    command.add_argument("--continuation-ack", help="main-conversation confirmation pointer required after each frontier batch")
     command.add_argument("--contract-change-evidence", help="authoritative adjudication and test-review pointers for a changed execution policy")
     command.add_argument("--owner", help="reservation owner for this command; defaults to cwd resource owner")
     command.add_argument("command", nargs=argparse.REMAINDER)

@@ -82,7 +82,8 @@ class ExecutionResourceTests(unittest.TestCase):
         return receipt
 
     def formal_arguments(self, name, *, gate, retry=None, key="full-suite", repair_limit=None,
-                         validate_after=None, repair_evidence=None, repair_round=None, contract_change_evidence=None):
+                         validate_after=None, repair_evidence=None, repair_round=None, contract_change_evidence=None,
+                         continuation_ack=None):
         arguments = ["--id", name, "--cwd-resource", self.cwd_resource, "--output-resource", "output",
             "--test", "--acceptance", "--execution-contract", self.contract,
             "--execution-gate", gate, "--failure-key", key]
@@ -91,16 +92,18 @@ class ExecutionResourceTests(unittest.TestCase):
                 "fixture/isolation-and-reset: only disposable processes and no external mutations"]
         for flag, value in (("--repair-limit", repair_limit), ("--validate-after", validate_after),
                             ("--repair-evidence", repair_evidence), ("--repair-round", repair_round),
-                            ("--contract-change-evidence", contract_change_evidence)):
+                            ("--contract-change-evidence", contract_change_evidence),
+                            ("--continuation-ack", continuation_ack)):
             if value is not None:
                 arguments += [flag, value]
         return arguments
 
     def formal(self, name, mode, *, gate, retry=None, ok=True, key="full-suite", repair_limit=None,
-               validate_after=None, repair_evidence=None, repair_round=None, contract_change_evidence=None):
+               validate_after=None, repair_evidence=None, repair_round=None, contract_change_evidence=None,
+               continuation_ack=None):
         arguments = self.formal_arguments(name, gate=gate, retry=retry, key=key, repair_limit=repair_limit,
             validate_after=validate_after, repair_evidence=repair_evidence, repair_round=repair_round,
-            contract_change_evidence=contract_change_evidence)
+            contract_change_evidence=contract_change_evidence, continuation_ack=continuation_ack)
         result = self.cli("run", *arguments, "--", *self.argv(mode), ok=ok)
         if result.returncode == 2:
             return json.loads(result.stderr)
@@ -486,10 +489,13 @@ elif mode == "missing":'''
         beyond = self.formal("budget-reset-attempt", "complete", gate=changed_gate, repair_limit=1,
             validate_after="approved-budget-green", repair_round=2, repair_evidence="fixture/second-budget-fix",
             contract_change_evidence="fixture/authority-ruling; fixture/test-review-evidence", ok=False)
-        self.assertIn("error", beyond)
+        self.assertIn("exhausted", beyond["error"])
         ledger = json.loads((self.state / "state.json").read_text())
         chain = ledger["execution_chains"]["full-suite"]
-        self.assertEqual(chain["attempts"], ["initial-green", "approved-budget-green"])
+        self.assertEqual(chain["attempts"], ["initial-green", "approved-budget-green", "budget-reset-attempt"])
+        self.assertTrue(ledger["runs"]["budget-reset-attempt"]["budget_exhausted"])
+        self.assertTrue(ledger["runs"]["budget-reset-attempt"]["repair_consumed"])
+        self.assertEqual(chain["repair_rounds"], 1, "the fixed limit was never extended")
         self.assertFalse(chain["recovery_used"])
         self.assertEqual(len(chain["policy_history"]), 1)
         adjudication = chain["policy_history"][0]
@@ -520,14 +526,18 @@ elif mode == "missing":'''
         third = self.formal("renamed-third", "complete", gate=receipt, repair_limit=1,
                             validate_after="review-green", repair_round=2,
                             repair_evidence="fixture/second-review-repair", ok=False)
-        self.assertIn("error", third)
-        self.assertNotIn("renamed-third", json.loads((self.state / "state.json").read_text())["runs"])
+        self.assertIn("exhausted", third["error"])
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertTrue(ledger["runs"]["renamed-third"]["budget_exhausted"])
+        self.assertEqual(ledger["execution_chains"]["full-suite"]["repair_rounds"], 1)
         expanded = self.formal("expanded-budget", "complete", gate=receipt, repair_limit=3,
                                validate_after="review-green", repair_round=2,
                                repair_evidence="fixture/request-to-expand-budget", ok=False)
         self.assertIn("error", expanded)
-        chain = json.loads((self.state / "state.json").read_text())["execution_chains"]["full-suite"]
-        self.assertEqual(chain["attempts"], ["first-green", "review-green"])
+        ledger = json.loads((self.state / "state.json").read_text())
+        self.assertNotIn("expanded-budget", ledger["runs"])
+        chain = ledger["execution_chains"]["full-suite"]
+        self.assertEqual(chain["attempts"], ["first-green", "review-green", "renamed-third"])
         self.assertFalse(chain["recovery_used"])
 
     def test_review_round_does_not_renew_an_already_used_automatic_recovery(self):
@@ -554,6 +564,135 @@ elif mode == "missing":'''
         chain = json.loads((self.state / "state.json").read_text())["execution_chains"]["full-suite"]
         self.assertTrue(chain["recovery_used"])
         self.assertEqual(chain["attempts"], ["initial-hang", "automatic-green", "review-hang"])
+
+    def scenario(self, fail=(), skip=(), pass_cases=()):
+        """Commit a case-verdict script; the adapter command stays gate-stable."""
+        config = {"fail": sorted(fail), "skip": sorted(skip),
+                  "cases": sorted(set(fail) | set(skip) | set(pass_cases))}
+        (self.cwd / "scenario.json").write_text(json.dumps(config))
+        self.git("add", "scenario.json", cwd=self.cwd)
+        self.git("commit", "-m", "scenario update", cwd=self.cwd)
+
+    def ledger_chain(self):
+        return json.loads((self.state / "state.json").read_text())["execution_chains"]["full-suite"]
+
+    def classify(self, run, evidence):
+        self.cli("classify-run", "--run", run, "--classification", "business", "--evidence", evidence)
+
+    def test_frontier_verification_does_not_consume_the_round_budget(self):
+        self.prepare()
+        self.scenario(fail=["case-1"])
+        receipt = self.gate("scenario")
+        self.formal("initial", "scenario", gate=receipt, ok=False)
+        self.classify("initial", "fixture/first-failure-on-a-new-case")
+        # A failure on a never-executed case is frontier progress: no consumption.
+        self.scenario(fail=["case-2"], pass_cases=("case-1",))
+        self.formal("verify-1", "scenario", gate=receipt, validate_after="initial",
+                    repair_evidence="fixture/repair-of-case-1", repair_round=1, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 0)
+        self.assertEqual(self.ledger_chain()["verifications"], 1)
+        self.assertEqual(self.ledger_chain()["free_rounds"], 1)
+        self.assertEqual(self.ledger_chain()["free_rounds_since_ack"], 1)
+        verify_1 = json.loads((self.state / "state.json").read_text())["runs"]["verify-1"]
+        self.assertFalse(verify_1["repair_consumed"])
+        self.assertEqual(verify_1["frontier_cases"], ["case-2"])
+        # The same failing case again is a repeat failure: it consumes.
+        self.classify("verify-1", "fixture/repeat-failure-classified")
+        self.formal("verify-2", "scenario", gate=receipt, validate_after="verify-1",
+                    repair_evidence="fixture/second-repair-attempt-for-case-2", repair_round=2, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 1)
+        verify_2 = json.loads((self.state / "state.json").read_text())["runs"]["verify-2"]
+        self.assertTrue(verify_2["repair_consumed"])
+        self.assertEqual(verify_2["failing_cases"], ["case-2"])
+        self.assertEqual(verify_2["frontier_cases"], [])
+        # A new frontier failure is free again; a green attempt consumes.
+        self.classify("verify-2", "fixture/repeat-failure-classified-again")
+        self.scenario(fail=["case-3"], pass_cases=("case-1", "case-2"))
+        self.formal("verify-3", "scenario", gate=receipt, validate_after="verify-2",
+                    repair_evidence="fixture/repair-of-case-2", repair_round=3, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 1)
+        self.assertEqual(self.ledger_chain()["free_rounds"], 2)
+        self.classify("verify-3", "fixture/frontier-failure-classified")
+        self.scenario(pass_cases=("case-1", "case-2", "case-3"))
+        green = self.formal("verify-4", "scenario", gate=receipt, validate_after="verify-3",
+                            repair_evidence="fixture/repair-of-case-3", repair_round=4)
+        self.assertTrue(green["acceptance_qualified"])
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 2)
+        self.assertTrue(json.loads((self.state / "state.json").read_text())["runs"]["verify-4"]["repair_consumed"])
+
+    def test_skipped_case_has_not_executed_for_the_frontier_ledger(self):
+        self.prepare()
+        self.scenario(fail=["case-2"], skip=("case-1",))
+        receipt = self.gate("scenario")
+        self.formal("initial", "scenario", gate=receipt, ok=False)
+        self.classify("initial", "fixture/failed-and-skipped-classified")
+        # case-1 was only skipped, so its first real failure is still frontier.
+        self.scenario(fail=["case-1"], pass_cases=("case-2",))
+        self.formal("verify-1", "scenario", gate=receipt, validate_after="initial",
+                    repair_evidence="fixture/repair-of-case-2", repair_round=1, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 0)
+        verify_1 = json.loads((self.state / "state.json").read_text())["runs"]["verify-1"]
+        self.assertFalse(verify_1["repair_consumed"])
+        self.assertEqual(verify_1["frontier_cases"], ["case-1"])
+
+    def test_frontier_batches_require_recorded_confirmation(self):
+        self.prepare()
+        self.scenario(fail=["case-1"])
+        receipt = self.gate("scenario")
+        self.formal("initial", "scenario", gate=receipt, ok=False)
+        self.classify("initial", "fixture/initial-failure-classified")
+        previous = "initial"
+        for number in range(2, 12):  # ten unconsumed frontier verifications
+            name = "verify-" + str(number - 1)
+            self.scenario(fail=["case-" + str(number)],
+                          pass_cases=tuple("case-" + str(index) for index in range(1, number)))
+            self.formal(name, "scenario", gate=receipt, validate_after=previous,
+                        repair_evidence="fixture/frontier-repair-" + str(number - 1),
+                        repair_round=number - 1, ok=False)
+            self.classify(name, "fixture/frontier-failure-" + str(number - 1))
+            previous = name
+        self.assertEqual(self.ledger_chain()["free_rounds"], 10)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 0)
+        # The next verification is refused until the confirmation is recorded.
+        self.scenario(fail=["case-12"], pass_cases=tuple("case-" + str(index) for index in range(1, 12)))
+        refused = self.formal("verify-11", "scenario", gate=receipt, validate_after=previous,
+                              repair_evidence="fixture/frontier-repair-11", repair_round=11, ok=False)
+        self.assertIn("confirmation", refused["error"])
+        self.assertNotIn("verify-11", json.loads((self.state / "state.json").read_text())["runs"])
+        acked = self.formal("verify-11", "scenario", gate=receipt, validate_after=previous,
+                            repair_evidence="fixture/frontier-repair-11", repair_round=11,
+                            continuation_ack="fixture/main-conversation-confirmation", ok=False)
+        self.assertEqual(self.ledger_chain()["free_rounds"], 11)
+        self.assertEqual(self.ledger_chain()["free_rounds_since_ack"], 1)
+        self.assertEqual(len(self.ledger_chain()["confirmations"]), 1)
+        self.assertFalse(json.loads((self.state / "state.json").read_text())["runs"]["verify-11"]["repair_consumed"])
+
+    def test_consumed_rounds_refuse_at_the_fixed_limit_and_frontier_continues(self):
+        self.prepare()
+        self.scenario(fail=["case-1"])
+        receipt = self.gate("scenario")
+        self.formal("initial", "scenario", gate=receipt, repair_limit=1, ok=False)
+        self.classify("initial", "fixture/initial-failure-classified")
+        self.formal("verify-1", "scenario", gate=receipt, validate_after="initial",
+                    repair_evidence="fixture/repeat-repair", repair_round=1, repair_limit=1, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 1)
+        self.assertTrue(json.loads((self.state / "state.json").read_text())["runs"]["verify-1"]["repair_consumed"])
+        self.classify("verify-1", "fixture/repeat-failure-classified")
+        # At the fixed limit a consuming verification is refused post-run.
+        refused = self.formal("verify-2", "scenario", gate=receipt, validate_after="verify-1",
+                              repair_evidence="fixture/repeat-repair-2", repair_round=2, repair_limit=1, ok=False)
+        self.assertIn("exhausted", refused["error"])
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 1)
+        verify_2 = json.loads((self.state / "state.json").read_text())["runs"]["verify-2"]
+        self.assertTrue(verify_2["repair_consumed"])
+        self.assertTrue(verify_2["budget_exhausted"])
+        self.classify("verify-2", "fixture/exhausted-repeat-classified")
+        # A frontier verification still continues at the exhausted budget.
+        self.scenario(fail=["case-2"], pass_cases=("case-1",))
+        self.formal("verify-3", "scenario", gate=receipt, validate_after="verify-2",
+                    repair_evidence="fixture/frontier-repair", repair_round=3, repair_limit=1, ok=False)
+        self.assertEqual(self.ledger_chain()["repair_rounds"], 1)
+        self.assertFalse(json.loads((self.state / "state.json").read_text())["runs"]["verify-3"]["repair_consumed"])
 
     def test_exit_zero_without_cleanup_preserves_a_supervised_failure(self):
         self.prepare()

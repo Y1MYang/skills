@@ -76,9 +76,9 @@ def begin(worker="worker-a", phase="run", case="case-a"):
         emit("phase_end", worker, phase="run")
         emit("phase_start", worker, phase="cleanup")
 
-def end(worker="worker-a", phase="run", case="case-a"):
+def end(worker="worker-a", phase="run", case="case-a", verdict="passed"):
     if phase == "run":
-        emit("case_end", worker, case_id=case)
+        emit("case_end", worker, case_id=case, verdict=verdict)
         emit("phase_end", worker, phase="run")
         emit("phase_start", worker, phase="cleanup")
     emit("phase_end", worker, phase="cleanup")
@@ -95,6 +95,41 @@ if os.environ.get("IMPLEMENT_SPEC_EXECUTION_GATE") == "1":
         end()
     sys.exit(0)
 
+if mode == "verdicts":
+    emit("worker_start")
+    emit("phase_start", phase="setup")
+    emit("phase_end", phase="setup")
+    emit("phase_start", phase="run")
+    for case, verdict in (("case-a", "passed"), ("case-b", "failed"), ("case-c", "skipped")):
+        emit("case_start", case_id=case)
+        emit("case_end", case_id=case, verdict=verdict)
+    emit("phase_end", phase="run")
+    emit("phase_start", phase="cleanup")
+    emit("phase_end", phase="cleanup")
+    emit("worker_end")
+    sys.exit(1)
+if mode == "bad_verdict":
+    begin()
+    emit("case_end", case_id="case-a", verdict="maybe")
+    end()
+    sys.exit(0)
+if mode == "scenario":
+    config = json.loads((Path.cwd() / "scenario.json").read_text())
+    fail, skip = set(config.get("fail", [])), set(config.get("skip", []))
+    cases = config.get("cases") or sorted(fail | skip | set(config.get("pass", [])))
+    emit("worker_start")
+    emit("phase_start", phase="setup")
+    emit("phase_end", phase="setup")
+    emit("phase_start", phase="run")
+    for case in cases:
+        emit("case_start", case_id=case)
+        emit("case_end", case_id=case,
+             verdict="failed" if case in fail else "skipped" if case in skip else "passed")
+    emit("phase_end", phase="run")
+    emit("phase_start", phase="cleanup")
+    emit("phase_end", phase="cleanup")
+    emit("worker_end")
+    sys.exit(1 if fail else 0)
 if mode == "missing":
     print("normal exit without acceptance boundaries", flush=True)
 elif mode == "malformed":
@@ -601,6 +636,19 @@ class ExecutionSupervisorTests(unittest.TestCase):
                 result = self.supervise(mode)
                 self.assertFalse(result["coverage_verified"])
                 self.assertEqual(result["outcome"], "coverage_unverified")
+
+    def test_case_verdicts_are_recorded_in_terminal_diagnostics(self):
+        result = self.supervise("verdicts")
+        self.assertTrue(result["coverage_verified"])
+        diagnostics = result["diagnostics"]
+        self.assertEqual(diagnostics["executed_cases"], ["case-a", "case-b"])
+        self.assertEqual(diagnostics["failed_cases"], ["case-b"])
+
+    def test_an_invalid_case_verdict_is_an_event_error(self):
+        result = self.supervise("bad_verdict")
+        self.assertTrue(result["diagnostics"]["event_errors"])
+        self.assertFalse(result["coverage_verified"])
+        self.assertEqual(result["outcome"], "coverage_unverified")
 
     def test_replaced_fifo_event_channel_cannot_block_the_external_supervisor(self):
         result = self.supervise("fifo_events")

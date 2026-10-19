@@ -32,6 +32,8 @@ MAX_EVENT = 16 * 1024
 MAX_WORKERS = 128
 MAX_DIAGNOSTICS = 64
 MAX_PROGRESS_TOKENS = 4096
+MAX_CASES = 4096
+CASE_VERDICTS = ("passed", "failed", "skipped")
 PHASES = ("setup", "run", "cleanup")
 ENV_ATTEMPT = "IMPLEMENT_SPEC_ATTEMPT_ID"
 ENV_EVENTS = "IMPLEMENT_SPEC_EVENTS_PATH"
@@ -230,6 +232,8 @@ class _Events:
         self.pending = b""
         self.file_identity = None
         self.case_count = 0
+        self.cases_started = set()
+        self.case_verdicts = {}
 
     def error(self, value):
         if value not in self.errors and len(self.errors) < MAX_DIAGNOSTICS:
@@ -335,11 +339,20 @@ class _Events:
                 budget = self.contract.get("case_profiles", {}).get(profile, self.contract["budgets"]["case"])
             item.update(case_id=case, case_at=at, case_seconds=budget["seconds"], case_budget=budget, last_progress_at=at,
                         progress_status="unknown", last_progress_evidence=None, stall_reported=False)
+            if case not in self.cases_started:
+                if len(self.cases_started) >= MAX_CASES:
+                    raise Refusal("case inventory exceeds bounded capacity")
+                self.cases_started.add(case)
             item["cases"] += 1
             self.case_count += 1
         elif kind == "case_end":
             if item["case_id"] is None or event.get("case_id") != item["case_id"]:
                 raise Refusal("case_end does not match current case")
+            verdict = event.get("verdict")
+            if verdict is not None:
+                if verdict not in CASE_VERDICTS:
+                    raise Refusal("case_end verdict must be passed, failed or skipped")
+                self.case_verdicts.setdefault(item["case_id"], set()).add(verdict)
             item.update(case_id=None, case_at=None)
         elif kind == "progress":
             evidence = event.get("evidence")
@@ -411,8 +424,13 @@ class _Events:
             item["ended"] and item["cases"] > 0 for item in self.workers.values())
 
     def report(self):
+        # A skipped case never ran its body, so it has not executed; a case
+        # without a verdict still counts as executed.
+        skipped = {case for case, verdicts in self.case_verdicts.items() if verdicts == {"skipped"}}
         return {"workers": {worker: {k: v for k, v in item.items() if k != "evidence_seen"}
                             for worker, item in self.workers.items()},
+                "executed_cases": sorted(self.cases_started - skipped),
+                "failed_cases": sorted(case for case, verdicts in self.case_verdicts.items() if "failed" in verdicts),
                 "events_ignored": self.ignored, "event_errors": self.errors}
 
 
@@ -692,7 +710,7 @@ if mode=='noisy_events':
  while True:
   with open(p,'a') as f: f.write('x'*20000)
   print('log flood',flush=True); time.sleep(.001)
-event('case_end',case_id='canary'); event('phase_end',phase='run'); event('phase_start',phase='cleanup')
+event('case_end',case_id='canary',verdict='passed'); event('phase_end',phase='run'); event('phase_start',phase='cleanup')
 if mode=='cleanup_block': time.sleep(60)
 event('phase_end',phase='cleanup'); event('worker_end')
 if mode=='pipe_descendant': subprocess.Popen([sys.executable,'-c','import time; time.sleep(60)'])
