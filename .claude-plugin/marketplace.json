@@ -7,6 +7,13 @@
       "source": "./skills/engineering",
       "skills": ["./implement-spec-v2", "./adopt-spec-v2", "./cleanup-spec-v2", "./test-review"],
       "strict": false
+    },
+    {
+      "name": "principles",
+      "description": "Engineering principle routers, such as the pstack principles index with on-demand full texts.",
+      "source": "./skills/principles",
+      "skills": ["./pstack-principles"],
+      "strict": false
     }
   ]
 }
