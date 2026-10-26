@@ -23,9 +23,23 @@ For mechanical changes following an established pattern, or constraints that adm
 
 Use a throwaway prototype only when a consequential uncertainty cannot be resolved from the available evidence and sketches. Name the question and the observation that would distinguish the candidates before building it. Keep prototype artifacts in invocation-owned notes/resources under the existing resource protocol; they are design evidence, not production implementation or formal spec tests. Sketches do not require extra agents, model roles, or an upstream pstack workflow.
 
+## Plan verifiable delivery
+
+Optimize spec-to-ready-PR elapsed time within explicit compute and resource bounds. Form **work units** around independently verifiable outcomes: combine fragmented tickets or split large ones while mapping every ticket and requirement to its responsible units. Use dependency shape, expected work and coordination cost to choose concurrency; ticket count alone is not a splitting rule. Keep estimates distinct from measured results.
+
+Group independent oracle tests into **test-contract batches** with explicit requirement sets and known helper, fixture, configuration and public-contract dependencies. Batch and implementation-unit boundaries may differ. Prioritize the test batches required to validate consequential shared contracts before dependent implementation begins; a batch is a review scope, not automatically another execution checkpoint.
+
+During the existing architecture approval, settle a finite **critical-contract checkpoint** plan:
+
+- For each stable checkpoint key, name its complete acceptance scope, implementation and test prerequisites, required fixture/runner infrastructure, and the units it releases. Include only contracts whose early validation justifies delaying their consumers; keep unrelated work parallel.
+- Check the augmented graph of units, test/infrastructure prerequisites, checkpoints and release edges for cycles. A checkpoint must be executable without any work it blocks. Resolve a cycle by moving required infrastructure earlier, adjusting unit boundaries or moving the checkpoint, while preserving real contract coverage.
+- Set checkpoint concurrency, per-checkpoint attempts and cumulative reserved execution time, an invocation-wide checkpoint attempt cap, and each chain's fixed repair budget. Name the evidence or conservative estimate behind those bounds. Declare a separate final key and the complete final acceptance scope; final-chain repair/frontier/recovery rules remain unchanged.
+
+Register the approved finite plan under [test-execution.md](test-execution.md#register-the-acceptance-plan). Registration checks the finite checkpoint keys and their dependency graph; the architecture reviewer remains responsible for the complete delivery graph, meaningful scopes and traceability. An additional batch, replacement agent or evidence refresh uses its existing checkpoint key and history. Keep the plan and scheduling rationale in the architecture notes; the test-safe package contains only public contracts, requirement/batch dependencies and permitted runner/fixture facts.
+
 ## Deliver and review
 
-Alongside the existing six-part architecture contract, record concise answers to:
+Alongside the architecture content contract and delivery plan, record concise answers to:
 
 1. **Direct approach:** What is the simplest viable shape, illustrated by a caller scenario?
 2. **Abstraction value:** What knowledge does each consequential new or changed abstraction hide, and where would that complexity go without it?

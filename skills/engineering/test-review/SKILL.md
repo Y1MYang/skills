@@ -3,7 +3,7 @@ name: test-review
 description: Review test changes for spec coverage and reliable acceptance criteria, including stronger assertions, timing budgets, and timeout failures. Use before blessing spec tests or when a failure may come from the test contract.
 ---
 
-Review tests as an independent oracle. Produce a read-only assessment of requirement fidelity, whole-spec coverage, and whether the tests can distinguish the required behavior from realistic failures. Test validity, coverage, and observed product success are separate conclusions.
+Review tests as an independent oracle. Produce a read-only assessment of requirement fidelity, coverage within an explicit scope, and whether the tests can distinguish the required behavior from realistic failures. Test validity, coverage, and observed product success are separate conclusions.
 
 ## Inputs and independence
 
@@ -32,22 +32,23 @@ Choose the scope:
 
 | Scope | Work and completion condition |
 | --- | --- |
-| `full` | Review all candidate test changes and the existing tests needed to map every spec requirement and acceptance criterion. Finish both axes and reconcile the complete coverage set. |
-| `delta` | Cite a pinned prior review, including a failed or partial review, compare its exact version to the new candidate, and review the affected dependency closure: shared helpers, fixtures, configuration, public contracts, and requirements. Carry forward only qualified, unaffected evidence with matching inputs; recheck unresolved findings relevant to the requested qualification, and add, change, and remove coverage entries explicitly. An unavailable prior version or unknown closure requires a wider review. A prior failure does not prohibit incremental repair review or supply an overall blessing. |
+| `full` | Account for all candidate test changes and the existing tests needed to map every spec requirement and acceptance criterion. Finish both axes and reconcile the complete coverage set. Reuse qualified, unaffected batch or prior full-review evidence only where its pinned inputs still match; review the remaining tests and cross-batch dependencies. |
+| `batch` | Review one caller-defined test-contract batch: its explicit requirement/criterion IDs, public-contract scope, test mapping, and dependency closure. Pin the batch identity and inputs; finish both axes for every in-scope criterion. A passing result grants **local qualification** for that batch and those inputs only. Requirements outside the batch remain outside this qualification. |
+| `delta` | Name the target qualification (`batch` with its identity, or `full`), cite a pinned prior review, including a failed or partial review, compare its exact version to the new candidate, and review the affected dependency closure: shared helpers, fixtures, configuration, public contracts, and requirements. Carry forward only qualified, unaffected evidence with matching inputs; recheck unresolved findings relevant to that target, and add, change, and remove coverage entries explicitly. Changes crossing batch boundaries reopen the affected batch conclusions. An unavailable prior version or unknown closure requires a wider review. A prior failure permits incremental repair review but supplies no qualification by itself. |
 | `failure` | Start with the failing test, its dependent helpers/configuration, and neutral first-failure facts. Classify the concrete uncertainty and request the next discriminating check. Widen to affected axes/coverage only when that evidence warrants it; do not automatically repeat a whole review or full suite. |
 
-Without a spec, perform the validity/standards assessment and mark requirement fidelity and whole-spec coverage **unverified**. Missing spec is not permission to infer the intended behavior from production. A partial review cannot bless the complete suite.
+Without a spec, perform the validity/standards assessment and mark requirement fidelity and coverage **unverified**. Missing spec is not permission to infer the intended behavior from production. Local qualification and a union of batch passes do not establish **whole-spec blessing**: a `full` reconciliation must account for every criterion, shared dependency, and applicable current input. Local test qualification establishes no passing product execution; a caller's execution checkpoint remains a separate gate.
 
 ## Review and reconcile
 
 Read [references/acceptance-contract.md](references/acceptance-contract.md) whenever reviewing acceptance assertions, changed success criteria, numbers, asynchronous evidence, or a failure. It is the single source for acceptance and timing rules; pass the resolved pointer to each relevant reviewer.
 
-With a spec, for `full` and substantive `delta` reviews, dispatch these axes in parallel, with disjoint briefs and the same pinned allowed inputs:
+With a spec, for `full`, `batch`, and substantive `delta` reviews, dispatch these axes in parallel, with disjoint briefs and the same pinned allowed inputs:
 
-- **Spec/coverage reviewer:** check requirement fidelity, the source of every new or changed acceptance assertion and numeric constraint, extra restrictions, and missing or partial coverage. Map every requirement to a test and the specific observable behavior it proves; a filename alone is insufficient.
+- **Spec/coverage reviewer:** check requirement fidelity, the source of every new or changed acceptance assertion and numeric constraint, extra restrictions, and missing or partial coverage. Map every in-scope requirement to a test and the specific observable behavior it proves; a filename alone is insufficient.
 - **Validity/standards reviewer:** check the test's decision mechanism, causal evidence of required behavior, relevant false-success and false-failure paths, fixtures/helpers, asynchronous ordering, isolation/cleanup, and repository testing standards. Apply the acceptance reference; distinguish confirmed defects from risks requiring a check.
 
-The **Coverage audit** coordinator reconciles the requirement set with the union of both reports and the test mapping. Account for every requirement as covered, partial, missing, or unverified, including negative/error cases the spec requires. Count only valid assertions as verified coverage; an invalid or unresolved mechanism leaves the affected link partial or unverified. Resolve disagreement through source evidence or a scoped check, and keep independent whole-spec coverage and validity conclusions. Coverage of a requirement does not prove the product currently satisfies it.
+The **Coverage audit** coordinator reconciles the requested requirement set with the union of both reports and the test mapping. Account for every in-scope requirement as covered, partial, missing, or unverified, including negative/error cases the spec requires. Count only valid assertions as verified coverage; an invalid or unresolved mechanism leaves the affected link partial or unverified. Resolve disagreement through source evidence or a scoped check, and keep separate coverage and validity conclusions. A batch conclusion identifies its exact local scope; a full conclusion includes the complete spec and cross-batch interactions. Coverage of a requirement does not prove the product currently satisfies it.
 
 When called from a workflow with selected models, explicitly dispatch the Spec/coverage reviewer with its **Spec reviewer** model and the Validity/standards reviewer with its **Standards reviewer** model; the coordinating agent uses **Coverage audit**. Reuse that mapping for replacements and nested dispatches. Do not add a startup model questionnaire. Standalone reviews honor supplied choices; otherwise follow runtime selection. If the platform cannot parallelize, perform and label the two assessments sequentially.
 
@@ -57,9 +58,9 @@ For `failure`, the coordinator may make the initial narrow assessment directly o
 
 Return a compact versioned report containing:
 
-- scope, base/comparison method, candidate snapshot, allowed input revisions, prior evidence reused, and independence limitations;
+- scope and target qualification, batch identity and criterion set when applicable, base/comparison method, candidate snapshot, allowed input revisions, dependency closure, prior evidence reused, and independence limitations;
 - separate Spec/coverage and Validity/standards results; identify any axis not run;
-- whole-spec coverage conclusion and requirement-to-observable-test mapping, with explicit partial/missing/unverified entries;
+- coverage conclusion and requirement-to-observable-test mapping, with explicit partial/missing/unverified entries; label a batch pass **locally qualified** and whole-spec coverage **unverified (outside scope)**, reserving **whole-spec blessing** for passing full reconciliation;
 - findings classified as **confirmed defect**, **risk**, or **missing business decision**: test location, requirement/source, failure mechanism, and next discriminating check;
 - failure ownership recommendation, remaining evidence gaps, and the caller's next action.
 

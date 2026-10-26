@@ -21,7 +21,6 @@ class ExecutionResourceTests(unittest.TestCase):
     cli = lifecycle.ResourceLifecycleTests.cli
     tree = lifecycle.ResourceLifecycleTests.tree
     data = lifecycle.ResourceLifecycleTests.data
-    record = lifecycle.ResourceLifecycleTests.record
     cleanup_invocation = lifecycle.ResourceLifecycleTests.cleanup_invocation
     publish_pr = lifecycle.ResourceLifecycleTests.publish_pr
 
@@ -35,6 +34,7 @@ class ExecutionResourceTests(unittest.TestCase):
         self.cwd = self.tree()
         self.data()
         self.configure_adapter()
+        self.register_plan()
 
     def prepare_delivery(self):
         self.cleanup_invocation()
@@ -42,6 +42,19 @@ class ExecutionResourceTests(unittest.TestCase):
         self.cwd = self.publish_pr()
         self.data()
         self.configure_adapter()
+        self.register_plan()
+
+    def register_plan(self):
+        plan = self.root / "acceptance-plan.json"
+        plan.write_text(json.dumps({"version": 1, "approval": "fixture/approved-architecture-plan",
+            "max_parallel_checkpoints": 1, "max_checkpoint_attempts": 2,
+            "checkpoints": [{"key": "checkpoint-suite", "acceptance": self.FULL_SCOPE[:1],
+                "depends_on": [], "repair_limit": 2, "max_attempts": 2, "max_total_seconds": 10}],
+            "final": {"key": "full-suite", "acceptance": self.FULL_SCOPE}}))
+        self.cli("register-plan", "--plan", plan)
+
+    def record(self, run="attempt"):
+        self.record_acceptance(run, self.FULL_SCOPE)
 
     def configure_adapter(self):
         self.adapter = self.root / "adapter.py"
@@ -87,6 +100,12 @@ class ExecutionResourceTests(unittest.TestCase):
         arguments = ["--id", name, "--cwd-resource", self.cwd_resource, "--output-resource", "output",
             "--test", "--acceptance", "--execution-contract", self.contract,
             "--execution-gate", gate, "--failure-key", key]
+        if key == "checkpoint-suite":
+            revision = self.git("rev-parse", "HEAD", cwd=self.cwd)
+            inputs = self.root / "checkpoint-inputs.json"
+            inputs.write_text(json.dumps({"implementation": revision, "tests": revision,
+                "contract": "fixture/approved-public-contract"}))
+            arguments += ["--checkpoint-inputs", inputs]
         if retry:
             arguments += ["--retry-of", retry, "--recovery-evidence",
                 "fixture/isolation-and-reset: only disposable processes and no external mutations"]
@@ -177,7 +196,7 @@ class ExecutionResourceTests(unittest.TestCase):
     def interrupted_summary(self, name):
         path = self.root / (name + "-summary.json")
         path.write_text(json.dumps({"tests": {"passed": 0, "failed": 0, "errors": 0,
-            "skipped": 0, "total": 0}, "acceptance": ["fixture/full-suite"],
+            "skipped": 0, "total": 0}, "acceptance": self.FULL_SCOPE,
             "reproduce": "Use the recorded adapter, command and execution contract."}))
         self.cli("record-test", "--run", name, "--summary", path)
 

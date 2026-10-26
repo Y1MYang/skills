@@ -54,10 +54,10 @@ npx skills update                        # 更新已安装的技能
 
 | 技能 | 说明 |
 | --- | --- |
-| `implement-spec-v2` | 按 spec 实现：架构先行 + 独立测试神谕，调用 `test-review` 审查测试后再集成，最终产出单个 PR。需同时安装 `test-review`。 |
+| `implement-spec-v2` | 按 spec 实现：按可验证工作单元并行开发，以分批独立测试和关键契约检查点放行依赖，最终在同一固定版本上并行验收与审查，产出单个 PR。需同时安装 `test-review`。 |
 | `cleanup-spec-v2` | PR 合并后显式调用 `cleanup-spec-v2 <PR 编号>`，确认完整清单后清理本次开发的本地资源、远端分支和记录。需同时安装 `implement-spec-v2`。 |
 | `adopt-spec-v2` | 主动调用以接管已开工的 spec：按证据复用成果、补齐独立验证，遵循 v2 规则继续到 PR 可供评审。依赖 `implement-spec-v2`。 |
-| `test-review` | 不读取实现的双轴测试审查：需求与覆盖、判定可靠性。支持完整审查、失败诊断和变更复核，检查真实执行证据及时间预算。 |
+| `test-review` | 不读取实现的双轴测试审查：需求与覆盖、判定可靠性。支持批次局部资格、全规格覆盖核对、失败诊断和变更复核，检查执行证据及时间预算。 |
 | `pstack-principles` | pstack 24 条编程原则的路由：内嵌索引按任务挑选相关原则并读取全文快照，非平凡任务开始时自动应用、任务切换时重扫。原则内容逐字取自 [poteto/pstack](https://github.com/cursor/plugins/tree/main/pstack)（MIT, © Lauren Tan）。 |
 
 ## 许可

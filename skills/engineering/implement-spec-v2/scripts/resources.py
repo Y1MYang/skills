@@ -766,6 +766,7 @@ def init(args):
     state = {"version": VERSION, "invocation": invocation,
              "created_at": now(), "state_path": str(path), "identity": identity(path),
              "repo": str(repo), "common_git": str(common), "resources": {}, "runs": {}}
+    state["acceptance_plan_protocol"] = companion("acceptance_plan").PROTOCOL
     companion("resource_capacity").initialize(state)
     if notes:
         state.update(cleanup_protocol=CLEANUP_PROTOCOL, notes=notes, index_root=str(index_root))
@@ -866,15 +867,20 @@ def run_command(args):
     gate_path = getattr(args, "execution_gate", None)
     retry_of = getattr(args, "retry_of", None)
     validate_after = getattr(args, "validate_after", None)
+    recheck_after = getattr(args, "recheck_after", None)
     failure_key = getattr(args, "failure_key", None)
     if formal and (not args.test or not contract_path or not gate_path or not failure_key):
         raise Refusal("formal acceptance requires --test --execution-contract --execution-gate --failure-key")
     if gate_path and not contract_path:
         raise Refusal("--execution-gate requires --execution-contract")
-    if retry_of and validate_after:
-        raise Refusal("automatic recovery and repair validation are separate actions")
-    if (retry_of or validate_after) and not formal:
-        raise Refusal("recovery and repair validation require a formal acceptance configuration")
+    if sum(bool(value) for value in (retry_of, validate_after, recheck_after)) > 1:
+        raise Refusal("automatic recovery, repair validation and checkpoint recheck are separate actions")
+    if (retry_of or validate_after or recheck_after) and not formal:
+        raise Refusal("recovery, repair validation and recheck require a formal acceptance configuration")
+    if getattr(args, "recheck_evidence", None) and not recheck_after:
+        raise Refusal("recheck evidence requires --recheck-after")
+    if getattr(args, "checkpoint_inputs", None) and not formal:
+        raise Refusal("checkpoint inputs require formal acceptance")
     if not validate_after and (getattr(args, "repair_round", None) is not None or
                                getattr(args, "repair_evidence", None)):
         raise Refusal("repair round/evidence requires --validate-after")
@@ -904,19 +910,22 @@ def run_command(args):
             raise Refusal("output resource must be owned data")
         cwd = Path(cwd_item["path"])
         source = None
+        plan_fields = {}
         if formal:
             if cwd_item["kind"] != "worktree":
                 raise Refusal("formal acceptance requires a committed owned worktree")
             source = execution_source(cwd, contract["budgets"]["shutdown"]["seconds"], output["path"])
             if not source["clean"]:
                 raise Refusal("formal acceptance requires a clean committed worktree")
+            plan_fields = companion("acceptance_plan").admission(
+                state_path, state, args, contract, cwd, source, helper_api())
         gate = supervisor.validate_gate(plain_path(gate_path), command, cwd, contract) if gate_path else None
         chain = None
         if formal:
             checked_id(failure_key)
             chains = state.setdefault("execution_chains", {})
             chain = chains.get(failure_key)
-            predecessor = retry_of or validate_after
+            predecessor = retry_of or validate_after or recheck_after
             if predecessor:
                 previous = state["runs"].get(predecessor)
                 if not previous or previous.get("failure_key") != failure_key or not chain:
@@ -1013,8 +1022,11 @@ def run_command(args):
                     chain.setdefault("policy_history", []).append(change)
                     chain["execution_policy"] = execution_policy(contract)
                     run["contract_adjudication"] = change
+            if recheck_after:
+                run.update(recheck_after=recheck_after, recheck_evidence=args.recheck_evidence)
             run["failure_key"] = failure_key
             run["source_initial"] = source
+            run.update(plan_fields)
         state["runs"][args.id] = run
         save(state_path, state)
     if contract:
@@ -1241,6 +1253,7 @@ def acceptance_assessment(state_path, state, final_run=None, revision=None, requ
             else:
                 qualified.append(run["id"])
     if final:
+        blockers.extend(companion("acceptance_plan").final_blockers(state, final_run, required_scope))
         if final_run not in qualified:
             blockers.append({"run": final_run, "reason": "designate a qualified final run at the delivery revision"})
         if required_scope is None:
@@ -1256,7 +1269,8 @@ def acceptance_assessment(state_path, state, final_run=None, revision=None, requ
 
 def acceptance_status(args):
     with locked(args.state) as (state_path, state):
-        return acceptance_assessment(state_path, state)
+        return dict(acceptance_assessment(state_path, state),
+                    plan=companion("acceptance_plan").snapshot(state))
 
 
 def execution_status(args):
@@ -1275,7 +1289,7 @@ def execution_status(args):
         return {"invocation": state["invocation"], "snapshot_at": now(),
                 **{key: run.get(key) for key in ["id", "owner", "status", "pid", "wrapper_pid",
                    "started_at", "ended_at", "process_identity", "outcome", "exit_code",
-                   "acceptance_qualified", "failure_key", "retry_of", "validate_after", "repair_round",
+                   "acceptance_qualified", "failure_key", "retry_of", "validate_after", "recheck_after", "repair_round",
                    "repair_consumed"]},
                 "chain": {key: chain.get(key) for key in ["repair_rounds", "repair_limit",
                           "verifications", "free_rounds", "free_rounds_since_ack"]} if chain else None,
@@ -1283,6 +1297,7 @@ def execution_status(args):
                 "events": str(output / (args.run + ".events.jsonl")),
                 "alerts": str(output / (args.run + ".alerts.jsonl")),
                 "terminal": str(output / (args.run + ".events.jsonl.terminal.json")),
+                "plan": companion("acceptance_plan").snapshot(state),
                 "limits": "registered metadata only; no process or evidence inspection"}
 
 
@@ -1328,6 +1343,7 @@ def record_test(args):
                 raise Refusal("qualified acceptance requires observed passing tests")
         if run.get("execution_contract") and execution_failed(run) and not counts["failed"] and not counts["errors"]:
             summary.setdefault("notes", "Execution interrupted; no product failure asserted by the supervisor.")
+        companion("acceptance_plan").check_summary(state, run, summary, helper_api())
         run["summary"] = summary
         run["summary_recorded_at"] = now()
         write_record(state_path, run)
@@ -1657,8 +1673,10 @@ def parser():
     command.add_argument("--repo", required=True)
     command.add_argument("--notes-root", help="new or empty invocation notes root containing the state directory")
     command.add_argument("--index-root", help="cleanup discovery index outside the notes root")
-    for name in ["create", "run", "record-test", "resolve", "classify-run", "acceptance-status", "execution-status", "recover-run", "handoff", "release", "preflight", "status", "capacity", "publish-branch", "bind-pr", "seal"]:
+    for name in ["create", "run", "record-test", "resolve", "classify-run", "acceptance-status", "execution-status", "recover-run", "handoff", "release", "preflight", "status", "capacity", "publish-branch", "bind-pr", "seal", "register-plan"]:
         commands.add_parser(name).add_argument("--state", required=True)
+    commands.choices["register-plan"].add_argument("--plan", required=True, help="approved finite checkpoint and final acceptance plan")
+    commands.choices["register-plan"].add_argument("--amendment-evidence", help="approval for adding disjoint checkpoints within unchanged global limits")
     command = commands.choices["publish-branch"]
     command.add_argument("--resource", required=True)
     command.add_argument("--remote-url", required=True, help="exact native REST head.repo.clone_url")
@@ -1691,6 +1709,9 @@ def parser():
     command.add_argument("--retry-of", help="prior classified run; at most one automatic recovery per failure chain")
     command.add_argument("--recovery-evidence", help="proof pointers for isolation, fixture reset and repeatability")
     command.add_argument("--validate-after", help="latest attempt followed by a justified repair and new verification")
+    command.add_argument("--recheck-after", help="latest qualified checkpoint pass invalidated by changed inputs")
+    command.add_argument("--recheck-evidence", help="approved input-change evidence for normal checkpoint recheck")
+    command.add_argument("--checkpoint-inputs", help="pinned implementation/tests commit IDs and contract pointer JSON")
     command.add_argument("--repair-evidence", help="new repair/review findings supporting this validation")
     command.add_argument("--repair-round", type=int, help="next consecutive verification ordinal in the failure chain")
     command.add_argument("--repair-limit", type=int, choices=[1, 2, 3], help="fixed initial repair budget; checkpoint 1-2, final default 3")
@@ -1749,6 +1770,8 @@ def main():
     try:
         if args.action in ["reserve", "reservation"]:
             result = companion("resource_capacity").dispatch(args.action, args, helper_api())
+        elif args.action == "register-plan":
+            result = companion("acceptance_plan").register(args, helper_api())
         elif args.action in companion("resource_audit").ACTIONS:
             result = companion("resource_audit").dispatch(args.action, args, helper_api())
         else:
