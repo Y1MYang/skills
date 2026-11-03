@@ -1,0 +1,9 @@
+{
+  "utc": "2026-11-03T07:01:45.0537616Z",
+  "timing_definition": "First actual Red receipt started_at through actual final handoff ready clock; setup and first authoring excluded",
+  "start_utc": "2026-11-03T14:55:29.326421+08:00",
+  "start_artifact": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-3b191c0a0c8ac5969fcb86e9.receipt.json",
+  "start_sha256": "1126154DACFA8587AF3E0DB0594D7419FA6C476F5BB1960016368E0CC83680C2",
+  "end_utc": null,
+  "dispatch_timestamps": "Unavailable timestamps remain unknown"
+}

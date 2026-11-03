@@ -1,0 +1,13 @@
+{
+  "evidence": [
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-9192a3728af19ed0afc182f8.receipt.json",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-9192a3728af19ed0afc182f8.receipt.json.stderr.log",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example2-author-report.json"
+  ],
+  "schema": 1,
+  "classification": "valid-red",
+  "op": "judge",
+  "op_id": "below-judge",
+  "reason": "Runner actual target shipping_fee(9999) returns0; independent assertion requires500. Currency/threshold pass; stable snapshots and owned cleanup.",
+  "attempt_id": "attempt-9192a3728af19ed0afc182f8"
+}

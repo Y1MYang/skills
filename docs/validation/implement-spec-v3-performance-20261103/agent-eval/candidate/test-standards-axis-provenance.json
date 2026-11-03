@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "audit_kind": "provenance only; no new test qualification or review",
+  "actual_model": "gpt-6.1-sol",
+  "audit_utc": "2026-11-03T08:31:21.4938897Z",
+  "original_review_completed_utc": "2026-11-03T08:28:03.3553408Z",
+  "original_artifact": "candidate/test-standards-axis.json",
+  "original_artifact_sha256": "b57a1d2cb820c6b32207a51d0ac802111f16a8ed5edce303dc25ff1ffdb3efb3",
+  "allowed_inputs": [
+    "candidate/final-blind-pin-packet.json",
+    "candidate/architect-test-safe-package.json",
+    "C:/Users/admin/.codex/skills/test-review/SKILL.md",
+    "C:/Users/admin/.codex/skills/test-review/references/acceptance-contract.md",
+    "C:/Users/admin/.codex/skills/pstack-principles/SKILL.md",
+    "pstack principles: principle-test-behavior-not-implementation.md, principle-build-the-lever.md, principle-prove-it-works.md",
+    "Pinned project README.md",
+    "Pinned project tests/test_regression.py",
+    "Pinned project tests/test_shipping_threshold.py",
+    "Pinned project tests/test_shipping_below.py",
+    "Pinned project tests/test_shipping_negative.py",
+    "Git base/head resolution, path-constrained direct diff/status and test-tree path inventory",
+    "Own original report and own conversation for provenance audit"
+  ],
+  "incoming_messages_since_original_completion": [
+    {
+      "sender": "/root/v3_perf_agent_eval",
+      "kind": "NEW_TASK",
+      "content_summary": "Requested same-context provenance audit only, original completion UTC/artifact hash and allowed inventory; report all subsequent messages and any unallowlisted status/source/implementation observations; prohibit global inventory, other reports, product execution and spawning.",
+      "unallowlisted_status_source_or_implementation_observation": false
+    }
+  ],
+  "boundary_assertion": "No incoming message since original completion supplied candidate implementation, production source, unallowlisted status, execution observation, raw log, or another agent report.",
+  "product_execution": false,
+  "assertion_limitations": [
+    "Assertion covers only this agent's visible conversation and own tool actions, not other agents or global state.",
+    "Original completion UTC is the recorded report timestamp, not independent timing attestation.",
+    "Current SHA256 was computed from the original report during this audit; no claim of externally timestamped immutability.",
+    "No new qualification, review, or product success inference."
+  ]
+}

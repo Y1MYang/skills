@@ -1,0 +1,113 @@
+{
+  "valid": true,
+  "paired_trials": 14,
+  "individual_trials": 28,
+  "normalized_fields": [
+    "Absolute per-trial root path",
+    "Final Git commit SHA",
+    "Generated attempt IDs, replaced in preparation order"
+  ],
+  "normalization_reason": "Fresh isolated directories, commit metadata, and generated identity are expected to differ; all other full event payload fields are retained and compared.",
+  "runtime_signature": "Actual argv, outcomes, exit codes, test/contract/product byte hashes at each execution, and final fixture source hashes are compared. Each receipt independently proved stable before/after snapshots and cleanup. Timing, PID/ownership tokens, and log hashes are not cross-arm equality criteria; each original receipt SHA is verified against its saved bytes.",
+  "process_count_evidence": "outer_process_invocations agrees with actual commands.jsonl launches and phase records; descendant counts are not inferred.",
+  "pairs": [
+    {
+      "scenario": "small",
+      "pair": -1,
+      "warmup": true,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 0,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 1,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 2,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 3,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 4,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "small",
+      "pair": 5,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "7917b07ef809e29409204c543bc059e912b722a5831f8b4e6eaa0177a61d1430",
+      "events": 24
+    },
+    {
+      "scenario": "history_logs",
+      "pair": -1,
+      "warmup": true,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 0,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 1,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 2,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 3,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 4,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 5,
+      "warmup": false,
+      "normalized_full_event_payload_sha256": "8a282562a68a3d5ce4b78ceb03757ec910a0c42285ef0abdba4dc1b3bd2bb588",
+      "events": 88
+    }
+  ]
+}

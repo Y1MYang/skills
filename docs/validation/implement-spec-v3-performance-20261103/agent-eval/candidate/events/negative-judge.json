@@ -1,0 +1,13 @@
+{
+  "op": "judge",
+  "evidence": [
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-2a6cd8de1613cba0d671532b.receipt.json",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-2a6cd8de1613cba0d671532b.receipt.json.stderr.log",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example3-author-report.json"
+  ],
+  "op_id": "negative-judge",
+  "classification": "valid-red",
+  "schema": 1,
+  "attempt_id": "attempt-2a6cd8de1613cba0d671532b",
+  "reason": "Runner actual -1 target fails ValueError not raised; independent README requires ValueError; all prior tests pass, stable snapshots and owned cleanup."
+}

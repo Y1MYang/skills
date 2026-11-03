@@ -1,0 +1,18 @@
+{
+  "op_id": "final-finish",
+  "code_reviews": {
+    "standards": {
+      "verdict": "pass",
+      "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+      "review_id": "candidate-code-standards-aa2aad4"
+    },
+    "spec": {
+      "verdict": "pass",
+      "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+      "review_id": "candidate-code-spec-review"
+    }
+  },
+  "attempt_id": "attempt-dff6618966f3a50b851af5c5",
+  "op": "finish",
+  "schema": 1
+}

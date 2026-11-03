@@ -1,0 +1,11 @@
+{
+  "sole_authority": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\README.md",
+  "criterion_mapping": {
+    "nonnegative >=10000 fee0": "fee-at-10000 exact return assertion",
+    "nonnegative <10000 fee500": "fee-at-9999 exact return assertion",
+    "negative ValueError": "negative-total exact exception-class assertion"
+  },
+  "limits": "Exactly required three examples; other integer values represented by requirement classes; outside-integer types out of scope.",
+  "graph": "fee-at-10000 -> fee-at-9999 -> negative-total -> final; no critical consumers/checkpoints, gates empty.",
+  "budgets": "20 attempts/600 command seconds/3 formal failures; nominal 3 probes+3 green+1 formal=7 executions, each 20s deadline; reserve permits repairs and separate regression runs. Progress JSON best-effort ~1 second; stop owned job only; 5s termination bound. Local diagnostic allocations established only if issue arises."
+}

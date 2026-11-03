@@ -1,0 +1,76 @@
+         19139243 function calls (12375910 primitive calls) in 16.078 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1172 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      116    0.002    0.000   16.077    0.139 <frozen runpy>:262(run_path)
+ 3490/232    0.014    0.000   15.027    0.065 {built-in method builtins.exec}
+      116    0.001    0.000   14.285    0.123 <frozen runpy>:91(_run_module_code)
+      116    0.000    0.000   14.282    0.123 <frozen runpy>:65(_run_code)
+       25    0.001    0.000    7.572    0.303 run_command.py:1(<module>)
+  739/572    0.052    0.000    7.013    0.012 {method 'acquire' of '_thread.lock' objects}
+       41    0.000    0.000    6.991    0.171 threading.py:1117(join)
+       41    0.000    0.000    6.989    0.170 threading.py:1155(_wait_for_tstate_lock)
+    41/33    0.003    0.000    6.945    0.210 threading.py:1018(_bootstrap)
+       25    0.000    0.000    6.850    0.274 run_command.py:441(main)
+       25    0.000    0.000    6.850    0.274 run_command.py:321(run)
+      331    0.007    0.000    6.830    0.021 {built-in method builtins.next}
+       50    0.000    0.000    6.819    0.136 run_command.py:40(progress)
+       62    0.000    0.000    6.818    0.110 contextlib.py:141(__exit__)
+       91    0.007    0.000    6.710    0.074 cycle.py:1(<module>)
+       25    0.003    0.000    6.296    0.252 run_command.py:344(execute)
+       29    0.003    0.000    5.683    0.196 run_command.py:229(run_owned)
+      112    5.588    0.050    5.588    0.050 {built-in method time.sleep}
+5075/1212    0.019    0.000    4.293    0.004 <frozen importlib._bootstrap>:1349(_find_and_load)
+5075/1212    0.007    0.000    4.266    0.004 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+       91    0.004    0.000    4.167    0.046 cycle.py:1140(main)
+4959/1212    0.009    0.000    3.907    0.003 <frozen importlib._bootstrap>:911(_load_unlocked)
+3374/1211    0.009    0.000    3.880    0.003 <frozen importlib._bootstrap_external>:993(exec_module)
+10714/2565    0.015    0.000    3.262    0.001 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+      114    0.002    0.000    1.908    0.017 cycle.py:199(atomic_json)
+       89    0.001    0.000    1.901    0.021 cycle.py:987(save_state)
+     3374    0.022    0.000    1.851    0.001 <frozen importlib._bootstrap_external>:1066(get_code)
+      115    0.228    0.002    1.704    0.015 __init__.py:120(dump)
+     7796    1.338    0.000    1.389    0.000 {built-in method _io.open}
+     7637    0.003    0.000    1.388    0.000 pathlib.py:1005(open)
+  1491214    0.147    0.000    1.340    0.000 encoder.py:414(_iterencode)
+     3515    0.009    0.000    1.266    0.000 <frozen importlib._bootstrap_external>:1187(get_data)
+8129236/1491214    0.894    0.000    1.193    0.000 encoder.py:334(_iterencode_dict)
+     5075    0.015    0.000    1.146    0.000 <frozen importlib._bootstrap>:1240(_find_spec)
+     3863    1.127    0.000    1.127    0.000 {built-in method _io.open_code}
+
+
+         19139243 function calls (12375910 primitive calls) in 16.078 seconds
+
+   Ordered by: internal time
+   List reduced from 1172 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      112    5.588    0.050    5.588    0.050 {built-in method time.sleep}
+     7796    1.338    0.000    1.389    0.000 {built-in method _io.open}
+     3863    1.127    0.000    1.127    0.000 {built-in method _io.open_code}
+      257    0.991    0.004    0.991    0.004 {built-in method builtins.compile}
+    29705    0.964    0.000    0.989    0.000 {built-in method nt.stat}
+8129236/1491214    0.894    0.000    1.193    0.000 encoder.py:334(_iterencode_dict)
+      398    0.376    0.001    0.376    0.001 {built-in method _imp.create_dynamic}
+    11541    0.359    0.000    0.359    0.000 {method 'read' of '_io.BufferedReader' objects}
+     3233    0.238    0.000    0.238    0.000 {built-in method marshal.loads}
+      115    0.228    0.002    1.704    0.015 __init__.py:120(dump)
+      165    0.180    0.001    0.180    0.001 {built-in method nt.fsync}
+    66052    0.160    0.000    0.248    0.000 <frozen importlib._bootstrap_external>:96(_path_join)
+       37    0.151    0.004    0.151    0.004 {built-in method _winapi.CreateProcess}
+  285/277    0.147    0.001    0.033    0.000 {method 'read' of '_io.TextIOWrapper' objects}
+  1491214    0.147    0.000    1.340    0.000 encoder.py:414(_iterencode)
+     5252    0.141    0.000    0.141    0.000 {built-in method nt._getfinalpathname}
+  1491099    0.136    0.000    0.136    0.000 {method 'write' of '_io.TextIOWrapper' objects}
+1019044/1002168    0.135    0.000    0.421    0.000 encoder.py:278(_iterencode_list)
+    12200    0.130    0.000    0.130    0.000 encoder.py:205(iterencode)
+    11265    0.104    0.000    0.104    0.000 {method '__exit__' of '_io._IOBase' objects}
+17687/17339    0.099    0.000    0.198    0.000 {built-in method builtins.__build_class__}
+  1558829    0.098    0.000    0.100    0.000 {built-in method builtins.isinstance}
+    19114    0.089    0.000    0.089    0.000 {built-in method _hashlib.openssl_sha256}
+      398    0.089    0.000    0.089    0.000 {built-in method _imp.exec_dynamic}
+     1494    0.066    0.000    0.066    0.000 decoder.py:344(raw_decode)
+
+

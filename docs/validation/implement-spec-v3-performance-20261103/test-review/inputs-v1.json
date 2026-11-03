@@ -1,0 +1,84 @@
+{
+  "review": "performance-full-v1",
+  "head": "996eb268bf0cf3c31b19cbe2c1445f1cff06cb1d",
+  "method": "Working-tree content snapshot; all public runtime/contracts and test-side candidate paths are untracked. No production diff inspected. No prior qualification reused.",
+  "files": [
+    {
+      "Path": "docs/plans/implement-spec-v3-performance-contract.md",
+      "Sha256": "b6ede11f51d5c3a0f509d97e9026a0caadcb2900fb8cc14d10c223c5d2a48d0b"
+    },
+    {
+      "Path": "docs/plans/implement-spec-v3-runtime-contract.md",
+      "Sha256": "0a6e2285afd62fc3789bd23874ebcf6c415a5b873901e3e5bec61c19af59f1fb"
+    },
+    {
+      "Path": "skills/engineering/implement-spec-v3/references/runtime-ledger.md",
+      "Sha256": "88491ab095eee1b1c89d9a4a898f40c8a67aff37b72a72d7b1440c307a54309f"
+    },
+    {
+      "Path": "skills/engineering/test-review/SKILL.md",
+      "Sha256": "939e2a91bf6b533685b5040f6af599c090dc0a9a9902a6dcc2871362caef2c9f"
+    },
+    {
+      "Path": "skills/engineering/test-review/references/acceptance-contract.md",
+      "Sha256": "ece535a7ec797aaa2a00a321a14f0106d434246b67ba4561bf5c22ab778bc59c"
+    },
+    {
+      "Path": "skills/engineering/tdd/SKILL.md",
+      "Sha256": "10cf99be22eafeb8822e5bcd7c86392cc87794d5f7f0c950d314db2853baf78a"
+    },
+    {
+      "Path": "skills/engineering/tdd/tests.md",
+      "Sha256": "219466e68591aab4f76782a1751a7d8fd028c0b999fe0143de033f7360ac0dc9"
+    },
+    {
+      "Path": "skills/engineering/tdd/mocking.md",
+      "Sha256": "052036b53d819ae8a49ba120c04a9bc0af9b53ef7191b40d6351540e552b1465"
+    },
+    {
+      "Path": "skills/principles/pstack-principles/SKILL.md",
+      "Sha256": "ce5fd4056346cdadd4015700e4626b27318ca2c6630582635e2ae2345285318f"
+    },
+    {
+      "Path": "skills/principles/pstack-principles/principles/principle-test-behavior-not-implementation.md",
+      "Sha256": "1264277f8c486a4cdc9ef73f9cbe8271254758f8b6c78702abc29efa68280297"
+    },
+    {
+      "Path": "skills/principles/pstack-principles/principles/principle-explain-the-number.md",
+      "Sha256": "1baa95f52d32c640c14d53443c20036a4e384620a2f484e74a67fe8175890e93"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_cycle_performance.py",
+      "Sha256": "f23993b2dabc2c907b2d5b461fe95674b280df66a8014c426a12fa146c841dda"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_cycle_proofs.py",
+      "Sha256": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_cycle_recovery.py",
+      "Sha256": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_cycle_safety.py",
+      "Sha256": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_cycle.py",
+      "Sha256": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53"
+    },
+    {
+      "Path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\tests\\test_run_command.py",
+      "Sha256": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    },
+    {
+      "Path": "C:\\Users\\admin\\.codex\\skills\\pstack-principles\\SKILL.md",
+      "Sha256": "0d2002dfd2df39af370b6d4c0d01c4d6671bedd943cf9838b5ef8b8dae4d0f69"
+    },
+    {
+      "Path": "skills/principles/pstack-principles/principles/principle-build-the-lever.md",
+      "Sha256": "d86bd7df14255cf6127b93f54ad88e26d04251e14f0ca3f0e95a8ba6882b92c4"
+    }
+  ],
+  "immutable_candidate_archive": "docs/validation/implement-spec-v3-performance-20261103/independent-tests/37-case-test-cycle-performance.py"
+}

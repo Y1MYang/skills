@@ -1,0 +1,22 @@
+{
+  "record_op_id": "negative-green-record",
+  "prepare": {
+    "op_id": "negative-green-prepare",
+    "purpose": "green",
+    "schema": 1,
+    "op": "prepare",
+    "example": "negative",
+    "timeout_seconds": 20
+  },
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "schema": 1
+}

@@ -1,0 +1,46 @@
+{
+  "role": "Test author",
+  "model": "gpt-6.1-sol",
+  "example": "threshold",
+  "authored_utc": "2026-11-03T08:21:44.1938395Z",
+  "product_baseline": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "contract": "shipping-v1",
+  "target": "test_shipping_threshold.ShippingThresholdTest.test_shipping_is_free_at_10000_cents",
+  "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t\\tests\\test_shipping_threshold.py",
+  "test_sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+  "dependency_digests": [
+    {
+      "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t\\README.md"
+    },
+    {
+      "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t\\tests\\test_regression.py"
+    },
+    {
+      "sha256": "9be913b7458b28cd3a3817bdcff3548ba71103779625cf5d70ec4f801bfaa092",
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\candidate\\architect-test-safe-package.json"
+    }
+  ],
+  "helpers": [],
+  "fixtures": [],
+  "configuration": "Python 3.12 standard-library unittest; project root on import path; no additional dependency or test configuration",
+  "input": 10000,
+  "expected": 0,
+  "oracle_source": "Authoritative README.md and architect-test-safe-package.json shipping-v1",
+  "independent_derivation": "10000 satisfies the README rule of 10000 cents or more, whose specified fee is zero. This literal answer is independent of product behavior.",
+  "independent_expected_failure": "The assertion fails if shipping_fee(10000) returns any value unequal to 0, or the public call raises instead of returning 0. No baseline output has been observed; Runner must establish actual target-specific causality.",
+  "lightweight_check": "Calls the public API with exactly one current example and asserts the exact contract return. Detects a threshold fee of 500 and survives internal refactoring preserving results.",
+  "execution_performed": false,
+  "next_example_authorized": false,
+  "allowed_inventory": [
+    "Frozen implement-spec-v3/SKILL.md and relevant dispatch/TDD/execution references",
+    "Frozen sibling tdd/SKILL.md and tests.md; installed tdd fallback read before frozen availability check",
+    "Installed pstack index and relevant behavior-testing/sequencing principles",
+    "Project README.md",
+    "Project tests/test_regression.py",
+    "architect-test-safe-package.json",
+    "Own tests/test_shipping_threshold.py and author reports"
+  ],
+  "forbidden_inputs_read": false
+}

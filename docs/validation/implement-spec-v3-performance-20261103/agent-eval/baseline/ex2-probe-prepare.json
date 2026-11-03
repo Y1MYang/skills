@@ -1,0 +1,8 @@
+{
+  "op": "prepare",
+  "timeout_seconds": 20,
+  "example": "fee-at-9999",
+  "schema": 1,
+  "op_id": "ex2-probe-prepare",
+  "purpose": "probe"
+}

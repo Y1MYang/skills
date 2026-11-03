@@ -1,0 +1,13 @@
+{
+  "reason": "Author requirement-derived exact10000 expected0; actual target call raised NotImplementedError, demonstrating absent behavior rather than unrelated harness fault, with stable snapshots and completed cleanup.",
+  "op": "judge",
+  "classification": "valid-red",
+  "schema": 1,
+  "op_id": "ex1-probe-judge",
+  "attempt_id": "attempt-3b191c0a0c8ac5969fcb86e9",
+  "evidence": [
+    "example1-red-runner-report.json",
+    "state/attempts/attempt-3b191c0a0c8ac5969fcb86e9.receipt.json",
+    "state/attempts/attempt-3b191c0a0c8ac5969fcb86e9.receipt.json.stderr.log"
+  ]
+}

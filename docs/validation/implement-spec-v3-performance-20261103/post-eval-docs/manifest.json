@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-03",
+  "reason": "Candidate blind Coverage coordinator queried global agent inventory after clean review axes; clarify complete safe routing and missing-recipient fallback. This documentation clarification does not retroactively make that invocation compliant.",
+  "scope": "Two documentation files only; runtime, tests and contract unchanged. Original candidate ZIP remains the benchmark and workflow tool snapshot.",
+  "candidate_source_zip_sha256": "6ecf887b34885875170efddf2fb80dd63cef8c7e7cf9cbd3a7c233316ed5aa3d",
+  "runtime_sha256": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+  "test_sha256": "5b726580139693d62bd0ee2021473a2e14e0e30d6d19d42dbeb6ea0e294c22f1",
+  "files": [
+    {
+      "path": "skills/engineering/implement-spec-v3/references/dispatch-and-isolation.md",
+      "frozen_candidate_sha256": "b03bea81576e87e78a323e8f18598bbcea7378652d22003b04a1d8c525f24220",
+      "post_eval_sha256": "9ed45fc780efa7e7ffc0a7fbde89448512f262da34e4e0f223f1214c165cf0d3",
+      "snapshot": "post-eval-docs/dispatch-and-isolation.md"
+    },
+    {
+      "path": "skills/engineering/implement-spec-v3/references/execution-and-recovery.md",
+      "frozen_candidate_sha256": "535e2c8e42cb90cb6b1d2633dfa4135ad5f8b68f98ab8d9a08250a753fa097ea",
+      "post_eval_sha256": "5747fe694e863f81c1304a40943026d6b8ac5da146a1418fd342057f0d810870",
+      "snapshot": "post-eval-docs/execution-and-recovery.md"
+    }
+  ]
+}

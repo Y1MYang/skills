@@ -1,0 +1,61 @@
+{
+  "authority": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\README.md",
+  "public_contract": "from shipping import shipping_fee; shipping_fee(total_cents: int) -> int. For integer total_cents >= 0 and < 10000 return 500; for >=10000 return 0; for negative integers raise ValueError. Noninteger inputs are outside scope.",
+  "allowed_read_paths": [
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\README.md",
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\tests"
+  ],
+  "allowed_test_write_paths": [
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\tests"
+  ],
+  "forbidden": [
+    "shipping.py source",
+    "production diffs/history",
+    "raw runner logs",
+    "implementation notes"
+  ],
+  "test_inventory": [
+    "tests/test_regression.py (existing; unittest RegressionTests.test_currency)"
+  ],
+  "future_examples": [
+    "10000 -> 0",
+    "9999 -> 500",
+    "-1 raises ValueError"
+  ],
+  "future_test_files": "Test author chooses one new file per current example; author only current example.",
+  "test_command": "python -B -m unittest discover -s tests -v",
+  "dependencies": "Python standard library unittest; tests only, no fixtures/helpers/config beyond files in tests; no third-party packages.",
+  "contract_version": "shipping-public-v1",
+  "requirement_basis": "README.md sole behavior authority; no production observations used. Existing public CURRENCY remains USD.",
+  "observation_seam": "Direct public Python function call and returned integer or ValueError; no mocks, private helpers, internal ordering, error-message requirements, or new dependencies.",
+  "current_contracts": [
+    {
+      "example": "fee-at-10000",
+      "input": 10000,
+      "expected": 0,
+      "prerequisites": []
+    },
+    {
+      "example": "fee-at-9999",
+      "input": 9999,
+      "expected": 500,
+      "prerequisites": [
+        "fee-at-10000 closed with current Green and affected regressions"
+      ]
+    },
+    {
+      "example": "negative-total",
+      "input": -1,
+      "expected_error": "ValueError",
+      "prerequisites": [
+        "fee-at-9999 closed with current Green and affected regressions"
+      ]
+    }
+  ],
+  "authoring_constraint": "Exactly one main new independent behavior test per example, serial order 10000, 9999, -1. Refine/pin current contract immediately before its authoring; do not preauthor later examples.",
+  "provenance": {
+    "owner": "Architect",
+    "source": "README.md and Exploration test-safe inventory",
+    "sanitization": "No production source, diffs, private logs, or implementation-notes read or included."
+  }
+}

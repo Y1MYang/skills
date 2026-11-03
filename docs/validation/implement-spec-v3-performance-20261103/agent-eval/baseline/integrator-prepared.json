@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-03T06:52:58.8577756Z",
+  "role": "Integrator",
+  "model": "gpt-6.1-sol",
+  "status": "prepared-awaiting-architect",
+  "run_id": "v3-perf-baseline-20261103",
+  "state": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state",
+  "ownership": "Ledger, event/request preparation, integration index and commits only; Runner owns command receipts and logs; author owns tests; implementer owns shipping.py",
+  "plan": "proposed-plan.json",
+  "sequence": [
+    "fee-at-10000",
+    "fee-at-9999",
+    "negative-total"
+  ],
+  "command_budget": "20 seconds each; 20 attempts; 600 total command seconds; 3 formal failures",
+  "principles": [
+    "sequence-verifiable-units",
+    "prove-it-works",
+    "make-operations-idempotent"
+  ],
+  "next": "Receive Architect report before init; thereafter blind author current example."
+}

@@ -1,0 +1,43 @@
+{
+  "test_inventory": [
+    {
+      "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "integrator_followup_observed": 3,
+  "formal_argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "frozen_utc": "2026-11-03T08:27:00.3948734Z",
+  "clean": true,
+  "formal_timeout_seconds": 20,
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "product_sha256": "903b95a47e39a6ffbac982ec706ef48ce7cacea637e3e027d00efffd22df619f",
+  "coordinator_followup_reported": 1,
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "counters_note": "Only these followups directly observed/reported; coordinator supplies final spawn/control/wait totals"
+}

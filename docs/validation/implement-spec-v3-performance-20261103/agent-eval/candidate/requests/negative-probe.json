@@ -1,0 +1,22 @@
+{
+  "prepare": {
+    "timeout_seconds": 20,
+    "schema": 1,
+    "example": "negative",
+    "op": "prepare",
+    "purpose": "probe",
+    "op_id": "negative-probe-prepare"
+  },
+  "schema": 1,
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "record_op_id": "negative-probe-record"
+}

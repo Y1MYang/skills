@@ -1,0 +1,13 @@
+{
+  "recorded_runs": 48,
+  "examples": 30,
+  "red_green_cycles": 15,
+  "first_run_green_examples": 15,
+  "verified_refactors": 2,
+  "final_test_count": 30,
+  "snapshot_hashes_valid": true,
+  "one_new_test_per_example": true,
+  "production_unchanged_before_each_new_example_run": true,
+  "tests_unchanged_during_green_and_refactor": true,
+  "all_cycles_started_after_green": true
+}

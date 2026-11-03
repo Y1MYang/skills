@@ -1,0 +1,10 @@
+{
+  "candidate_root": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-candidate-9fgw2e6t",
+  "candidate_skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-candidate-9fgw2e6t\\implement-spec-v3",
+  "runtime_sha256": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+  "test_sha256": "5b726580139693d62bd0ee2021473a2e14e0e30d6d19d42dbeb6ea0e294c22f1",
+  "manifest_sha256": "af56002356909f1305fd630560704e41658dc3b6309c613033e2a70c5d20975c",
+  "files": 25,
+  "contract_sha256": "b6ede11f51d5c3a0f509d97e9026a0caadcb2900fb8cc14d10c223c5d2a48d0b",
+  "archive_sha256": "6ecf887b34885875170efddf2fb80dd63cef8c7e7cf9cbd3a7c233316ed5aa3d"
+}

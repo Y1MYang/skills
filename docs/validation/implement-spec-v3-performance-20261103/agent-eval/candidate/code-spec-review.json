@@ -1,0 +1,25 @@
+{
+  "review_id": "candidate-code-spec-review",
+  "role": "Spec reviewer (final implementation-visible code review)",
+  "model": "gpt-6.1-sol",
+  "utc": "2026-11-03T08:27:45Z",
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "clean_status": "clean: git status --porcelain returned no entries; HEAD matches frozen candidate",
+  "direct_comparison": "git diff 874982f1f83cfb1f38bf673416920be5bbf4d993 aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "scope": "Whole candidate shipping.py and all test files, README authoritative contract; no other review conclusions read; no product execution",
+  "verdict": "pass",
+  "findings": [],
+  "rationale": [
+    "Negative integer totals raise ValueError before the fee branch.",
+    "Every nonnegative integer total below 10000 returns 500; 10000 and all larger integer totals return 0.",
+    "Public signature and USD constant are preserved. Type validation is correctly outside scope.",
+    "The three new examples match the requested 10000, 9999, and -1 behaviors; unchanged regression preserves USD."
+  ],
+  "counts": {
+    "wait": 0,
+    "dispatch": 0,
+    "followup": 0
+  },
+  "limitations": "Static code/spec review only; formal execution and blind test qualification belong to separate owners."
+}

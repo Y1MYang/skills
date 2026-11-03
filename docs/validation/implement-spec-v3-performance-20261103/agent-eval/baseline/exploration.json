@@ -1,0 +1,27 @@
+{
+  "role": "Exploration",
+  "model": "gpt-6.1-sol",
+  "dispatch": {
+    "model": "gpt-6.1-sol",
+    "fork_turns": "none"
+  },
+  "first_role_dispatch_time_utc": "2026-11-03T06:51:12.418038+00:00",
+  "dispatch_time_precision": "Approximation captured after initial reference reading; exact dispatch receipt UTC unavailable in exposed context.",
+  "project": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "evidence": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline",
+  "baseline_head": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "models": {
+    "exploration": "gpt-6.1-sol",
+    "architect": "gpt-6.1-sol",
+    "test_author": "gpt-6.1-sol",
+    "implementer": "gpt-6.1-sol",
+    "runner": "gpt-6.1-sol",
+    "integrator": "gpt-6.1-sol",
+    "coverage_audit": "gpt-6.1-sol",
+    "spec_reviewer": "gpt-6.1-sol",
+    "standards_reviewer": "gpt-6.1-sol",
+    "expert": "gpt-6.1-sol"
+  },
+  "start_utc_approximation": "2026-11-03T06:51:12.418038+00:00",
+  "capacity_notice": "Coordinator sent retry/capacity notice while this instance was already running; no extra role execution or product diagnostics occurred."
+}

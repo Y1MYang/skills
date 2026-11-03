@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Spec v3"
+  short_description: "Execute a spec with independent tests and small TDD steps"
+  default_prompt: "Use $implement-spec-v3 to implement this agreed specification through independent tests and small TDD steps."

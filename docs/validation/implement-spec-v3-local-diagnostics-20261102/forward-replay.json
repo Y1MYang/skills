@@ -1,0 +1,342 @@
+{
+  "after_replay": {
+    "checks_by_id": {
+      "A": {
+        "failure": true,
+        "phase": "diagnostic",
+        "seconds": 1.1
+      },
+      "B": {
+        "failure": true,
+        "phase": "preflight",
+        "seconds": 0.02
+      },
+      "C": {
+        "failure": false,
+        "phase": "diagnostic",
+        "seconds": 0.21800000000803266
+      }
+    },
+    "cycle_attempts_remaining": 646,
+    "cycle_formal_failures_remaining": 24,
+    "cycle_global": {
+      "issue_id": "I",
+      "limits": {
+        "attempts": 656,
+        "formal_failures": 24,
+        "seconds": 590400
+      },
+      "pending": [],
+      "provenance": "supplied simulated history; not observed PR execution",
+      "run_id": "R",
+      "unknown_or_business_decision_blockers": [],
+      "used": {
+        "attempts": 10,
+        "formal_failures": 0,
+        "seconds": 30.42
+      }
+    },
+    "effective_run_seconds_including_standalone": 30.638000000008034,
+    "effective_seconds_remaining": 590369.362,
+    "formal_qualification": false,
+    "historical_failures_resolved_for_delivery": false,
+    "issue_id": "I",
+    "local_cumulative_limits": {
+      "diagnostic": {
+        "checks": 2,
+        "seconds": 11.1
+      },
+      "preflight": {
+        "checks": 1,
+        "seconds": 0.02
+      }
+    },
+    "local_use": {
+      "diagnostic": {
+        "checks": 2,
+        "failures": 1,
+        "seconds": 1.318
+      },
+      "preflight": {
+        "checks": 1,
+        "failures": 1,
+        "seconds": 0.02
+      }
+    },
+    "reservations": {},
+    "run_id": "R",
+    "standalone_added_seconds": 0.21800000000803266
+  },
+  "audit_after": [
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\001-R-I-policy-1.json",
+      "sha256": "9437ec391a256652eb1f87a887182c607adc53784d532cd4880efcda480ebc86"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\002-R-I-correction-B-1.json",
+      "sha256": "425e9c02198725d5c607c55925f2d807a10cc21938ab29af3311f2b358ff3a87"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\003-R-I-extension-1.json",
+      "sha256": "f23b07350d25c4032fab983f30adaffb8eb55093127d5f78229afcffe629e426"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\004-R-I-C-admission.json",
+      "sha256": "5fcf82f9a79ef742f439a6df82f2d470a23b69f57b04341e3da5f343a05e6371"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\005-R-I-C-outcome.json",
+      "sha256": "2f0d69575486e21a0ae937866342acb2ce4a4b3534bbf8e4982977fcf33adca6"
+    }
+  ],
+  "audit_before": [
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\001-R-I-policy-1.json",
+      "sha256": "9437ec391a256652eb1f87a887182c607adc53784d532cd4880efcda480ebc86"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\002-R-I-correction-B-1.json",
+      "sha256": "425e9c02198725d5c607c55925f2d807a10cc21938ab29af3311f2b358ff3a87"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\003-R-I-extension-1.json",
+      "sha256": "f23b07350d25c4032fab983f30adaffb8eb55093127d5f78229afcffe629e426"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\004-R-I-C-admission.json",
+      "sha256": "5fcf82f9a79ef742f439a6df82f2d470a23b69f57b04341e3da5f343a05e6371"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\events\\005-R-I-C-outcome.json",
+      "sha256": "2f0d69575486e21a0ae937866342acb2ce4a4b3534bbf8e4982977fcf33adca6"
+    }
+  ],
+  "before_replay": {
+    "checks_by_id": {
+      "A": {
+        "failure": true,
+        "phase": "diagnostic",
+        "seconds": 1.1
+      },
+      "B": {
+        "failure": true,
+        "phase": "preflight",
+        "seconds": 0.02
+      },
+      "C": {
+        "failure": false,
+        "phase": "diagnostic",
+        "seconds": 0.21800000000803266
+      }
+    },
+    "cycle_attempts_remaining": 646,
+    "cycle_formal_failures_remaining": 24,
+    "cycle_global": {
+      "issue_id": "I",
+      "limits": {
+        "attempts": 656,
+        "formal_failures": 24,
+        "seconds": 590400
+      },
+      "pending": [],
+      "provenance": "supplied simulated history; not observed PR execution",
+      "run_id": "R",
+      "unknown_or_business_decision_blockers": [],
+      "used": {
+        "attempts": 10,
+        "formal_failures": 0,
+        "seconds": 30.42
+      }
+    },
+    "effective_run_seconds_including_standalone": 30.638000000008034,
+    "effective_seconds_remaining": 590369.362,
+    "formal_qualification": false,
+    "historical_failures_resolved_for_delivery": false,
+    "issue_id": "I",
+    "local_cumulative_limits": {
+      "diagnostic": {
+        "checks": 2,
+        "seconds": 11.1
+      },
+      "preflight": {
+        "checks": 1,
+        "seconds": 0.02
+      }
+    },
+    "local_use": {
+      "diagnostic": {
+        "checks": 2,
+        "failures": 1,
+        "seconds": 1.318
+      },
+      "preflight": {
+        "checks": 1,
+        "failures": 1,
+        "seconds": 0.02
+      }
+    },
+    "reservations": {},
+    "run_id": "R",
+    "standalone_added_seconds": 0.21800000000803266
+  },
+  "conflict_result": "conflicting content for stable event_id",
+  "event_chain_valid": true,
+  "issue_id": "I",
+  "limitations": [
+    "This verifies a small support-record projection, not cycle.py recovery internals.",
+    "Real Windows runner receipt was used only for one standalone fixture.",
+    "Historical A/B and global 10/0/30.42 are supplied simulation, preserved byte-for-byte.",
+    "Diagnostic success does not resolve historical formal failure or establish real PR readiness."
+  ],
+  "marker_after": "ad69a11fc19b30907d2438419e38b30d73c49188edf3be298b5eab344407f4a1",
+  "marker_before": "ad69a11fc19b30907d2438419e38b30d73c49188edf3be298b5eab344407f4a1",
+  "original_after": [
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\global-snapshot.json",
+      "sha256": "8726bfdb2c9a0185f0f1738506c788ea07eaa03ba0150e44159f4dba8b571dbe"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-check-A.json",
+      "sha256": "95311b681a99dd17600e1e7ed44f7eb12bdfd7d09981e0a64a2a04ad8ea2ee93"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-check-B.json",
+      "sha256": "4eefceef7deddee5bc063656c75b52b584d45ece1c08e28cdee6c1e06d52435a"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-handoff.json",
+      "sha256": "7a06152b6217a5e55c24b03916c6a3a9f9194bb28efb7c95dec9e1cb32b5de29"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-plan.json",
+      "sha256": "506b16404d61596fa3ed7c5094830cbcae6d5014a642d4e74d849edb22dbe007"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-summary.json",
+      "sha256": "fbb0da40d3819d3b79593944f6f74afe2a1e70992e14409d4bbd7c575c0600ec"
+    }
+  ],
+  "original_before": [
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\global-snapshot.json",
+      "sha256": "8726bfdb2c9a0185f0f1738506c788ea07eaa03ba0150e44159f4dba8b571dbe"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-check-A.json",
+      "sha256": "95311b681a99dd17600e1e7ed44f7eb12bdfd7d09981e0a64a2a04ad8ea2ee93"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-check-B.json",
+      "sha256": "4eefceef7deddee5bc063656c75b52b584d45ece1c08e28cdee6c1e06d52435a"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-handoff.json",
+      "sha256": "7a06152b6217a5e55c24b03916c6a3a9f9194bb28efb7c95dec9e1cb32b5de29"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-plan.json",
+      "sha256": "506b16404d61596fa3ed7c5094830cbcae6d5014a642d4e74d849edb22dbe007"
+    },
+    {
+      "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\originals\\old-summary.json",
+      "sha256": "fbb0da40d3819d3b79593944f6f74afe2a1e70992e14409d4bbd7c575c0600ec"
+    }
+  ],
+  "replay_results": [
+    {
+      "allocation_added": 0,
+      "charges_added": 0,
+      "event_id": "R-I-extension-1",
+      "replay": true
+    },
+    {
+      "allocation_added": 0,
+      "charges_added": 0,
+      "event_id": "R-I-C-admission",
+      "replay": true
+    },
+    {
+      "allocation_added": 0,
+      "charges_added": 0,
+      "event_id": "R-I-C-outcome",
+      "replay": true
+    },
+    {
+      "allocation_added": 0,
+      "charges_added": 0,
+      "event_id": "R-I-extension-1",
+      "replay": true
+    },
+    {
+      "allocation_added": 0,
+      "charges_added": 0,
+      "event_id": "R-I-C-outcome",
+      "replay": true
+    }
+  ],
+  "resume_behavior": "Read same R/I history; C has complete eligible standalone receipt and outcome, so do not relaunch it. An identical stable event is replayed with no accounting delta. New observations require new event identity and cannot repeat settled physical check charges. If a publication were incomplete, reconcile before admission; unpublished extension grants no allowance.",
+  "run_id": "R",
+  "same_check_executions_added": 0,
+  "same_decision_allocations_added": 0,
+  "sources_after": [
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\SKILL.md",
+      "sha256": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\execution-and-recovery.md",
+      "sha256": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\diagnostic-budgets.md",
+      "sha256": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\runtime-ledger.md",
+      "sha256": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\run_command.py",
+      "sha256": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\windows_job.py",
+      "sha256": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\path_identity.py",
+      "sha256": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071"
+    }
+  ],
+  "sources_before": [
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\SKILL.md",
+      "sha256": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\execution-and-recovery.md",
+      "sha256": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\diagnostic-budgets.md",
+      "sha256": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\references\\runtime-ledger.md",
+      "sha256": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\run_command.py",
+      "sha256": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\windows_job.py",
+      "sha256": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4"
+    },
+    {
+      "path": "E:\\Repos\\skills\\skills\\engineering\\implement-spec-v3\\scripts\\path_identity.py",
+      "sha256": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071"
+    }
+  ],
+  "verified_at": "2026-11-02T01:14:09.251397+00:00"
+}

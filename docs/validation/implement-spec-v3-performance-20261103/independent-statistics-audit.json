@@ -1,0 +1,1286 @@
+{
+  "schema": 1,
+  "created_at_utc": "2026-11-03T08:27:44.567364+00:00",
+  "status": "pass",
+  "scope": "Independent read-only arithmetic and saved-evidence audit; no target execution or timing rerun",
+  "input_sha256_before": {
+    "matched-results.json": "f43caafdd92c584435a8b50f23fb95fee1e459710b8d37b52703281b9a811675",
+    "analysis.json": "3ed69229932b5832b8c9ca60dc6131a24cb03a9beb64cbdb25ce2b4747313937",
+    "equivalence-audit.json": "b8158a5550cd23f0360543f3a6d6d59bf204a08916e95a86b650c19d351ec418",
+    "README.md": "90b24424e61aa94dba067c6e877e185de49989d8a1eecd0938821aef9c754be8"
+  },
+  "input_sha256_after": {
+    "matched-results.json": "f43caafdd92c584435a8b50f23fb95fee1e459710b8d37b52703281b9a811675",
+    "analysis.json": "3ed69229932b5832b8c9ca60dc6131a24cb03a9beb64cbdb25ce2b4747313937",
+    "equivalence-audit.json": "b8158a5550cd23f0360543f3a6d6d59bf204a08916e95a86b650c19d351ec418",
+    "README.md": "90b24424e61aa94dba067c6e877e185de49989d8a1eecd0938821aef9c754be8"
+  },
+  "matched_results_immutable": true,
+  "checks_performed": 9144,
+  "discrepancies": [],
+  "measured_runs": 24,
+  "warmup_runs_excluded": 4,
+  "all_pairs": 14,
+  "measured_failed_trials": [],
+  "statistics": {
+    "small": {
+      "arms": {
+        "baseline": {
+          "n": 6,
+          "values_seconds": [
+            5.241953500022646,
+            5.188586600008421,
+            5.161945400002878,
+            5.283524300000863,
+            5.294321800000034,
+            5.165351000003284
+          ],
+          "median_seconds": 5.215270050015533,
+          "min_seconds": 5.161945400002878,
+          "max_seconds": 5.294321800000034,
+          "mean_seconds": 5.222613766673021,
+          "stdev_seconds": 0.058895982260695784
+        },
+        "candidate": {
+          "n": 6,
+          "values_seconds": [
+            4.292271899990737,
+            4.421138799982145,
+            4.265209499979392,
+            4.35333620000165,
+            4.392389300017385,
+            4.32550119998632
+          ],
+          "median_seconds": 4.339418699993985,
+          "min_seconds": 4.265209499979392,
+          "max_seconds": 4.421138799982145,
+          "mean_seconds": 4.341641149992938,
+          "stdev_seconds": 0.05928177331221747
+        }
+      },
+      "measured_order": [
+        "AB",
+        "BA",
+        "AB",
+        "BA",
+        "AB",
+        "BA"
+      ],
+      "paired_trials": [
+        {
+          "pair": 0,
+          "baseline_seconds": 5.241953500022646,
+          "candidate_seconds": 4.292271899990737,
+          "saved_seconds": 0.9496816000319086,
+          "saved_percent": 18.11694056476857,
+          "candidate_over_baseline_ratio": 0.8188305943523143
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 5.188586600008421,
+          "candidate_seconds": 4.421138799982145,
+          "saved_seconds": 0.7674478000262752,
+          "saved_percent": 14.791076244637214,
+          "candidate_over_baseline_ratio": 0.8520892375536279
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 5.161945400002878,
+          "candidate_seconds": 4.265209499979392,
+          "saved_seconds": 0.8967359000234865,
+          "saved_percent": 17.37205318024066,
+          "candidate_over_baseline_ratio": 0.8262794681975933
+        },
+        {
+          "pair": 3,
+          "baseline_seconds": 5.283524300000863,
+          "candidate_seconds": 4.35333620000165,
+          "saved_seconds": 0.9301880999992136,
+          "saved_percent": 17.60544756080826,
+          "candidate_over_baseline_ratio": 0.8239455243919174
+        },
+        {
+          "pair": 4,
+          "baseline_seconds": 5.294321800000034,
+          "candidate_seconds": 4.392389300017385,
+          "saved_seconds": 0.9019324999826495,
+          "saved_percent": 17.03584583737701,
+          "candidate_over_baseline_ratio": 0.8296415416262299
+        },
+        {
+          "pair": 5,
+          "baseline_seconds": 5.165351000003284,
+          "candidate_seconds": 4.32550119998632,
+          "saved_seconds": 0.8398498000169639,
+          "saved_percent": 16.259297771176247,
+          "candidate_over_baseline_ratio": 0.8374070222882375
+        }
+      ],
+      "median_paired_saved_seconds": 0.899334200003068,
+      "median_paired_saved_percent": 17.203949508808833,
+      "ratio_of_arm_medians_candidate_over_baseline": 0.8320602113367188,
+      "reduction_from_ratio_of_arm_medians_percent": 16.793978866328118,
+      "baseline_over_candidate_median_speed_ratio": 1.201836100771461
+    },
+    "history_logs": {
+      "arms": {
+        "baseline": {
+          "n": 6,
+          "values_seconds": [
+            18.077630199986743,
+            18.29664449999109,
+            18.213469600013923,
+            18.133859499997925,
+            18.553081599995494,
+            18.109286299993983
+          ],
+          "median_seconds": 18.173664550005924,
+          "min_seconds": 18.077630199986743,
+          "max_seconds": 18.553081599995494,
+          "mean_seconds": 18.230661949996527,
+          "stdev_seconds": 0.1767060744612333
+        },
+        "candidate": {
+          "n": 6,
+          "values_seconds": [
+            14.330936199985445,
+            14.481404699996347,
+            14.502661400008947,
+            14.462728599988623,
+            14.40369209999335,
+            14.633064399997238
+          ],
+          "median_seconds": 14.472066649992485,
+          "min_seconds": 14.330936199985445,
+          "max_seconds": 14.633064399997238,
+          "mean_seconds": 14.469081233328325,
+          "stdev_seconds": 0.1015579827701733
+        }
+      },
+      "measured_order": [
+        "AB",
+        "BA",
+        "AB",
+        "BA",
+        "AB",
+        "BA"
+      ],
+      "paired_trials": [
+        {
+          "pair": 0,
+          "baseline_seconds": 18.077630199986743,
+          "candidate_seconds": 14.330936199985445,
+          "saved_seconds": 3.7466940000012983,
+          "saved_percent": 20.725581608611762,
+          "candidate_over_baseline_ratio": 0.7927441839138823
+        },
+        {
+          "pair": 1,
+          "baseline_seconds": 18.29664449999109,
+          "candidate_seconds": 14.481404699996347,
+          "saved_seconds": 3.8152397999947425,
+          "saved_percent": 20.852128377947118,
+          "candidate_over_baseline_ratio": 0.7914787162205288
+        },
+        {
+          "pair": 2,
+          "baseline_seconds": 18.213469600013923,
+          "candidate_seconds": 14.502661400008947,
+          "saved_seconds": 3.7108082000049762,
+          "saved_percent": 20.373977509491876,
+          "candidate_over_baseline_ratio": 0.7962602249050813
+        },
+        {
+          "pair": 3,
+          "baseline_seconds": 18.133859499997925,
+          "candidate_seconds": 14.462728599988623,
+          "saved_seconds": 3.6711309000093024,
+          "saved_percent": 20.244619740269425,
+          "candidate_over_baseline_ratio": 0.7975538025973058
+        },
+        {
+          "pair": 4,
+          "baseline_seconds": 18.553081599995494,
+          "candidate_seconds": 14.40369209999335,
+          "saved_seconds": 4.149389500002144,
+          "saved_percent": 22.364961193310073,
+          "candidate_over_baseline_ratio": 0.7763503880668993
+        },
+        {
+          "pair": 5,
+          "baseline_seconds": 18.109286299993983,
+          "candidate_seconds": 14.633064399997238,
+          "saved_seconds": 3.4762218999967445,
+          "saved_percent": 19.195797351759243,
+          "candidate_over_baseline_ratio": 0.8080420264824075
+        }
+      ],
+      "median_paired_saved_seconds": 3.7287511000031373,
+      "median_paired_saved_percent": 20.54977955905182,
+      "ratio_of_arm_medians_candidate_over_baseline": 0.7963207756020657,
+      "reduction_from_ratio_of_arm_medians_percent": 20.36792243979343,
+      "baseline_over_candidate_median_speed_ratio": 1.2557753491285477
+    }
+  },
+  "pair_equivalence": [
+    {
+      "scenario": "small",
+      "pair": -1,
+      "warmup": true,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 0,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 1,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 2,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 3,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 4,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "small",
+      "pair": 5,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": -1,
+      "warmup": true,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 0,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 1,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 2,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 3,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 4,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    },
+    {
+      "scenario": "history_logs",
+      "pair": 5,
+      "warmup": false,
+      "matches": {
+        "events": true,
+        "results": true,
+        "executions": true,
+        "final_sources": true,
+        "failures": true
+      },
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23"
+    }
+  ],
+  "trial_evidence": [
+    {
+      "trial": "small/-1/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-00-candidate",
+      "warmup": true,
+      "commands_sha256": "ec7c9c173004253f81ce1b8b91ab0f94ce0fda9715328fb86a29052cfcf47fe9",
+      "state_sha256": "067948a999e97bb65784b15e09d9563380249f9a65978b4b8b6c74de0d6983cf",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "cccf1cf230db349393a7c782fbf29bff746bcbeb16ff07cc0aa99eece0a66854",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/-1/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-00-baseline",
+      "warmup": true,
+      "commands_sha256": "a0f60f8a15e9bcf3934a0231af3648735f095a8ec6bc89c57229572b9ca79a86",
+      "state_sha256": "ff7d5986785e8640739e69aaa6747a7675e922d6cab70ac878c7a40f14c934c1",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "72255610e983420609b2d188ca4e2e84eba8e7cf1546e275e4a6277434463705",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/0/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-01-baseline",
+      "warmup": false,
+      "commands_sha256": "26ced826b9778e0bf5d21a1b3c6e5edac53d10db791b2253f847d582089fa023",
+      "state_sha256": "cd4b2ccf24d110c8a2fb0398704415cf01b94bcb9d34b1614ee9a729053294a5",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "f8fc2e27b24b918bc011db9062bad49100b55d4ba6ead5c654f45ada44378432",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/0/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-01-candidate",
+      "warmup": false,
+      "commands_sha256": "a181251f002f8073103726c88ea6416ff055f7515fe6ebc7c01402bc566d7d16",
+      "state_sha256": "996b69db7b0a6503cda9dde22a58406f67a4aab252d57a517392ec3da181504b",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "de497e3ff1afec10a69f464b3523c03822761c713b47811b8477088d84a6834e",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/1/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-02-candidate",
+      "warmup": false,
+      "commands_sha256": "c7af265a9033b657641d924b04333b89eaa751c446d5f0acecbe922b7cca3411",
+      "state_sha256": "dbf7f29c8887de301f630adc5907f4bec6bcae0f1113127f25bd066364f65c3e",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "7585b2a20ce4724d5dbf5a259d2e6e5685ff8fdacb98e5874834d56a7c8c7f3c",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/1/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-02-baseline",
+      "warmup": false,
+      "commands_sha256": "ee29b9ef462ed74eb9af0f0a1f08e261ef5c80f6fe7863b8448a04fd4282a12b",
+      "state_sha256": "7f42d729acf83f3a008c1082ef85451fd51bed26df61013147967007f1af5c0f",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "e484ef57fa6d36be8a4a30c5d0fb3d183ce29f2e47da8db4e55b0f3d8894c26f",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/2/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-03-baseline",
+      "warmup": false,
+      "commands_sha256": "7c8657cf63872096a2f37bd718e6331c9040f62c8e5f6a0917791be69f421e4c",
+      "state_sha256": "22c5594d5fb29846d6f73f4b46a4fa27a519cfb7b8045cb87d328594440a4308",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "bd65000caf52d7249556d57dee73a48e73ffc47c0be3ea8cceda622a5b66d6cf",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/2/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-03-candidate",
+      "warmup": false,
+      "commands_sha256": "5f129032b811adc9f9d7718dc8e2f3d05fa3d88d5b66be040ebdbd8e98204099",
+      "state_sha256": "34a0e0949194b7a6e77e2c1b7854a9ac4456a4618dda0ad713b814ee02e55ee7",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "65922eb624e5108d2406da8481fec2fb4998f5273719b39791004b47d2869437",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/3/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-04-candidate",
+      "warmup": false,
+      "commands_sha256": "9f23646200f4653e79e08cbc731326531c49c65c7aacbb1d295718db2320752d",
+      "state_sha256": "930b72d41ba1942c684e3e6641aa32049873946aff6ed7b4e826343689dc4fe7",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "668a187ce7608391035faca8312e4b25154b0a2375f89e92917c067f833876a9",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/3/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-04-baseline",
+      "warmup": false,
+      "commands_sha256": "67d9a05ca0bf33f4b5d6ed0af794ad8478882f4c195157849c2814850ca53690",
+      "state_sha256": "473bceb0b3eb63ca8ffb59904b92bc44e6a280b13bd21d50cd48d17f022ac649",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "52a6276adf7b462a03bb0f2757b9583863f11ddfced466a21260e83a741b7533",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/4/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-05-baseline",
+      "warmup": false,
+      "commands_sha256": "8b8f00fcdf08710fd9229fe30d077a3fab8a020e71b39d7cb19e8916cada225c",
+      "state_sha256": "75dac74922feecbac2f21012004dfdc31b05184dbe30394444b41458abcd070c",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "254ffc864dda84dbe225004ddc310d640f96dbb8ab5d5d0215b3fbbe293a0407",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/4/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-05-candidate",
+      "warmup": false,
+      "commands_sha256": "fe58c1d2624280e0e874ee1db94a3c0421f42ac8d9be9d6a5286124795b28df9",
+      "state_sha256": "4c10e607db99b708c8f91569349b299f08eb7e833e44917865f9f1a18f131bf9",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "3192082af3bae1d69c60be7b01f88870df1bb735c4ef6b02a47b69927c4907ac",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/5/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-06-candidate",
+      "warmup": false,
+      "commands_sha256": "b1b510b22ed0f3ab49675c1e2a7f294fbb9504853fa9444794f3df392b13059a",
+      "state_sha256": "32e8fd188b68909ee8301091cd3bd1f8a6d921713d008d2e8fd9d5df07a8e0d5",
+      "outer_launches": 25,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "a81906c074ad15c43c94be69d27bb7389025add06372dc47bb2f167c934058ef",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "small/5/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\small-06-baseline",
+      "warmup": false,
+      "commands_sha256": "cea1089efe12556f1b84650beaaaf2a1b70842a23113765d9df316fd350bfdc0",
+      "state_sha256": "82bea95b6f9387fde4afdaac5198e35602e8fccbfde9cee831977d4ab894eb62",
+      "outer_launches": 37,
+      "events": 24,
+      "target_runs": 6,
+      "assertion_cases": 10,
+      "failed_target_executions_retained": 3,
+      "normalized_full_event_payload_sha256": "2484821813b6bdca2416a59edd99e69784dbf5696c6671f15c690ef77708119d",
+      "normalized_event_results_sha256": "3ab649207655fe19e0ca97a834ca4eda69319a47cbdee2033c460043290781bc",
+      "receipt_index_sha256": "e7ab8fe6d03c95b95ad7bc19e69bb487fc7b685364f4120649861b7729d2a852",
+      "final_source_sha256": {
+        "src\\fee.py": "dc77400b202f9ace3e6987d3e6fe44de796987d683ffd201fd30271f3267bf24",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "c0c9965e163d93c15ae7614fc02b65565a7f62a32cc7a42c4404d688995086be",
+        "tests\\test_fee_02.py": "9da4a5f6dd57c015c7f3b1cac8f18468cec4553015824684db5a2c95990b9559",
+        "shared\\fees.json": "213a20674570fded30818418f334a454b5681191fdee46c358ee39c69953aa5c",
+        "shared\\oracle.py": "68b2a044b753941e2f6f62ca8a86e54c45d7e84b868800bfc9990ebaa6724c64"
+      }
+    },
+    {
+      "trial": "history_logs/-1/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-00-candidate",
+      "warmup": true,
+      "commands_sha256": "77d351267fca7500ef6e98bd9ff0d45bd2567e63a7742840bf07defd06e39a8c",
+      "state_sha256": "4bd7a0ca097d54661c03a25ef364c645175536af03219af6fbca5e2d370d2c14",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "c62bc2a451eac1f71bde0f39eb7521b52cc125ac58f7926122d53acf177f0af7",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/-1/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-00-baseline",
+      "warmup": true,
+      "commands_sha256": "575169841e696142b6b8d66f12ad086dffa7dd3e941385236be2f621f083a29f",
+      "state_sha256": "a442e8bc3eed78cc1e9b9541620ab38ecc89df325c2286455ef62ac5469032b1",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "284382731e7cd7785375f372f6d7716970c7943409471452eb692053092867e4",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/0/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-01-baseline",
+      "warmup": false,
+      "commands_sha256": "8df82b627a087a70563a6fd7b65c93bcf168fb31bdc56a133874454e6db4472c",
+      "state_sha256": "86d2b193a5ad21915beeeadd5eb8849d50b8cd9abed391c1357fce5e4b6f8208",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "f58db84d767d7da7004073cef32df33e8983ed40a95ad1006d90f815c9e8762c",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/0/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-01-candidate",
+      "warmup": false,
+      "commands_sha256": "1cebbb9d35e8f2548f8f339c4d0842e4dc6be69afd10bb32a0a3e709f15d76fa",
+      "state_sha256": "cb148b53b23e874564bfe11c9ffcff408d32600e48b1c1cc2f3a8fb9563207b6",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "e57a3954f25fd11fbb44c7f579e26de3613ac03995e61680ffade9cc3b179f6c",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/1/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-02-candidate",
+      "warmup": false,
+      "commands_sha256": "c3b9a330192862bbf4e56b1c3a6999c331fd2c2aa063f67983fd5db1ef3b493a",
+      "state_sha256": "728c3796dd651db08b344a59d650080ad6d84eee68e91db0f2d3c11d02baa313",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "e169849a4f616acfe220712720c40a005a7652dd1af6787d37a46314bce3a46c",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/1/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-02-baseline",
+      "warmup": false,
+      "commands_sha256": "b0a30482de5484cd7c54966fb327c094a7b54ff32d5edd010a2d41de04b86f08",
+      "state_sha256": "f785856faab90dcdd6b090bfbf2eeb0009f853e08077bc7c6de8912cb348dc09",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "c1d75b3d9b4e2c469dce326d1440850839c1ca67e7e923096cb85c3c076caf7f",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/2/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-03-baseline",
+      "warmup": false,
+      "commands_sha256": "bfdcc2ebca9483f530e4e5d36f6acb5d038b910dd82f85ae1248bea188501f91",
+      "state_sha256": "82e01a7dc7eecc3fb74131eefb45cad8fd62b30bca3edded89d3da9be97be9c7",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "39387d4d37480c510c0a2edb9a9c860e9e239f87c686b6ffafb5f89fd7824784",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/2/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-03-candidate",
+      "warmup": false,
+      "commands_sha256": "ba5f01112092094f65ef661527c1e04d33e7e8746fb5e0004a408b67a52b583f",
+      "state_sha256": "0e4a300f82b802f49c09a983563ff52fee3ba17379b8821e9bffc71c39be05ab",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "66643ca64483f795d798316e9fab66d73c3e199ce634b26ab55529cdffbfeb13",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/3/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-04-candidate",
+      "warmup": false,
+      "commands_sha256": "a8f8e4ae9220e4f22cca67ba3960fa795f0cec955b4c0a5a4bce11f7042f5f7b",
+      "state_sha256": "6da86c380480372c95a17bb9dda95c9d2a8746f5ab69283b7789fc5e3e9f5a56",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "193695a088188ae16f4d02982367c932504819931e0de3c676e6a72d48b61d50",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/3/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-04-baseline",
+      "warmup": false,
+      "commands_sha256": "d2f89a160cf14d6352c6a209426b0510006b5c26fc96add498b5214a0ecd1731",
+      "state_sha256": "ecb42242c02c8106a33a803f1575ada50c82001c46f3823278f4564444c3bce0",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "ae52cd655320c7fc88f69ae76050616f8fbcf1b5338384623644ab33c4b1deb7",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/4/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-05-baseline",
+      "warmup": false,
+      "commands_sha256": "b7df24c49d39c35b3d90c0d1d27285cf6073ecdffb11be38e7314bb8bd29ebbd",
+      "state_sha256": "7f03d85f4451f02d0154bfa0c3ba09433cb41e51da1e64b3c5a41c34e07b9b08",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "997cf3d9c4c27b319bdb7fab3246f26da433ca39debd0fade00b4724bce1b4b1",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/4/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-05-candidate",
+      "warmup": false,
+      "commands_sha256": "b07f8d54b110742fa211ea335d534d5dca9cb0aa84dc3fa32908360ac17caeb4",
+      "state_sha256": "198e983a9e66c1ce93d435cb2a421482d5a7f675f944b74bd085a12c717ffa5b",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "cf71b8d3795f2bbd43bb095bfdaca91be21ca931868dfc018016c577498400eb",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/5/candidate",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-06-candidate",
+      "warmup": false,
+      "commands_sha256": "07c6539445a18da45910d588b8af733057b8d66c174fdb1bfb57c7f0441c89aa",
+      "state_sha256": "6f0770a5db8db3a6bc29422a7fd9e4bba7f2d127af112a2e0b8aa2cc1e35de55",
+      "outer_launches": 70,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "c404506bc599bb8c45da14908fad099318bf7004aa12dacb6d0a51e35f6c23f1",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    },
+    {
+      "trial": "history_logs/5/baseline",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll\\history_logs-06-baseline",
+      "warmup": false,
+      "commands_sha256": "057e19a27d1167ca539db40f87f02439c300b23bed34620efc2c26c71bff45f5",
+      "state_sha256": "c7f9703174bc78dd9d66bbaca4197065c85351fecd6efabc29c524d403c8b839",
+      "outer_launches": 120,
+      "events": 88,
+      "target_runs": 25,
+      "assertion_cases": 168,
+      "failed_target_executions_retained": 12,
+      "normalized_full_event_payload_sha256": "19e3d667baf6dddf12b795dedc2dea9252d7b1f37620aafd5d4d132c378dee23",
+      "normalized_event_results_sha256": "f264e6b38cc408bed94e4a56209fbc7ca9e70f2f66aada4206c8b7756c636b40",
+      "receipt_index_sha256": "84220da270347db71fffcfaf84386bde33d6add0c17beb86288467eb2db9b62a",
+      "final_source_sha256": {
+        "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+        "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+        "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+        "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+        "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+        "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+        "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+        "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+        "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+        "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+        "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+        "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+        "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+        "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+        "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+      }
+    }
+  ],
+  "target_receipts_verified": 434,
+  "source_bindings": {
+    "baseline": {
+      "files": 18,
+      "cycle_sha256": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+      "all_measured_copy_bytes_match": true,
+      "manifest_matches": true,
+      "manifest_separator_normalization": "Windows and POSIX separators normalized for path identity only; file bytes unchanged",
+      "archive_only_bytecode_cache_entries_excluded": [
+        "scripts/__pycache__/path_identity.cpython-312.pyc",
+        "scripts/__pycache__/windows_job.cpython-312.pyc",
+        "tests/__pycache__/test_cycle.cpython-312.pyc",
+        "tests/__pycache__/test_cycle_proofs.cpython-312.pyc",
+        "tests/__pycache__/test_cycle_recovery.cpython-312.pyc",
+        "tests/__pycache__/test_run_command.cpython-312.pyc"
+      ],
+      "measured_copy_has_exact_source_pin_inventory": true
+    },
+    "candidate": {
+      "files": 19,
+      "cycle_sha256": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+      "all_measured_copy_bytes_match": true,
+      "manifest_matches": true,
+      "manifest_separator_normalization": "Windows and POSIX separators normalized for path identity only; file bytes unchanged",
+      "archive_only_bytecode_cache_entries_excluded": [],
+      "measured_copy_has_exact_source_pin_inventory": true
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "artifact": "baseline-profile-instrumented.json",
+      "sha256": "1e2ece99fc70cebd145bf29cffd68ef339199aa94d84182f2f035de37fc6a38c",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\single",
+      "profiled": true,
+      "pstats_files": 116,
+      "actual_outer_launches": 120,
+      "commands_sha256": "6b091f4c1b5b5412c0c5b35ef101a6356e5e2d3ae9666fa6453d7f5299b34787",
+      "profile_file_index_sha256": "ff58ebc616b47e37dbad2c441c83546c59d02cc07c0bd356696129e9eb408937",
+      "audit_history_calls": 90,
+      "check_receipt_calls": 1171,
+      "save_state_calls": 89,
+      "atomic_json_calls": 114,
+      "run_owned_calls": 29,
+      "find_and_load_calls": 5075,
+      "elapsed_seconds_excluded_from_comparison": 21.910669899982167,
+      "actual_profile_source_files_match_measured_pins": true,
+      "profile_file_index_encoding": "Sorted objects {file: basename, sha256: actual digest}; canonical JSON sort_keys=true, separators=(comma, colon), UTF-8"
+    },
+    "candidate": {
+      "artifact": "candidate-profile.json",
+      "sha256": "ea80764eefe484016d71ecca717ae8e439ab03472bbce5a8bffa5604c7caf46d",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single",
+      "profiled": true,
+      "pstats_files": 66,
+      "actual_outer_launches": 70,
+      "commands_sha256": "b01900bff6ea791379d3e464e841c342bc76ffc0928c2e01f23b27749301224c",
+      "profile_file_index_sha256": "c466bcdedff12d9b8154283f379044d749e746a76ac5793ecb3f1ea81b2ae428",
+      "audit_history_calls": 90,
+      "check_receipt_calls": 1171,
+      "save_state_calls": 89,
+      "atomic_json_calls": 114,
+      "run_owned_calls": 29,
+      "find_and_load_calls": 3025,
+      "elapsed_seconds_excluded_from_comparison": 18.095646600006148,
+      "actual_profile_source_files_match_measured_pins": true,
+      "profile_file_index_encoding": "Sorted objects {file: basename, sha256: actual digest}; canonical JSON sort_keys=true, separators=(comma, colon), UTF-8"
+    }
+  },
+  "excluded_diagnostic_failures": [
+    {
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-d19lxb_d\\single",
+      "commands_sha256": "4ba3c6552752d065b477592ba41d850635ec9a83eb7f015437f21ec5b6192a41",
+      "observed_exit_disagreement": [
+        {
+          "phase": "fee-1-probe-run",
+          "outer_exit": 0,
+          "reported_target_exit": 1
+        }
+      ],
+      "included_in_measured": false,
+      "replaces_trial": false
+    }
+  ],
+  "normalization": {
+    "event_payload": "All event fields retained, replacing only per-trial root, generated attempt IDs by preparation order, and final Git HEAD",
+    "comparison": "Full normalized events and event results; execution argv/purpose/outcome/exit/snapshot hashes; final fixture source hashes; retained failure records",
+    "receipt_checks": "Actual receipt/request/log bytes and digests, state adoption, request binding, before/after stability, cleanup and same-candidate formal facts",
+    "warmups": "pair=-1 and warmup=true, exactly one per arm per scenario, excluded from every statistic",
+    "formulas": {
+      "pair_saved_seconds": "A_i - B_i",
+      "pair_saved_percent": "100 * (A_i - B_i) / A_i",
+      "median_pair_reduction": "median(pair_saved_percent)",
+      "arm_median_ratio_reduction": "100 * (1 - median(B) / median(A))"
+    },
+    "source_manifests": "Normalize manifest path separators. Baseline archive contains six preexisting bytecode cache files excluded from the measured copy/source map; no non-cache source entry omitted and measured source inventories match exactly."
+  },
+  "limitations": [
+    "This audit consumes retained records; it does not rerun targets or restore historical product bytes.",
+    "The CLI benchmark uses explicit mechanical fixtures for qualification and code reviews; it does not measure independent agent review or real workflow compliance.",
+    "Results apply to these two native Windows/Python 3.12.10 scenarios, not model inference, queueing, agent handoffs, or full-task speed.",
+    "Outer launches are actual commands.jsonl entries; descendant process totals are not inferred.",
+    "Profile runs are separately instrumented and excluded from paired timing; cumulative profile times overlap and must not be summed as wall time.",
+    "Observed comparable target work, retained audit counts and reduced launches/import calls support mechanical overhead reduction; they do not establish a universal speed ratio."
+  ],
+  "audit_self_correction": "Initial audit comparison did not normalize baseline manifest separators or distinguish its six archived bytecode caches from measured sources. Direct file inventory and byte comparisons corrected the audit rule; no benchmark input or outcome changed."
+}

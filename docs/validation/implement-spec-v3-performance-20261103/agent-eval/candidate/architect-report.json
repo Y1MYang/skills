@@ -1,0 +1,105 @@
+{
+  "role": "Architect",
+  "model": "gpt-6.1-sol",
+  "completed_utc": "2026-11-03T08:20:49.894Z",
+  "baseline": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "contract": {
+    "id": "shipping-v1",
+    "authority": "README.md at 874982f1f83cfb1f38bf673416920be5bbf4d993",
+    "signature": "from shipping import shipping_fee; shipping_fee(total_cents: int) -> int",
+    "domain": "integer cents",
+    "rules": [
+      "For nonnegative integer totals below 10000, return 500.",
+      "For integer totals at least 10000, return 0.",
+      "Negative totals raise ValueError.",
+      "Type validation is out of scope.",
+      "CURRENCY remains USD."
+    ],
+    "error_message": "Unspecified; do not assert a message."
+  },
+  "status": "approved",
+  "inputs": [
+    "Frozen implement-spec-v3/SKILL.md",
+    "references/architecture-and-flow.md",
+    "references/execution-and-recovery.md",
+    "exploration-report.json",
+    "proposed-plan.json",
+    "exploration-test-safe-package.json",
+    "README.md",
+    "tests/test_regression.py",
+    "pstack-principles/SKILL.md and selected principle texts"
+  ],
+  "principles": [
+    "sequence-verifiable-units",
+    "boundary-discipline",
+    "laziness-protocol"
+  ],
+  "architecture": "Keep public shipping module API and integer-cents contract. No new module, framework, persistence, IO seam, type guard, helper or abstraction required. Internal algorithm left to Implementer.",
+  "examples": [
+    {
+      "id": "threshold",
+      "input": 10000,
+      "expected": 0,
+      "depends_on": [],
+      "covers": "Inclusive free-shipping threshold"
+    },
+    {
+      "id": "below",
+      "input": 9999,
+      "expected": 500,
+      "depends_on": [
+        "threshold"
+      ],
+      "covers": "Immediately below threshold charges fixed fee"
+    },
+    {
+      "id": "negative",
+      "input": -1,
+      "expected_exception": "ValueError",
+      "depends_on": [
+        "below"
+      ],
+      "covers": "Negative input rejection"
+    }
+  ],
+  "requirements_coverage": {
+    "nonnegative_below_threshold": "below",
+    "at_or_above_threshold": "threshold",
+    "negative_rejection": "negative",
+    "currency_compatibility": "Existing CurrencyRegression",
+    "type_validation": "Explicitly out of scope"
+  },
+  "graph": {
+    "edges": [
+      "threshold -> below",
+      "below -> negative"
+    ],
+    "acyclic": true,
+    "readiness": "Initial threshold ready; successors need current Green and affected regression for predecessor.",
+    "critical_contracts": [],
+    "checkpoint_prerequisites": [],
+    "blocked_consumers": [],
+    "final_gate": "All three examples plus existing regression, independent test qualification, both review axes on one clean committed frozen candidate."
+  },
+  "ownership": {
+    "test_author": "Exclusive writer of new/changed tests; blind context.",
+    "implementer": "Exclusive product writer shipping.py; no test changes.",
+    "runner": "Command prescription, causal interpretation, raw logs and neutral reports.",
+    "integrator": "Only integration branch/index/runtime ledger writer; serialize phase transitions and ensure immutable snapshot bindings.",
+    "architect": "Only architect-report.json and architect-test-safe-package.json; no tests/product edits."
+  },
+  "integration": "One serial flow in authoritative workspace; no overlapping writers or command observation during mutations. Preserve README and CURRENCY contract. Integrator uses approved plan with no gates; all current examples and regression affected by shipping.py changes.",
+  "budgets": {
+    "run_max_attempts": 20,
+    "run_max_formal_failures": 3,
+    "run_max_seconds": 600,
+    "command_deadline_seconds": 30,
+    "status_interval_seconds": 10,
+    "capacity": "One active command and one current phase writer.",
+    "basis": "Tiny standard-library unittest suite; baseline regression reported exit 0. Thirty seconds is conservative containment, not business SLA.",
+    "stop_scope": "Only owned command/process descendants; preserve evidence. Run caps stop affected execution; local diagnostics renewable on new material evidence."
+  },
+  "execution": "Use runtime execute for each prepared bounded command and batch only evidence-supported decided events. Distinct immutable Red and Green product bindings. Runner interprets actual target Red before implementation; first-run Green follows existing-capability path.",
+  "plan_change": "No semantic changes to proposed-plan.json required. This report supplies ownership, readiness, boundary, budget and final acceptance detail.",
+  "blind_isolation": "Initial blind participant inventory must exclude this implementation-visible report; supply only architect-test-safe-package.json plus enumerated authoritative inputs."
+}

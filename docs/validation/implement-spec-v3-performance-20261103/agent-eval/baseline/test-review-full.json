@@ -1,0 +1,162 @@
+{
+  "review_id": "baseline-full-coverage-reconciliation-v1",
+  "utc": "2026-11-03T07:21:26.5479020Z",
+  "role": "Coverage audit",
+  "model": "gpt-6.1-sol",
+  "scope": "full",
+  "target_qualification": "whole-spec test qualification",
+  "base": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "head": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+  "comparison": "direct base-to-head, exact four allowed test paths only; no merge-base",
+  "contract": "shipping-public-v1",
+  "allowed_inventory": [
+    "README.md",
+    "tests/test_regression.py",
+    "tests/test_shipping_threshold.py",
+    "tests/test_shipping_below.py",
+    "tests/test_shipping_negative.py"
+  ],
+  "pins": [
+    {
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7",
+      "path": "README.md"
+    },
+    {
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "960ACA21F1D8FCFDCB24A9D495D550557F8C5CED0A15A0DE47007862534BAB86",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "2F83EB522C7A20548CCF9D9215C579F061EC143072134BF9C68597EF367E52F9",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "test_contract_digests": {
+    "acceptance_contract": "ECE535A7EC797AAA2A00A321A14F0106D434246B67BA4561BF5C22AB778BC59C",
+    "architect_test_safe_package": "6C414DE4583B0D9A8460788A32481F093D8D493FA9E8336222E1C9F436D5F788",
+    "frozen_test_review_skill": "939E2A91BF6B533685B5040F6AF599C090DC0A9A9902A6DCC2871362CAEF2C9F",
+    "final_blind_pin_packet": "743B8D85417F5F0EF5AA5AAB41B2A9E1ADB0BB3EF0224565F6E29BB5BE9BF263"
+  },
+  "dependency_closure": "All four test modules; stdlib unittest and approved public shipping_fee/CURRENCY imports. No fixtures/helpers/config beyond supplied inventory. All candidate test changes and unchanged currency regression accounted for; no cross-batch dependencies.",
+  "prior_evidence_reused": [],
+  "independence": "Coordinator and both fresh fork_turns=none reviewers stayed implementation blind. No product source/diffs/history, raw logs, architect report or implementation notes read; no product execution/import/collection. Architect package provenance README and test-safe inventory only; owner Architect. Expected answers derived solely README/public contract, not observed behavior.",
+  "dispatch": [
+    {
+      "actual_model": "gpt-6.1-sol",
+      "fork_turns": "none",
+      "axis": "Spec/coverage",
+      "agent": "spec_axis",
+      "review_id": "baseline-final-spec-axis-v1",
+      "report": "test-review-spec.json"
+    },
+    {
+      "actual_model": "gpt-6.1-sol",
+      "fork_turns": "none",
+      "axis": "Validity/standards",
+      "agent": "standards_axis",
+      "review_id": "baseline-full-standards-head412a10d-20261103",
+      "report": "test-review-standards.json"
+    }
+  ],
+  "spec_fidelity": {
+    "basis": "Independent spec axis; no unsupported assertions or omitted required examples",
+    "status": "pass"
+  },
+  "validity": {
+    "basis": "Independent standards axis; direct synchronous assertions, no false-success mechanism or confirmed defect",
+    "status": "pass"
+  },
+  "coverage": {
+    "basis": "R1/R2/R3 and CURRENCY each have a valid observable assertion; exactly three new main examples and stdlib-only constraint satisfied",
+    "mapping": [
+      {
+        "id": "R1",
+        "source": "README.md:6,9",
+        "action": "shipping_fee(10000)",
+        "observable": "assertEqual return value 0",
+        "test": "tests/test_shipping_threshold.py:7-8",
+        "status": "pass"
+      },
+      {
+        "id": "R2",
+        "source": "README.md:6,9",
+        "action": "shipping_fee(9999)",
+        "observable": "assertEqual return value 500",
+        "test": "tests/test_shipping_below.py:7-8",
+        "status": "pass"
+      },
+      {
+        "id": "R3",
+        "source": "README.md:7,9",
+        "action": "shipping_fee(-1)",
+        "observable": "assertRaises(ValueError) enclosing direct call",
+        "test": "tests/test_shipping_negative.py:7-9",
+        "status": "pass"
+      },
+      {
+        "id": "CURRENCY",
+        "source": "README.md:10",
+        "action": "read public CURRENCY",
+        "observable": "assertEqual USD",
+        "test": "tests/test_regression.py:6-7",
+        "status": "pass"
+      },
+      {
+        "id": "exactly-three-new-independent-examples",
+        "status": "pass",
+        "source": "README.md:9",
+        "observable": "Direct diff adds exactly three files, each with one independent test method and single specified example"
+      },
+      {
+        "id": "stdlib-only",
+        "status": "pass",
+        "source": "README.md:11",
+        "observable": "Only unittest and approved public shipping imports; no added dependencies"
+      },
+      {
+        "id": "serial-authoring-order",
+        "status": "unverified",
+        "source": "README.md:9; safe package authoring_constraint",
+        "observable": "Final snapshot cannot establish chronology or immediate contract pinning"
+      }
+    ],
+    "status": "pass"
+  },
+  "whole_spec_blessing": {
+    "basis": "Full two-axis reconciliation completed, all valid criterion links accounted for; no prior batch passes assumed",
+    "scope": "Complete required acceptance example set and regression, at pinned contracts/tests",
+    "limits": "Finite mandated examples do not prove universal integer correctness or exact Python return types. Serial authoring chronology is a separate workflow gate unverified by final snapshot, not a missing test criterion.",
+    "status": "pass"
+  },
+  "findings": [],
+  "workflow_chronology": {
+    "basis": "Final allowed inputs cannot establish serial authoring/Green chronology; workflow coordinator retains responsibility",
+    "status": "unverified"
+  },
+  "product_success": {
+    "basis": "No runner observations consumed; separate formal execution gate",
+    "status": "unverified"
+  },
+  "performance": "No claim; gross workflow elapsed time includes external pause and is not code performance",
+  "methods": "Static README/test reads; exact path constrained direct diff; independently recomputed five SHA256 pins. Simple synchronous mechanism reasoning; no isolated execution needed or performed.",
+  "continuity": {
+    "history_or_counters_reset": false,
+    "interruption_start": "unknown; not invented",
+    "actual_resume_utc": "2026-11-03T07:19:36Z",
+    "same_child_roles_resumed": true,
+    "prior_event": "Both initial child turns ended usage-limit errors before reports"
+  },
+  "failure_ownership": "No confirmed test defect; workflow chronology to coordinator, product execution to Runner",
+  "remaining_gaps": [
+    "Separate formal product execution and final implementation-visible review gates are outside this test qualification.",
+    "Serial authoring chronology requires workflow-owner evidence."
+  ],
+  "next_action": "Integrator may record full independent test qualification on the exact frozen HEAD; retain distinct formal execution and code-review gates."
+}

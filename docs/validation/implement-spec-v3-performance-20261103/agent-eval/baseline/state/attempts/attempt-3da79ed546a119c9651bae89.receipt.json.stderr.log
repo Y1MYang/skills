@@ -1,0 +1,7 @@
+test_currency (test_regression.RegressionTests.test_currency) ... ok
+test_shipping_is_free_at_10000_cents (test_shipping_threshold.ShippingThresholdTests.test_shipping_is_free_at_10000_cents) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK

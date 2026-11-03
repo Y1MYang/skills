@@ -1,0 +1,43 @@
+{
+  "public_package": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/architect-test-safe-package.json",
+  "test_dependencies": "All tests directory files enumerated above; no helpers fixtures extra configuration",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "requirements": [
+    "10000 -> 0",
+    "9999 -> 500",
+    "-1 raises ValueError",
+    "CURRENCY USD preserved"
+  ],
+  "neutral_runner_facts": "Four named test assertions passed full unittest discovery; no raw logs authorized; formal product acceptance remains separate",
+  "allowed_inventory": [
+    {
+      "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "workspace": "C:/Users/admin/AppData/Local/Temp/v3-perf-candidate-20261103-qhq_ie8t",
+  "schema": 1,
+  "contract": "shipping-v1",
+  "independence": "Fresh blind review contexts only",
+  "comparison": "direct base-to-head allowed test paths only; existing test included",
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "sanitization": "Only authoritative contract,test inventory,Git version metadata,public assertion outcomes; excludes production source,diffs,algorithms,implementation reports,private logs",
+  "scope": "full",
+  "source_owner": "Integrator"
+}

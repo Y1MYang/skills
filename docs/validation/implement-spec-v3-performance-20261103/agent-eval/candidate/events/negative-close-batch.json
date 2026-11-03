@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "events": [
+    {
+      "regression_scope": "Full unittest discovery: -1 ValueError,9999->500,10000->0,currency USD; Runner confirmed4 ok stable inputs.",
+      "example": "negative",
+      "op": "close",
+      "op_id": "negative-close",
+      "schema": 1,
+      "regression_attempt_id": "attempt-0d2a1ca665766158719c2f2d"
+    }
+  ]
+}

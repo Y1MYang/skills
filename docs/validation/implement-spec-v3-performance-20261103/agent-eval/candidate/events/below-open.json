@@ -1,0 +1,12 @@
+{
+  "light_check": {
+    "source": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example2-author-report.json",
+    "expected_failure": "Assertion fails if shipping_fee(9999) returns a value unequal to 500 or raises. No product output observed by author; Runner establishes actual target-specific causality.",
+    "observation": "One direct public call and exact literal expected fee distinguish charging below threshold from an incorrect waiver; internal restructuring preserving behavior does not affect the test.",
+    "independent_context": "/root/v3_perf_agent_eval/candidate_test_author"
+  },
+  "schema": 1,
+  "op_id": "below-open",
+  "example": "below",
+  "op": "open"
+}

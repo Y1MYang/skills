@@ -1,0 +1,12 @@
+{
+  "example": 3,
+  "input": -1,
+  "owner": "Implementer",
+  "model": "gpt-6.1-sol",
+  "utc": "2026-11-03T08:26:11.4932759Z",
+  "red_judgment_seq": 18,
+  "diff_summary": "Added ValueError for negative total_cents; retained existing below/at-threshold fee behavior, CURRENCY, and signature. No test edits.",
+  "product_sha256": "903B95A47E39A6FFBAC982EC706EF48CE7CACEA637E3E027D00EFFFD22DF619F",
+  "tests_executed": false,
+  "verification_owner": "Runner prescribes; Integrator executes"
+}

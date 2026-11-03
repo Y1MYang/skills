@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-03",
+  "valid": true,
+  "method": "Read-only artifact byte/hash, canonical state/event-chain, receipt/request/log and current Git HEAD/cleanliness checks; no test target or runtime command rerun.",
+  "completion_manifest_sha256": "5c6bd871e2d175a5d5db9d1775db76977f4cdaa30b84f2f0b3b2c06d26bdacf8",
+  "completion_clock_sha256": "fd5e366e865a3f29993213c124bd90f6acd95a59f42954773eeb5b0b9d75f1b8",
+  "manifest_artifacts_verified": 93,
+  "events_verified": 25,
+  "receipts_verified": 7,
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "clean": true,
+  "status": "ready",
+  "formal_attempt": "attempt-dff6618966f3a50b851af5c5",
+  "formal_tests": 4,
+  "actual_clock_window_seconds": 811,
+  "limitations": [
+    "Completeness of conversation/context and exact incident ordering/no-forwarding are not proven by file hashes; retain original unverified reconciliation and later axis attestations.",
+    "12 contexts and 9 known followups are scoped owner reports, not independently reconstructed complete tool transcript counts.",
+    "No ratio against interrupted baseline timing; no new product execution."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-03T06:53:47.6675091Z",
+  "event_id": "integrator-init-dispatch-001",
+  "run_id": "v3-perf-baseline-20261103",
+  "owner": "Integrator",
+  "model": "gpt-6.1-sol",
+  "init_created": true,
+  "architect": "architect-report.json",
+  "first_example": "fee-at-10000",
+  "dispatch_history": [
+    {
+      "source": "coordinator report",
+      "observation": "Initial capacity notification followed by same-agent retry",
+      "actual_first_dispatch_utc": "unknown; not inferred",
+      "preserved": true
+    }
+  ],
+  "author_handoff": "Fresh model gpt-6.1-sol fork none; architect-test-safe-package.json plus resolved TDD/test principles and allowed README/tests only; author exactly10000 returns0 one main test; report exact file/target, oracle source,input,observation,expected failure,dependency closure,digests,UTC. No production/history/raw logs."
+}

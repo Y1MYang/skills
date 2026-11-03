@@ -1,0 +1,23 @@
+{
+  "kind": "implementation-owned public CLI reproduction, not independent test qualification",
+  "scenario": "Two closed examples declare tests and TESTS for the same directory; the final formal union must run and finish successfully.",
+  "script": "C:/Users/admin/AppData/Local/Temp/implement-spec-v3-scope-union/verify_union.py",
+  "script_sha256": "5544a4b134e6929ef09123d13a562144c5084b01dfd5a16c9e9ff96f621c9c7c",
+  "red": {
+    "cycle_sha256": "4e42ab29dbf53e1e4f620d4af9194341ce0ccd09d5b51b97b84be29811e2b9bf",
+    "execution": "Same Python script content supplied through PowerShell stdin before preserving the script file.",
+    "exit_code": 1,
+    "runner_exit_code": 2,
+    "expected_runner_exit_code": 0,
+    "duration_seconds": 3.4084312,
+    "tool_chunk": "a99e7b"
+  },
+  "green": {
+    "cycle_sha256": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+    "command": "python -B C:/Users/admin/AppData/Local/Temp/implement-spec-v3-scope-union/verify_union.py",
+    "exit_code": 0,
+    "duration_seconds": 3.8878141,
+    "tool_chunk": "6ed9d2",
+    "output": "Public union CLI scenario: PASS"
+  }
+}

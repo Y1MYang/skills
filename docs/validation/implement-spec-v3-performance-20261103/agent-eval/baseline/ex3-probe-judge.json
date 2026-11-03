@@ -1,0 +1,12 @@
+{
+  "op_id": "ex3-probe-judge",
+  "attempt_id": "attempt-84d7d6f462fcd654c70b7956",
+  "classification": "valid-red",
+  "op": "judge",
+  "evidence": [
+    "example3-red-runner-report.json",
+    "state/attempts/attempt-84d7d6f462fcd654c70b7956.receipt.json"
+  ],
+  "schema": 1,
+  "reason": "Actual target public-1 call failed assertRaises(ValueError): ValueError not raised. Missing required negative-input behavior, independent oracle README; no setup faults, stable snapshots and completed cleanup."
+}

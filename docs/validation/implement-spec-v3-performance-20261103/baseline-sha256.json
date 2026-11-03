@@ -1,0 +1,152 @@
+[
+  {
+    "Path": "implement-spec-v3\\SKILL.md",
+    "SHA256": "2BF8E5CDB53579BE7A38156690A45D32D6CC647C3BC8C2C6AB320D76953F0EF1",
+    "Length": 6445
+  },
+  {
+    "Path": "implement-spec-v3\\agents\\openai.yaml",
+    "SHA256": "2C467AEBED5E3782CA2E4A6C80067F279780ED940BC7892A541985DF03B5A358",
+    "Length": 261
+  },
+  {
+    "Path": "implement-spec-v3\\references\\architecture-and-flow.md",
+    "SHA256": "0C99378F0BEB9A9DF1C0BB2B2270E8285558B140D0490E39BCACE965879B5A41",
+    "Length": 5380
+  },
+  {
+    "Path": "implement-spec-v3\\references\\diagnostic-budgets.md",
+    "SHA256": "1459A0173BE6BD5627583B8B8202332B91C8C42F7049769A2B0199FBCE06EACF",
+    "Length": 8855
+  },
+  {
+    "Path": "implement-spec-v3\\references\\dispatch-and-isolation.md",
+    "SHA256": "1A7E5ACB2C4EF05CD83382AE484D6653901DDA74E02F2CC732CA987DF5EBF863",
+    "Length": 7361
+  },
+  {
+    "Path": "implement-spec-v3\\references\\execution-and-recovery.md",
+    "SHA256": "F7F7980782EDE3455020CEC0DA09FB7160CA8C769863119AFDC17961231258EF",
+    "Length": 8027
+  },
+  {
+    "Path": "implement-spec-v3\\references\\qualification-and-delivery.md",
+    "SHA256": "F13F7D2BD5A28B173C2A24C09F36401CE55CFD317553AB226771D655AB9447D6",
+    "Length": 7031
+  },
+  {
+    "Path": "implement-spec-v3\\references\\runtime-ledger.md",
+    "SHA256": "5621430D4FEC5F5AE7C75744600260A319E3451EE55CDA0FAA2B8B48D909C148",
+    "Length": 24678
+  },
+  {
+    "Path": "implement-spec-v3\\references\\tdd-loop.md",
+    "SHA256": "F60B35D2137A928FB8B1C3658CB514CF15ED4CB38D81DA22A24E2EAEA97A1441",
+    "Length": 5670
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\cycle.py",
+    "SHA256": "1E285FF07F1FF63E74BD9811C350CF081981316A2AF85EB8E2609D0AA8C8E9BC",
+    "Length": 68307
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\path_identity.py",
+    "SHA256": "F6A177A3BF922510719FE418DF3E82579407A0B7B1657E5F3487C202DD8C2071",
+    "Length": 5091
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\run_command.py",
+    "SHA256": "CC631C7709A000CC8A4641D74F55A8FB055ADE7A7D54FED006010898E2AAEDE4",
+    "Length": 20606
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\windows_job.py",
+    "SHA256": "2F9EDCFA60C0CE9EAAA2F097526C4D28FDD088570A73F38EF13117B9CDBC57B4",
+    "Length": 4759
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\__pycache__\\path_identity.cpython-312.pyc",
+    "SHA256": "ADD1B6BCD45E8DFEBB4969FDEC8BFB69EEFE9562D8A0608434151447A6F68714",
+    "Length": 7375
+  },
+  {
+    "Path": "implement-spec-v3\\scripts\\__pycache__\\windows_job.cpython-312.pyc",
+    "SHA256": "11C589445266193D462CA4F00932CC6B2B2F535FC8B1AA05C51AF54E08C52C28",
+    "Length": 9093
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\test_cycle_proofs.py",
+    "SHA256": "5C611692402CC915AE5000A4A64B101249B0F3F672691BBF7061CB02A3696DEB",
+    "Length": 33840
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\test_cycle_recovery.py",
+    "SHA256": "A6EF2B3A81B20499CC8F16AA61DE3A38EF869101253E4413AB2E0B5616519245",
+    "Length": 25585
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\test_cycle_safety.py",
+    "SHA256": "B1C1FCDB4F14BFC4D1981EA8F1ABCD8DD2434282B255B736381260D2123E0744",
+    "Length": 14897
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\test_cycle.py",
+    "SHA256": "C6C7A3FF20FA75ED8C51A6FE677A3E24CA3A43A2CD216CE1B07BCDC6D1DEBD53",
+    "Length": 47263
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\test_run_command.py",
+    "SHA256": "12F9AFDCB6523D4DFEFA7034204B466410F1734D52F8499B512434A7B92445B5",
+    "Length": 76722
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\__pycache__\\test_cycle_proofs.cpython-312.pyc",
+    "SHA256": "9B9E862F5D30CF24AD02609BC3007F7930ABA044B009C62D27FABB26AACA50D2",
+    "Length": 42324
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\__pycache__\\test_cycle_recovery.cpython-312.pyc",
+    "SHA256": "91408E4170D60341B5AA5A66BFCB083204C192EA7CAAEFDDF8C4D0CFF8D1AFC9",
+    "Length": 33287
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\__pycache__\\test_cycle.cpython-312.pyc",
+    "SHA256": "E66F55E919A782DACE435E06F04955BBD12CD381F0F63318396EEF2DB8D4A9F1",
+    "Length": 61587
+  },
+  {
+    "Path": "implement-spec-v3\\tests\\__pycache__\\test_run_command.cpython-312.pyc",
+    "SHA256": "9129C6F36EDDB5A618FA2D7C9DC266ADE207E4091E7710545283E9495C1FFFB5",
+    "Length": 109087
+  },
+  {
+    "Path": "tdd\\mocking.md",
+    "SHA256": "052036B53D819AE8A49BA120C04A9BC0AF9B53EF7191B40D6351540E552B1465",
+    "Length": 1877
+  },
+  {
+    "Path": "tdd\\SKILL.md",
+    "SHA256": "10CF99BE22EAFEB8822E5BCD7C86392CC87794D5F7F0C950D314DB2853BAF78A",
+    "Length": 3412
+  },
+  {
+    "Path": "tdd\\tests.md",
+    "SHA256": "219466E68591AAB4F76782A1751A7D8FD028C0B999FE0143DE033F7360AC0DC9",
+    "Length": 2486
+  },
+  {
+    "Path": "tdd\\agents\\openai.yaml",
+    "SHA256": "EA6F01CF1B8C06A4B0F5B649D74B1B8CE8685E72AF1B38D70D877693E092AF0B",
+    "Length": 87
+  },
+  {
+    "Path": "test-review\\SKILL.md",
+    "SHA256": "939E2A91BF6B533685B5040F6AF599C090DC0A9A9902A6DCC2871362CAEF2C9F",
+    "Length": 10768
+  },
+  {
+    "Path": "test-review\\references\\acceptance-contract.md",
+    "SHA256": "ECE535A7EC797AAA2A00A321A14F0106D434246B67BA4561BF5C22AB778BC59C",
+    "Length": 6832
+  }
+]

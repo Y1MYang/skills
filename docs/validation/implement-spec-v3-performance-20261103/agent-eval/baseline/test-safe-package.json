@@ -1,0 +1,28 @@
+{
+  "authority": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\README.md",
+  "public_contract": "shipping_fee(total_cents: int) -> int; negative ValueError; integer types only; semantics derived solely from README.md",
+  "allowed_read_paths": [
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\README.md",
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\tests"
+  ],
+  "allowed_test_write_paths": [
+    "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103\\tests"
+  ],
+  "forbidden": [
+    "shipping.py source",
+    "production diffs/history",
+    "raw runner logs",
+    "implementation notes"
+  ],
+  "test_inventory": [
+    "tests/test_regression.py (existing; unittest RegressionTests.test_currency)"
+  ],
+  "future_examples": [
+    "10000 -> 0",
+    "9999 -> 500",
+    "-1 raises ValueError"
+  ],
+  "future_test_files": "Test author chooses one new file per current example; author only current example.",
+  "test_command": "python -B -m unittest discover -s tests -v",
+  "dependencies": "Python standard library unittest; tests only, no fixtures/helpers/config beyond files in tests; no third-party packages."
+}

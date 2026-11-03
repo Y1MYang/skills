@@ -1,0 +1,13 @@
+{
+  "op": "judge",
+  "classification": "valid-red",
+  "evidence": [
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-80d03de7a9be555944f830ff.receipt.json",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/state/attempts/attempt-80d03de7a9be555944f830ff.receipt.json.stderr.log",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example1-author-report.json"
+  ],
+  "op_id": "threshold-judge",
+  "reason": "Runner inspected actual stderr: shipping_fee(10000) raises NotImplementedError instead of required0; currency passes; no setup/import/harness failure.",
+  "schema": 1,
+  "attempt_id": "attempt-80d03de7a9be555944f830ff"
+}

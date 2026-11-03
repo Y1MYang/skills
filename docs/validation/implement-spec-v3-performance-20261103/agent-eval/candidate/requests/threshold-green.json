@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "record_op_id": "threshold-green-record",
+  "prepare": {
+    "op": "prepare",
+    "example": "threshold",
+    "op_id": "threshold-green-prepare",
+    "timeout_seconds": 20,
+    "purpose": "green",
+    "schema": 1
+  },
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ]
+}

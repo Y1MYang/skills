@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "audit_kind": "nonblind provenance only; no test qualification, oracle changes, replacement review reads or production inspection",
+  "role": "Exploration provenance audit",
+  "actual_model": "gpt-6.1-sol",
+  "audit_received_clock_utc": "2026-11-03 08:30:15 UTC",
+  "audit_completed_utc": "2026-11-03T08:30:51.758230+00:00",
+  "clock_precision": "clock tool second resolution; artifact timestamps retained as reported",
+  "scope": [
+    {
+      "path": "coverage-role-event-log.json",
+      "sha256": "4146c7c33156791f6dec3dfe9b71f4a4d7754ff39064bf087b1d76783ded9f76"
+    },
+    {
+      "path": "test-spec-axis.json",
+      "sha256": "cac296ecb354f87b693067a1815cd6d9d24a82fea3ad95992ebbf22637f3101c"
+    },
+    {
+      "path": "test-standards-axis.json",
+      "sha256": "b57a1d2cb820c6b32207a51d0ac802111f16a8ed5edce303dc25ff1ffdb3efb3"
+    },
+    {
+      "path": "test-full-review.json",
+      "sha256": "ca2a939c8cc0b262d14a8a399c086bbdfaec5da691373c5e78787fbe866752b2"
+    }
+  ],
+  "candidate": {
+    "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+    "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+    "all_axis_and_reconciliation_heads_match": true
+  },
+  "axis_completion": {
+    "spec_report_completed_utc": "2026-11-03T08:28:21.7084916Z",
+    "standards_report_completed_utc": "2026-11-03T08:28:03.3553408Z",
+    "coverage_role_log_written_utc": "2026-11-03T08:29:07.8432433Z",
+    "coverage_reconciliation_written_utc": "2026-11-03T08:29:07.8272763Z"
+  },
+  "ordering": {
+    "reported_sequence": "Coverage role log lists two axis dispatches, two subsequent waits, then list_agents recipient discovery. Full review explicitly reports list_agents occurred after both axis reports completed. Both axis completion timestamps precede reconciliation/log timestamps.",
+    "assessment": "Artifact-reported ordering supports both axes completed before inventory incident; exact incident tool time and actual completion-to-incident ordering independently unverified because no timestamped per-tool transcript or per-axis dispatch/event receipts were present/referenced. A later report timestamp alone cannot prove incident ordering."
+  },
+  "axis_inputs": {
+    "pins_match": true,
+    "architect_safe_sha256": "9be913b7458b28cd3a3817bdcff3548ba71103779625cf5d70ec4f801bfaa092",
+    "final_pin_packet_sha256": "e1c3701572a57a4dfd9613e3f3fb853d932293ba4ecf556e9138ba562a057428",
+    "spec_claim": {
+      "boundary": "Fresh delegated reviewer; read only two supplied safe packets, installed test-review/acceptance reference and relevant pstack, README and four named test files, allowed-path Git metadata/diffs. No production source, unrestricted diffs, history explanations, raw logs, reports, execution, collection, or imports.",
+      "source_owner": "Integrator",
+      "sanitization": "Only authoritative contract,test inventory,Git version metadata,public assertion outcomes; excludes production source,diffs,algorithms,implementation reports,private logs",
+      "status": "pass"
+    },
+    "standards_claim": {
+      "fresh_context": true,
+      "production_source_read": false,
+      "production_execution": false,
+      "imports_or_collection": false,
+      "history_or_raw_logs_read": false,
+      "source_owner": "Integrator",
+      "sanitization_scope": "Packet permits authoritative contract, test inventory, Git version metadata and public assertion outcomes only",
+      "limitations": "No product execution inferred; serial authoring chronology is not proved by final snapshot or reviewed here."
+    },
+    "allowed_inventory": [
+      {
+        "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+        "path": "README.md"
+      },
+      {
+        "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+        "path": "tests/test_regression.py"
+      },
+      {
+        "sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+        "path": "tests/test_shipping_threshold.py"
+      },
+      {
+        "sha256": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+        "path": "tests/test_shipping_below.py"
+      },
+      {
+        "sha256": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297",
+        "path": "tests/test_shipping_negative.py"
+      }
+    ],
+    "assessment": "Both independently authored artifacts claim fresh clean contexts and same public/test-only inventory. No contrary contamination recorded in these four inputs. Full dispatch messages and tool-read transcript not supplied, so actual complete context cleanliness remains artifact-attested rather than independently established by this audit."
+  },
+  "post_incident_forwarding": {
+    "role_log_sequence_after_incident": [
+      "send_message parent boundary disclosure",
+      "send_message Integrator final handoff (scheduled next)"
+    ],
+    "assessment": "No post-incident message to either axis appears in provided role log. The log is a self-reported summary and its final handoff is labeled scheduled next; absence of metadata forwarding to axes is not independently provable from this material. Mark strict no-forwarding verification unverified."
+  },
+  "coordinator_boundary": {
+    "incident": "Global list_agents inventory exposed implementation-side completion summaries during blind Coverage coordination, per test-full-review.json.",
+    "packet_cause": "Original strict allowlist excluded implementation reports/status by scope but did not explicitly forbid global inventory or bind Integrator recipient; this task-supplied routing fact is recorded as coordinator assertion, not independently reconstructed original dispatch.",
+    "qualification": "Original coordinator whole-spec reconciliation explicitly unverified; this audit does not restore qualification. Fresh blind replacement remains necessary under coordinator direction."
+  },
+  "limitations": [
+    "No per-axis dispatch/event report referenced by supplied four artifacts; only their source reports and safe input digest names.",
+    "No actual tool transcript read or exposed by available files; no independent exact list_agents incident timestamp.",
+    "No replacement reconciliation, production source, implementation status report or new expected-value artifact was opened.",
+    "No tests executed or qualified; this is provenance audit only."
+  ],
+  "dispatch_record": {
+    "event": "followup",
+    "actual_tool": "collaboration.followup_task",
+    "target": "/root/v3_perf_agent_eval/candidate_exploration",
+    "observed_model": "gpt-6.1-sol",
+    "received_clock_utc": "2026-11-03 08:30:15 UTC",
+    "this_activation_counts": {
+      "followup": 1,
+      "spawn": 0
+    },
+    "global_counts": "Not supplied; no global totals inferred",
+    "authority": "Received NEW_TASK reactivation from coordinator; no subagents spawned"
+  },
+  "overall_provenance_verdict": "partially corroborated by timestamped artifacts; strict ordering/no-forwarding/context-transcript proof unverified; no test qualification granted"
+}

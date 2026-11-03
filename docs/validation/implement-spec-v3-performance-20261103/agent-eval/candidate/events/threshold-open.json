@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "light_check": {
+    "source": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example1-author-report.json",
+    "independent_context": "/root/v3_perf_agent_eval/candidate_test_author",
+    "observation": "Calls the public API with exactly one current example and asserts the exact contract return. Detects a threshold fee of 500 and survives internal refactoring preserving results.",
+    "expected_failure": "The assertion fails if shipping_fee(10000) returns any value unequal to 0, or the public call raises instead of returning 0. No baseline output has been observed; Runner must establish actual target-specific causality."
+  },
+  "op": "open",
+  "op_id": "threshold-open",
+  "example": "threshold"
+}

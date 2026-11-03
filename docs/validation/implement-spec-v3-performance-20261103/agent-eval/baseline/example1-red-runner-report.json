@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T06:55:44.0880230Z",
+  "example": "fee-at-10000",
+  "attempt_id": "attempt-3b191c0a0c8ac5969fcb86e9",
+  "classification": "valid-red",
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_shipping_threshold.py",
+    "-v"
+  ],
+  "cwd": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103",
+  "timeout_seconds": 20,
+  "receipt": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-3b191c0a0c8ac5969fcb86e9.receipt.json",
+  "outcome": "exited",
+  "exit_code": 1,
+  "cleanup_complete": true,
+  "snapshots_unchanged": true,
+  "requirement_source": "Parent-provided authoritative spec: shipping_fee(10000) returns 0; 9999 returns 500; negative raises ValueError.",
+  "target_test": "test_shipping_is_free_at_10000_cents",
+  "actual_cause": "The target test invoked shipping_fee(10000) and expected 0. shipping.py line 5 raised NotImplementedError at that call. This is absent target public behavior, rather than import, fixture, setup, or harness failure.",
+  "evidence": [
+    "attempt-3b191c0a0c8ac5969fcb86e9.receipt.json",
+    "attempt-3b191c0a0c8ac5969fcb86e9.receipt.json.stderr.log"
+  ],
+  "containment": "Development receipt reports Windows Job Object ownership and complete cleanup. Formal acceptance still requires actual-platform containment validation.",
+  "edits": "No product or test edits."
+}

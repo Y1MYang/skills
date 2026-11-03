@@ -1,0 +1,648 @@
+{
+  "cycle_sha256_before": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+  "include": {
+    "ok": true,
+    "op_id": "include-helper",
+    "included_examples": [
+      "fee-99"
+    ],
+    "status": "active",
+    "seq": 15
+  },
+  "refreshed_record": {
+    "ok": true,
+    "attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+    "outcome": "exited",
+    "exit_code": 0,
+    "seq": 18
+  },
+  "refreshed_receipt": {
+    "argv": [
+      "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-B",
+      "tests/test_fee.py"
+    ],
+    "cleanup_complete": true,
+    "cwd": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-cycle-test-wod1s_ei\\workspace",
+    "duration_seconds": 0.8440000000118744,
+    "ended_at": "2026-11-03T07:57:27.768179+00:00",
+    "exit_code": 0,
+    "formal": {
+      "clean_after": true,
+      "clean_before": true,
+      "head_after": "2df47a80852242f18a53fcd262b4394b0c70df28",
+      "head_before": "2df47a80852242f18a53fcd262b4394b0c70df28",
+      "requested": true
+    },
+    "logs": {
+      "stderr": {
+        "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-cycle-test-wod1s_ei\\state\\attempts\\attempt-a27ae9aa2b53f75eaacd6a22.receipt.json.stderr.log",
+        "sha256": "1a52ff93b2b7c8bc576900f70c9062f5baedb573cf55507ec33070c999cd9b12",
+        "size": 103
+      },
+      "stdout": {
+        "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-cycle-test-wod1s_ei\\state\\attempts\\attempt-a27ae9aa2b53f75eaacd6a22.receipt.json.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      }
+    },
+    "outcome": "exited",
+    "owner": {
+      "kind": "job",
+      "pid": 68796,
+      "platform": "windows",
+      "token": "024776d5f0374b5baff71347288f21be"
+    },
+    "receipt_id": "024776d5f0374b5baff71347288f21be",
+    "schema": 1,
+    "snapshot": {
+      "after": {
+        "contract": {
+          "entries": [
+            {
+              "kind": "file",
+              "path": "spec.md",
+              "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+              "size": 21
+            }
+          ],
+          "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+        },
+        "product": {
+          "entries": [
+            {
+              "kind": "directory",
+              "path": "src"
+            },
+            {
+              "kind": "file",
+              "path": "src/fee.txt",
+              "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+              "size": 2
+            }
+          ],
+          "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+        },
+        "tests": {
+          "entries": [
+            {
+              "kind": "file",
+              "path": "tests/helper.txt",
+              "sha256": "e17152ec2406a5360c0b552b761cb83fc1dd99409e5376663d17a093cd1d292e",
+              "size": 15
+            },
+            {
+              "kind": "file",
+              "path": "tests/test_fee.py",
+              "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+              "size": 233
+            }
+          ],
+          "sha256": "1d871ad46ff385951bffdf9f5e1d8fe30c4daabd539a9fd087d998c13ba6ea36"
+        }
+      },
+      "before": {
+        "contract": {
+          "entries": [
+            {
+              "kind": "file",
+              "path": "spec.md",
+              "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+              "size": 21
+            }
+          ],
+          "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+        },
+        "product": {
+          "entries": [
+            {
+              "kind": "directory",
+              "path": "src"
+            },
+            {
+              "kind": "file",
+              "path": "src/fee.txt",
+              "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+              "size": 2
+            }
+          ],
+          "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+        },
+        "tests": {
+          "entries": [
+            {
+              "kind": "file",
+              "path": "tests/helper.txt",
+              "sha256": "e17152ec2406a5360c0b552b761cb83fc1dd99409e5376663d17a093cd1d292e",
+              "size": 15
+            },
+            {
+              "kind": "file",
+              "path": "tests/test_fee.py",
+              "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+              "size": 233
+            }
+          ],
+          "sha256": "1d871ad46ff385951bffdf9f5e1d8fe30c4daabd539a9fd087d998c13ba6ea36"
+        }
+      },
+      "binding": {
+        "attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "example": null,
+        "gate": "gate-a",
+        "prepared_at": "2026-11-03T07:57:26.827700+00:00",
+        "prepared_seq": 17,
+        "purpose": "formal",
+        "run_id": "cycle-contract-example"
+      },
+      "request_sha256": "255ac673682a4b228826960a3f1d6cdea5bdd86fa62fec1767d47f05ff86b521"
+    },
+    "started_at": "2026-11-03T07:57:26.911934+00:00",
+    "timeout_seconds": 5.0
+  },
+  "release": {
+    "ok": true,
+    "gate": "gate-a",
+    "state": "released",
+    "seq": 19
+  },
+  "before": {
+    "ok": true,
+    "run_id": "cycle-contract-example",
+    "models": {
+      "architect": "explicit-model-for-architect",
+      "coverage_audit": "explicit-model-for-coverage_audit",
+      "expert": "explicit-model-for-expert",
+      "exploration": "explicit-model-for-exploration",
+      "implementer": "explicit-model-for-implementer",
+      "integrator": "explicit-model-for-integrator",
+      "runner": "explicit-model-for-runner",
+      "spec_reviewer": "explicit-model-for-spec_reviewer",
+      "standards_reviewer": "explicit-model-for-standards_reviewer",
+      "test_author": "explicit-model-for-test_author"
+    },
+    "active_by_flow": {
+      "alias": null,
+      "main": "next-main",
+      "other": null
+    },
+    "budget": {
+      "attempts_used": 6,
+      "formal_failures_used": 0,
+      "seconds_reserved": 5,
+      "seconds_used": 1.5460000000020955
+    },
+    "examples": {
+      "alias-example": {
+        "attempt_ids": [
+          "attempt-22593211d459e0faf0ad84a3",
+          "attempt-dda413f93ab0c74ababbf9e9"
+        ],
+        "existing_attempt_id": "attempt-22593211d459e0faf0ad84a3",
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/alias-example",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of alias-example under its declared requirement",
+          "source": "spec.md / REQ-1/alias-example"
+        },
+        "mode": "existing",
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "directory",
+                "path": "src"
+              },
+              {
+                "kind": "file",
+                "path": "src/fee.txt",
+                "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+                "size": 2
+              }
+            ],
+            "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "tests/test_fee.py",
+                "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+                "size": 233
+              }
+            ],
+            "sha256": "7259c73d368c2a04ff30ccc72e18cfe393315f724b18819d45e2c622dc27a1f8"
+          }
+        },
+        "regression_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "closed"
+      },
+      "fee-99": {
+        "attempt_ids": [
+          "attempt-b67ca7f6950dd5fd11287ade",
+          "attempt-a0249df7945db33cb316370a"
+        ],
+        "evidence_stale": true,
+        "existing_attempt_id": "attempt-b67ca7f6950dd5fd11287ade",
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/example-99",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of fee-99 under its declared requirement",
+          "source": "spec.md / REQ-1/example-99"
+        },
+        "mode": "existing",
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "directory",
+                "path": "src"
+              },
+              {
+                "kind": "file",
+                "path": "src/fee.txt",
+                "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+                "size": 2
+              }
+            ],
+            "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "nested/deep/test_fee.py",
+                "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+                "size": 233
+              }
+            ],
+            "sha256": "b47b8a86fcb2ee31afb564d4bfaeb5ea2d3743a7a5d95dda148c3b161e5b6e9d"
+          }
+        },
+        "regression_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "closed"
+      },
+      "next-main": {
+        "attempt_ids": [
+          "attempt-ecfb2b6feeff3f951f0261f2"
+        ],
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/next-main",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of next-main under its declared requirement",
+          "source": "spec.md / REQ-1/next-main"
+        },
+        "mode": null,
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "src/next"
+              }
+            ],
+            "sha256": "d3f545de903051b7c1b19ba15d82bfcc413649623cc1975a5ab4eb298136255c"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "next-tests"
+              }
+            ],
+            "sha256": "1a7aecb0aaa90d91b9838cbcd9739b10dcfbc64ea527131176aecfde71af52e1"
+          }
+        },
+        "state": "open"
+      },
+      "unrelated": {
+        "attempt_ids": [],
+        "mode": null,
+        "state": "planned"
+      }
+    },
+    "failures": [],
+    "gates": {
+      "gate-a": {
+        "attempt_ids": [
+          "attempt-a27ae9aa2b53f75eaacd6a22"
+        ],
+        "release_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "released"
+      }
+    },
+    "pending_attempts": [
+      {
+        "attempt_id": "attempt-ecfb2b6feeff3f951f0261f2",
+        "example": "next-main",
+        "gate": null,
+        "purpose": "probe",
+        "state": "prepared",
+        "timeout_seconds": 5,
+        "receipt_path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-cycle-test-wod1s_ei\\state\\attempts\\attempt-ecfb2b6feeff3f951f0261f2.receipt.json"
+      }
+    ],
+    "status": "active",
+    "last_seq": 21
+  },
+  "alias_same_file": true,
+  "revision": {
+    "ok": true,
+    "examples": [
+      "unrelated"
+    ],
+    "status": "active",
+    "seq": 22
+  },
+  "after": {
+    "ok": true,
+    "run_id": "cycle-contract-example",
+    "models": {
+      "architect": "explicit-model-for-architect",
+      "coverage_audit": "explicit-model-for-coverage_audit",
+      "expert": "explicit-model-for-expert",
+      "exploration": "explicit-model-for-exploration",
+      "implementer": "explicit-model-for-implementer",
+      "integrator": "explicit-model-for-integrator",
+      "runner": "explicit-model-for-runner",
+      "spec_reviewer": "explicit-model-for-spec_reviewer",
+      "standards_reviewer": "explicit-model-for-standards_reviewer",
+      "test_author": "explicit-model-for-test_author"
+    },
+    "active_by_flow": {
+      "alias": null,
+      "main": "next-main",
+      "other": null
+    },
+    "budget": {
+      "attempts_used": 6,
+      "formal_failures_used": 0,
+      "seconds_reserved": 5,
+      "seconds_used": 1.5460000000020955
+    },
+    "examples": {
+      "alias-example": {
+        "attempt_ids": [
+          "attempt-22593211d459e0faf0ad84a3",
+          "attempt-dda413f93ab0c74ababbf9e9"
+        ],
+        "existing_attempt_id": "attempt-22593211d459e0faf0ad84a3",
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/alias-example",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of alias-example under its declared requirement",
+          "source": "spec.md / REQ-1/alias-example"
+        },
+        "mode": "existing",
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "directory",
+                "path": "src"
+              },
+              {
+                "kind": "file",
+                "path": "src/fee.txt",
+                "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+                "size": 2
+              }
+            ],
+            "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "tests/test_fee.py",
+                "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+                "size": 233
+              }
+            ],
+            "sha256": "7259c73d368c2a04ff30ccc72e18cfe393315f724b18819d45e2c622dc27a1f8"
+          }
+        },
+        "regression_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "closed"
+      },
+      "fee-99": {
+        "attempt_ids": [
+          "attempt-b67ca7f6950dd5fd11287ade",
+          "attempt-a0249df7945db33cb316370a"
+        ],
+        "evidence_stale": true,
+        "existing_attempt_id": "attempt-b67ca7f6950dd5fd11287ade",
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/example-99",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of fee-99 under its declared requirement",
+          "source": "spec.md / REQ-1/example-99"
+        },
+        "mode": "existing",
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "directory",
+                "path": "src"
+              },
+              {
+                "kind": "file",
+                "path": "src/fee.txt",
+                "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+                "size": 2
+              }
+            ],
+            "sha256": "77fc67fb1b2de814dbca315411243bbf1abb3e6a9a4ecfd84947dcd3ec3740ee"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "nested/deep/test_fee.py",
+                "sha256": "e62425c55adbbf32a070b13e566c760d54bf461e39c88bd0be858e419ae6367f",
+                "size": 233
+              }
+            ],
+            "sha256": "b47b8a86fcb2ee31afb564d4bfaeb5ea2d3743a7a5d95dda148c3b161e5b6e9d"
+          }
+        },
+        "regression_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "closed"
+      },
+      "next-main": {
+        "attempt_ids": [
+          "attempt-ecfb2b6feeff3f951f0261f2"
+        ],
+        "light_check": {
+          "expected_failure": "A missing or incorrect public result violates REQ-1/next-main",
+          "independent_context": "test-author-context-with-no-product-input",
+          "observation": "Public behavior of next-main under its declared requirement",
+          "source": "spec.md / REQ-1/next-main"
+        },
+        "mode": null,
+        "opening": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "src/next"
+              }
+            ],
+            "sha256": "d3f545de903051b7c1b19ba15d82bfcc413649623cc1975a5ab4eb298136255c"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "next-tests"
+              }
+            ],
+            "sha256": "1a7aecb0aaa90d91b9838cbcd9739b10dcfbc64ea527131176aecfde71af52e1"
+          }
+        },
+        "state": "open"
+      },
+      "unrelated": {
+        "attempt_ids": [],
+        "mode": null,
+        "revision_seq": 22,
+        "revision_snapshot": {
+          "contract": {
+            "entries": [
+              {
+                "kind": "file",
+                "path": "spec.md",
+                "sha256": "0319f91df98a3b440c350f6beb6d8fb81d1526d317c4f266c9ea921851b235bb",
+                "size": 21
+              }
+            ],
+            "sha256": "0aff6b3d9757fe9fd3b94c13916fa276ec4d9e57466b0a7633ba8a26f2899b4e"
+          },
+          "product": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "other"
+              }
+            ],
+            "sha256": "4b55d1b22a1221e02d45588735bcba17d461f2e29620a0f5141d9def766e8008"
+          },
+          "tests": {
+            "entries": [
+              {
+                "kind": "missing",
+                "path": "other-tests"
+              }
+            ],
+            "sha256": "faeb63845d968ca211f4cf28fdb12e972f97138865b3457af182fa16c75770a5"
+          }
+        },
+        "state": "planned"
+      }
+    },
+    "failures": [],
+    "gates": {
+      "gate-a": {
+        "attempt_ids": [
+          "attempt-a27ae9aa2b53f75eaacd6a22"
+        ],
+        "release_attempt_id": "attempt-a27ae9aa2b53f75eaacd6a22",
+        "state": "released"
+      }
+    },
+    "pending_attempts": [
+      {
+        "attempt_id": "attempt-ecfb2b6feeff3f951f0261f2",
+        "example": "next-main",
+        "gate": null,
+        "purpose": "probe",
+        "state": "prepared",
+        "timeout_seconds": 5,
+        "receipt_path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-cycle-test-wod1s_ei\\state\\attempts\\attempt-ecfb2b6feeff3f951f0261f2.receipt.json"
+      }
+    ],
+    "status": "active",
+    "last_seq": 22
+  },
+  "pending_request_unchanged": true,
+  "pending_record": {
+    "ok": true,
+    "attempt_id": "attempt-ecfb2b6feeff3f951f0261f2",
+    "outcome": "exited",
+    "exit_code": 0,
+    "seq": 23
+  },
+  "verify": {
+    "ok": true,
+    "valid": true,
+    "last_seq": 23
+  },
+  "cycle_sha256_after": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5"
+}

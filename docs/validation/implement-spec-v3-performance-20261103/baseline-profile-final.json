@@ -1,0 +1,1460 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_count": 32,
+  "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g",
+  "baseline": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+  "candidate": "None",
+  "source_sha256": {
+    "baseline": {
+      "agents\\openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references\\architecture-and-flow.md": "0c99378f0beb9a9df1c0bb2b2270e8285558b140d0490e39bcace965879b5a41",
+      "references\\diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references\\dispatch-and-isolation.md": "1a7e5acb2c4ef05cd83382ae484d6653901dda74e02f2cc732ca987df5ebf863",
+      "references\\execution-and-recovery.md": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef",
+      "references\\qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references\\runtime-ledger.md": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148",
+      "references\\tdd-loop.md": "f60b35d2137a928fb8b1c3658cb514cf15ed4cb38d81da22a24e2eaea97a1441",
+      "scripts\\cycle.py": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+      "scripts\\path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts\\run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts\\windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1",
+      "tests\\test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests\\test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests\\test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests\\test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests\\test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    }
+  },
+  "results": [
+    {
+      "label": "baseline",
+      "scenario": "history_logs",
+      "mode": "legacy",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single",
+      "skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\baseline-skill",
+      "examples": 12,
+      "trace_bytes_per_test": 32768,
+      "elapsed_seconds": 22.150022699992405,
+      "phase_totals_seconds": {
+        "git": 0.12680290002026595,
+        "ledger": 12.709630099707283,
+        "runner": 9.103180200065253
+      },
+      "other_seconds": 0.21040950019960292,
+      "phases": [
+        {
+          "phase": "fixture-git-init",
+          "seconds": 0.028499400010332465,
+          "exit": 0
+        },
+        {
+          "phase": "init",
+          "seconds": 0.1536206000018865,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-open",
+          "seconds": 0.11931139999069273,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-prepare",
+          "seconds": 0.11314229998970404,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-run",
+          "seconds": 0.33010320001631044,
+          "exit": 1
+        },
+        {
+          "phase": "fee-1-probe-record",
+          "seconds": 0.10468990000663325,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-judge",
+          "seconds": 0.11133809998864308,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-prepare",
+          "seconds": 0.11690530000487342,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-run",
+          "seconds": 0.3258800000185147,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-record",
+          "seconds": 0.1068152999796439,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-close",
+          "seconds": 0.10676460000104271,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-open",
+          "seconds": 0.11336299998220056,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-prepare",
+          "seconds": 0.11429530000896193,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "seconds": 0.3346431000099983,
+          "exit": 1
+        },
+        {
+          "phase": "fee-2-probe-record",
+          "seconds": 0.11017780000111088,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-judge",
+          "seconds": 0.11399300000630319,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-prepare",
+          "seconds": 0.11521889999858104,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-run",
+          "seconds": 0.3319529000145849,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-record",
+          "seconds": 0.10991349999676459,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-close",
+          "seconds": 0.11476589998346753,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-open",
+          "seconds": 0.12139559999923222,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-probe-prepare",
+          "seconds": 0.12241039998480119,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-probe-run",
+          "seconds": 0.3360806000127923,
+          "exit": 1
+        },
+        {
+          "phase": "fee-3-probe-record",
+          "seconds": 0.11235750000923872,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-judge",
+          "seconds": 0.11730469999019988,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-prepare",
+          "seconds": 0.12240369999199174,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-run",
+          "seconds": 0.33638359999167733,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-record",
+          "seconds": 0.11304329999256879,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-close",
+          "seconds": 0.12326870000106283,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-open",
+          "seconds": 0.12167500000214204,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-probe-prepare",
+          "seconds": 0.1293289999885019,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-probe-run",
+          "seconds": 0.3318894999974873,
+          "exit": 1
+        },
+        {
+          "phase": "fee-4-probe-record",
+          "seconds": 0.11924669999280013,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-judge",
+          "seconds": 0.12547049997374415,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-prepare",
+          "seconds": 0.12906599999405444,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-run",
+          "seconds": 0.3324291000026278,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-record",
+          "seconds": 0.11844469999778084,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-close",
+          "seconds": 0.11964639998041093,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-open",
+          "seconds": 0.12656909998622723,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-probe-prepare",
+          "seconds": 0.12835639997501858,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-probe-run",
+          "seconds": 0.3358487000223249,
+          "exit": 1
+        },
+        {
+          "phase": "fee-5-probe-record",
+          "seconds": 0.12381329998606816,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-judge",
+          "seconds": 0.1269433999841567,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-prepare",
+          "seconds": 0.13335160000133328,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-run",
+          "seconds": 0.3373890000220854,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-record",
+          "seconds": 0.1279426999972202,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-close",
+          "seconds": 0.12973799998871982,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-open",
+          "seconds": 0.12654529997962527,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-probe-prepare",
+          "seconds": 0.13331520001520403,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-probe-run",
+          "seconds": 0.3341783999931067,
+          "exit": 1
+        },
+        {
+          "phase": "fee-6-probe-record",
+          "seconds": 0.1270997000101488,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-judge",
+          "seconds": 0.1341672999842558,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-prepare",
+          "seconds": 0.13407669999287464,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-run",
+          "seconds": 0.33673690000432543,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-record",
+          "seconds": 0.126191999996081,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-close",
+          "seconds": 0.12481199999456294,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-open",
+          "seconds": 0.13638569999602623,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-probe-prepare",
+          "seconds": 0.14188930002273992,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-probe-run",
+          "seconds": 0.34026639998774044,
+          "exit": 1
+        },
+        {
+          "phase": "fee-7-probe-record",
+          "seconds": 0.14476379999541678,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-judge",
+          "seconds": 0.1459659000101965,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-prepare",
+          "seconds": 0.14763660001335666,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-run",
+          "seconds": 0.3445032000017818,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-record",
+          "seconds": 0.13574009999865666,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-close",
+          "seconds": 0.13423580001108348,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-open",
+          "seconds": 0.14400719999684952,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-probe-prepare",
+          "seconds": 0.14409360001445748,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-probe-run",
+          "seconds": 0.3465596000023652,
+          "exit": 1
+        },
+        {
+          "phase": "fee-8-probe-record",
+          "seconds": 0.14026210000156425,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-judge",
+          "seconds": 0.14061949998722412,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-prepare",
+          "seconds": 0.14617059999727644,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-run",
+          "seconds": 0.3333734000043478,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-record",
+          "seconds": 0.1386824999935925,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-close",
+          "seconds": 0.14414460002444685,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-open",
+          "seconds": 0.14686879998771474,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-probe-prepare",
+          "seconds": 0.1486997999891173,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-probe-run",
+          "seconds": 0.3356674999813549,
+          "exit": 1
+        },
+        {
+          "phase": "fee-9-probe-record",
+          "seconds": 0.14915519999340177,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-judge",
+          "seconds": 0.15464170000632294,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-prepare",
+          "seconds": 0.16064720001304522,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-run",
+          "seconds": 0.34281890001147985,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-record",
+          "seconds": 0.14155070000560954,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-close",
+          "seconds": 0.1486287000006996,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-open",
+          "seconds": 0.15916829998604953,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-probe-prepare",
+          "seconds": 0.15668359998380765,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-probe-run",
+          "seconds": 0.3379259000066668,
+          "exit": 1
+        },
+        {
+          "phase": "fee-10-probe-record",
+          "seconds": 0.1508332000230439,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-judge",
+          "seconds": 0.1559109000081662,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-prepare",
+          "seconds": 0.15711920001194812,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-run",
+          "seconds": 0.3384926999860909,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-record",
+          "seconds": 0.15757009998196736,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-close",
+          "seconds": 0.1593622999789659,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-open",
+          "seconds": 0.1614523000025656,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-probe-prepare",
+          "seconds": 0.15662799999699928,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-probe-run",
+          "seconds": 0.34015749997342937,
+          "exit": 1
+        },
+        {
+          "phase": "fee-11-probe-record",
+          "seconds": 0.152812400017865,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-judge",
+          "seconds": 0.1609007999941241,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-prepare",
+          "seconds": 0.1667812999803573,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-run",
+          "seconds": 0.33965209999587387,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-record",
+          "seconds": 0.1607773999858182,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-close",
+          "seconds": 0.15794869998353533,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-open",
+          "seconds": 0.1745799999916926,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-probe-prepare",
+          "seconds": 0.1635353000019677,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-probe-run",
+          "seconds": 0.34703580001951195,
+          "exit": 1
+        },
+        {
+          "phase": "fee-12-probe-record",
+          "seconds": 0.1618490999971982,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-judge",
+          "seconds": 0.16387640000903048,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-prepare",
+          "seconds": 0.17122409999137744,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-run",
+          "seconds": 0.33910690000629984,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-record",
+          "seconds": 0.16460889999871142,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-close",
+          "seconds": 0.16314569997484796,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-add",
+          "seconds": 0.03669830001308583,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-commit",
+          "seconds": 0.04299030001857318,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-head",
+          "seconds": 0.01861489997827448,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-final",
+          "seconds": 0.1756473000277765,
+          "exit": 0
+        },
+        {
+          "phase": "prepare-final",
+          "seconds": 0.17637790000298992,
+          "exit": 0
+        },
+        {
+          "phase": "formal-run",
+          "seconds": 1.0141052999824751,
+          "exit": 0
+        },
+        {
+          "phase": "record-final",
+          "seconds": 0.22141450000344776,
+          "exit": 0
+        },
+        {
+          "phase": "finish",
+          "seconds": 0.21721639999304898,
+          "exit": 0
+        },
+        {
+          "phase": "inspect",
+          "seconds": 0.12052389999735169,
+          "exit": 0
+        },
+        {
+          "phase": "verify",
+          "seconds": 0.16459289999329485,
+          "exit": 0
+        }
+      ],
+      "receipts": [
+        {
+          "phase": "fee-1-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-e3c1490b0be351bac04530a7.receipt.json",
+          "duration_seconds": 0.235000000015134,
+          "sha256": "57c0fcfc6d1db5ecc77b4f7c8b84a44ed2af1055fc2f02a7c8b4ab2a72bf5b18"
+        },
+        {
+          "phase": "fee-1-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-0ec6bae58d33e1c1eaee3d53.receipt.json",
+          "duration_seconds": 0.23499999998603016,
+          "sha256": "de94565a81c9238a565f83f3cb684a04c333c636d24b495e910ee7f70ec99c1d"
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-1131d06b255b87ff23069db9.receipt.json",
+          "duration_seconds": 0.23499999998603016,
+          "sha256": "7a73f0cc152ff1b9fd55ec376dd4b461bf55fdc996aa74b45441e0ab7be3ccd6"
+        },
+        {
+          "phase": "fee-2-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-2be6b88de3a99743c79ba9c7.receipt.json",
+          "duration_seconds": 0.235000000015134,
+          "sha256": "fe270d583982251efe919af85f8e60378be80009281ac59873c7d6ac9fd080a3"
+        },
+        {
+          "phase": "fee-3-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-d4843202b95b497c46263830.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "96683edf8a24c28856c1c31a558b370d6295f4419ad6e6f767221b7584aadd2b"
+        },
+        {
+          "phase": "fee-3-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-2623aaca8c4660f380566136.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "c722207eb69919f67938be4094dee77b6053049a31708f0497dcf5e11d2d85f9"
+        },
+        {
+          "phase": "fee-4-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-f9bb7763d07ddf921018d760.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "f4ea888f7a6eaaa1f9c9c8de511e1db45505a0889c8048c6718906c22019d107"
+        },
+        {
+          "phase": "fee-4-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-a9af0bf2ea2a94756e93e838.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "55f49171a23c22a5094d6ee9dd74df96812e8c291e69edffa75a610cb497f2d7"
+        },
+        {
+          "phase": "fee-5-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-0dd246b77abb050672436154.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "0ef32277359078d8bbd4011dc18af2ae7af558ced418d0d97da4e5b03cd30b79"
+        },
+        {
+          "phase": "fee-5-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-f0b32cae77ccebca70925d00.receipt.json",
+          "duration_seconds": 0.235000000015134,
+          "sha256": "4e772801b7d331cfb288fe9a564deda62de261ecf4a77d5b03cf7bb54b3f56ea"
+        },
+        {
+          "phase": "fee-6-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-a1ecb1f1957b4f8b72a07b40.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "83226ee86f5800c800c3acecb5cd6a84d4dcb3ec81423dd61bc55a83f5af7c3b"
+        },
+        {
+          "phase": "fee-6-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-01a16e20952f34ef2c6fd9eb.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "fc26fd302cdaad5896a21aca03fd031596d1e43d8d940527ead8f719903fa3bd"
+        },
+        {
+          "phase": "fee-7-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-3aff8c0454b47dcf7dab69c2.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "ffb9bf1d77848a45f65dcbc04d87b76d9ed3b82189895d3b8eca4958ecb38629"
+        },
+        {
+          "phase": "fee-7-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-5cf2d78dfbde06cdc78d5a29.receipt.json",
+          "duration_seconds": 0.235000000015134,
+          "sha256": "8fd6632d3fb7c2567272d70df2c3953ed79c46a950ba91f51a1cfc9af348e30f"
+        },
+        {
+          "phase": "fee-8-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-d760a0a2575f366be9475182.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "bfa47ca7a06800783281db780f9c8a38d7b53d2125830e559999b37d5a9ca655"
+        },
+        {
+          "phase": "fee-8-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-d46e875384b8e00bf2d69bc6.receipt.json",
+          "duration_seconds": 0.23499999998603016,
+          "sha256": "7f7c5dfea9832c8c5267b1f102eaf3af65a3f224a03f89bb226b10c74345dfeb"
+        },
+        {
+          "phase": "fee-9-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-765c0deaed059ebe8968048b.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "bd96407d900fc8b58487b92a60dd1165898dd55394e97dc5a34dc851f7634f2b"
+        },
+        {
+          "phase": "fee-9-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-79e2e24816b3f8853213b38c.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "316c648a521153771fe654bd5d48dc9d1270e5577df31674608828ef26a0271e"
+        },
+        {
+          "phase": "fee-10-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-33395a30cf55849b02ebef28.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "3dbd12dde16cf4c7bae9562704c1e28922ac52289f73f7d4de08d728857ea377"
+        },
+        {
+          "phase": "fee-10-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-9d256b91fc7a9864580a9dcc.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "ca279ba89eb79c74e14cd1d09f09a67db2914d2788b9adaf7acea5b6ae296147"
+        },
+        {
+          "phase": "fee-11-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-548d4e3912953f3fb6f11411.receipt.json",
+          "duration_seconds": 0.2340000000258442,
+          "sha256": "29c0e522c9937f54bbac25ed9ce5d30f3a96d86317267552b7e52a34a3623f08"
+        },
+        {
+          "phase": "fee-11-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-60d86b746433c41924af41ca.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "2da5e3a5ce9dd360f7c213ea3819ff32ea176b336bfcfde2f76c2a7d75acc873"
+        },
+        {
+          "phase": "fee-12-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-743d07ec1992006ec5cd7d28.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "05b05c16666ec535e0777ab7ee1ce04db6d1b8efd771390c9284a10eedeba4f9"
+        },
+        {
+          "phase": "fee-12-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-6907b6475d9aab4b5d58e455.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "a1e2b21e2f2984397a3b05533c1af0022957509d613167ef4fbf41cfb78f7baa"
+        },
+        {
+          "phase": "formal-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-8bz5j56g\\single\\state\\attempts\\attempt-7013a28b2990980384228c46.receipt.json",
+          "duration_seconds": 0.9070000000065193,
+          "sha256": "ac0655c81c3975db3f95ef19433a66e87cc0b3a5ac9a5a599bbc4c269e8e08fc"
+        }
+      ],
+      "status": "ready",
+      "attempts": 25,
+      "events": 88,
+      "outer_process_invocations": 120,
+      "work_signature": {
+        "events": [
+          [
+            "fee-1-open",
+            "open"
+          ],
+          [
+            "fee-1-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-1-probe-record",
+            "record"
+          ],
+          [
+            "fee-1-judge",
+            "judge"
+          ],
+          [
+            "fee-1-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-1-green-record",
+            "record"
+          ],
+          [
+            "fee-1-close",
+            "close"
+          ],
+          [
+            "fee-2-open",
+            "open"
+          ],
+          [
+            "fee-2-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-2-probe-record",
+            "record"
+          ],
+          [
+            "fee-2-judge",
+            "judge"
+          ],
+          [
+            "fee-2-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-2-green-record",
+            "record"
+          ],
+          [
+            "fee-2-close",
+            "close"
+          ],
+          [
+            "fee-3-open",
+            "open"
+          ],
+          [
+            "fee-3-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-3-probe-record",
+            "record"
+          ],
+          [
+            "fee-3-judge",
+            "judge"
+          ],
+          [
+            "fee-3-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-3-green-record",
+            "record"
+          ],
+          [
+            "fee-3-close",
+            "close"
+          ],
+          [
+            "fee-4-open",
+            "open"
+          ],
+          [
+            "fee-4-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-4-probe-record",
+            "record"
+          ],
+          [
+            "fee-4-judge",
+            "judge"
+          ],
+          [
+            "fee-4-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-4-green-record",
+            "record"
+          ],
+          [
+            "fee-4-close",
+            "close"
+          ],
+          [
+            "fee-5-open",
+            "open"
+          ],
+          [
+            "fee-5-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-5-probe-record",
+            "record"
+          ],
+          [
+            "fee-5-judge",
+            "judge"
+          ],
+          [
+            "fee-5-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-5-green-record",
+            "record"
+          ],
+          [
+            "fee-5-close",
+            "close"
+          ],
+          [
+            "fee-6-open",
+            "open"
+          ],
+          [
+            "fee-6-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-6-probe-record",
+            "record"
+          ],
+          [
+            "fee-6-judge",
+            "judge"
+          ],
+          [
+            "fee-6-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-6-green-record",
+            "record"
+          ],
+          [
+            "fee-6-close",
+            "close"
+          ],
+          [
+            "fee-7-open",
+            "open"
+          ],
+          [
+            "fee-7-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-7-probe-record",
+            "record"
+          ],
+          [
+            "fee-7-judge",
+            "judge"
+          ],
+          [
+            "fee-7-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-7-green-record",
+            "record"
+          ],
+          [
+            "fee-7-close",
+            "close"
+          ],
+          [
+            "fee-8-open",
+            "open"
+          ],
+          [
+            "fee-8-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-8-probe-record",
+            "record"
+          ],
+          [
+            "fee-8-judge",
+            "judge"
+          ],
+          [
+            "fee-8-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-8-green-record",
+            "record"
+          ],
+          [
+            "fee-8-close",
+            "close"
+          ],
+          [
+            "fee-9-open",
+            "open"
+          ],
+          [
+            "fee-9-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-9-probe-record",
+            "record"
+          ],
+          [
+            "fee-9-judge",
+            "judge"
+          ],
+          [
+            "fee-9-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-9-green-record",
+            "record"
+          ],
+          [
+            "fee-9-close",
+            "close"
+          ],
+          [
+            "fee-10-open",
+            "open"
+          ],
+          [
+            "fee-10-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-10-probe-record",
+            "record"
+          ],
+          [
+            "fee-10-judge",
+            "judge"
+          ],
+          [
+            "fee-10-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-10-green-record",
+            "record"
+          ],
+          [
+            "fee-10-close",
+            "close"
+          ],
+          [
+            "fee-11-open",
+            "open"
+          ],
+          [
+            "fee-11-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-11-probe-record",
+            "record"
+          ],
+          [
+            "fee-11-judge",
+            "judge"
+          ],
+          [
+            "fee-11-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-11-green-record",
+            "record"
+          ],
+          [
+            "fee-11-close",
+            "close"
+          ],
+          [
+            "fee-12-open",
+            "open"
+          ],
+          [
+            "fee-12-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-12-probe-record",
+            "record"
+          ],
+          [
+            "fee-12-judge",
+            "judge"
+          ],
+          [
+            "fee-12-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-12-green-record",
+            "record"
+          ],
+          [
+            "fee-12-close",
+            "close"
+          ],
+          [
+            "qualify-final",
+            "qualify"
+          ],
+          [
+            "prepare-final",
+            "prepare-formal"
+          ],
+          [
+            "record-final",
+            "record"
+          ],
+          [
+            "finish",
+            "finish"
+          ]
+        ],
+        "executions": [
+          {
+            "example": "fee-1",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "592a069b4f84ca3c170f34ec164b712163ca4d8d618a40242616bb6ad028392f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "55e7d427451a6f8378fc2c247e35b27bb6a499c3f6fe2aa6871f60c41cf95edb"
+            }
+          },
+          {
+            "example": "fee-1",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "592a069b4f84ca3c170f34ec164b712163ca4d8d618a40242616bb6ad028392f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "0dd92d4753bf3fd24d0106fd82368802f6cd53e401398fd06831e386aef2927c"
+            }
+          },
+          {
+            "example": "fee-2",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "e781cffa1e9250d085a9cf14bd9729aafbdef50436a9a60148a57859c2ae22b3",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "0dd92d4753bf3fd24d0106fd82368802f6cd53e401398fd06831e386aef2927c"
+            }
+          },
+          {
+            "example": "fee-2",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "e781cffa1e9250d085a9cf14bd9729aafbdef50436a9a60148a57859c2ae22b3",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "e8326b7226a9f12efc19662616f3296917f6129fdde2b666da264790000a681e"
+            }
+          },
+          {
+            "example": "fee-3",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "fa1fe3d734c87cf6bbb2991e8e571f7daf6b9b0b47860958a466297a0c321ec2",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "e8326b7226a9f12efc19662616f3296917f6129fdde2b666da264790000a681e"
+            }
+          },
+          {
+            "example": "fee-3",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "fa1fe3d734c87cf6bbb2991e8e571f7daf6b9b0b47860958a466297a0c321ec2",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "1fa6bdec55486462906f738aacc6ab6d0bc8e9b123f7298454bab53196dcb551"
+            }
+          },
+          {
+            "example": "fee-4",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "d911c37246215c72897bafa8c1c21345940577a42524dbc1c66519967de3465f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "1fa6bdec55486462906f738aacc6ab6d0bc8e9b123f7298454bab53196dcb551"
+            }
+          },
+          {
+            "example": "fee-4",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "d911c37246215c72897bafa8c1c21345940577a42524dbc1c66519967de3465f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "cce66a33775714f5800a3aeb3cea7498bd306cdb2335e0987f309ca11ff31ec7"
+            }
+          },
+          {
+            "example": "fee-5",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "a3495d8730a320af91148b3b497a90ef0e33c6dbb0c499fad2de38943992aea8",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "cce66a33775714f5800a3aeb3cea7498bd306cdb2335e0987f309ca11ff31ec7"
+            }
+          },
+          {
+            "example": "fee-5",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "a3495d8730a320af91148b3b497a90ef0e33c6dbb0c499fad2de38943992aea8",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4b5d76a75f6a12a49133c166ec5fbf7fd5e26096a047f9aeb816f082e0d078b4"
+            }
+          },
+          {
+            "example": "fee-6",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "7b28cabaacd3de30936f785cfcea1662a26a4cddbd5e491fccf7dbd9778c13c6",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4b5d76a75f6a12a49133c166ec5fbf7fd5e26096a047f9aeb816f082e0d078b4"
+            }
+          },
+          {
+            "example": "fee-6",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "7b28cabaacd3de30936f785cfcea1662a26a4cddbd5e491fccf7dbd9778c13c6",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "ccea8c813b96a8f04a3f2b40bd82af0037bf443f8ca07cb5dfde0952a1180f69"
+            }
+          },
+          {
+            "example": "fee-7",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "b3f797a5064d71eddef20db4c8d4ec2ac020b150e5eedaa74f746382c531126f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "ccea8c813b96a8f04a3f2b40bd82af0037bf443f8ca07cb5dfde0952a1180f69"
+            }
+          },
+          {
+            "example": "fee-7",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "b3f797a5064d71eddef20db4c8d4ec2ac020b150e5eedaa74f746382c531126f",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "37a270837170181510e4471e7ebfa300f26b218becfeb7e5e61dc4202538ce47"
+            }
+          },
+          {
+            "example": "fee-8",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "c4f09ba1a3b291159b1565fdb56725e4abf69331f7256797ae9f1467920cd57e",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "37a270837170181510e4471e7ebfa300f26b218becfeb7e5e61dc4202538ce47"
+            }
+          },
+          {
+            "example": "fee-8",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "c4f09ba1a3b291159b1565fdb56725e4abf69331f7256797ae9f1467920cd57e",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "d67cfa35ce140a3acf05296bae400647ef6a57aa152513743b1b5f9457705c19"
+            }
+          },
+          {
+            "example": "fee-9",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "199064ea67de23284499221db1bab0d06f99dec324a1e60faecd74dbee7ff229",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "d67cfa35ce140a3acf05296bae400647ef6a57aa152513743b1b5f9457705c19"
+            }
+          },
+          {
+            "example": "fee-9",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "199064ea67de23284499221db1bab0d06f99dec324a1e60faecd74dbee7ff229",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "665d8c66bf924f68f4687d4827789de07ce332d959786d797e99fa445de9e41b"
+            }
+          },
+          {
+            "example": "fee-10",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "a61a54c7fd2906f399a4ef67912af36503e02c6fbcfd5a20ca79b9b5dc9fe114",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "665d8c66bf924f68f4687d4827789de07ce332d959786d797e99fa445de9e41b"
+            }
+          },
+          {
+            "example": "fee-10",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "a61a54c7fd2906f399a4ef67912af36503e02c6fbcfd5a20ca79b9b5dc9fe114",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "486bdb3262b9ed2abbb0a72752ff6467ee7f2a11eb5df19bf078e478d097b983"
+            }
+          },
+          {
+            "example": "fee-11",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "4586d54d11034b99af959108e83eddb1bc8a2c83a46120e7f3cae5613ff6409c",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "486bdb3262b9ed2abbb0a72752ff6467ee7f2a11eb5df19bf078e478d097b983"
+            }
+          },
+          {
+            "example": "fee-11",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "4586d54d11034b99af959108e83eddb1bc8a2c83a46120e7f3cae5613ff6409c",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "6962eee1f2a2dffcd154f12b5dfb2f8faa530f66f39ca60575816baa8537aa56"
+            }
+          },
+          {
+            "example": "fee-12",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "after": {
+              "tests": "a963914e07507d065bba2c75365b7e5d322c8db833f8004f9d56de915655c337",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "6962eee1f2a2dffcd154f12b5dfb2f8faa530f66f39ca60575816baa8537aa56"
+            }
+          },
+          {
+            "example": "fee-12",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "a963914e07507d065bba2c75365b7e5d322c8db833f8004f9d56de915655c337",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4206dc6e5dbe3134e57d0cc665d44819f8073e61a799490806771bc568738cb5"
+            }
+          },
+          {
+            "example": null,
+            "purpose": "formal",
+            "outcome": "exited",
+            "exit_code": 0,
+            "after": {
+              "tests": "a963914e07507d065bba2c75365b7e5d322c8db833f8004f9d56de915655c337",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4206dc6e5dbe3134e57d0cc665d44819f8073e61a799490806771bc568738cb5"
+            }
+          }
+        ],
+        "final_sources": {
+          "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+          "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+          "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+          "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+          "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+          "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+          "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+          "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+          "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+          "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+          "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+          "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+          "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+          "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+        }
+      },
+      "profiled": true,
+      "retained_bytes": 18765650,
+      "pair": 0
+    }
+  ],
+  "summary": {}
+}

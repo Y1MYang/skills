@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "run_id": "v3-perf-baseline-20261103",
+  "workspace": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "spec_sources": [
+    "README.md"
+  ],
+  "models": {
+    "exploration": "gpt-6.1-sol",
+    "architect": "gpt-6.1-sol",
+    "test_author": "gpt-6.1-sol",
+    "implementer": "gpt-6.1-sol",
+    "runner": "gpt-6.1-sol",
+    "integrator": "gpt-6.1-sol",
+    "coverage_audit": "gpt-6.1-sol",
+    "spec_reviewer": "gpt-6.1-sol",
+    "standards_reviewer": "gpt-6.1-sol",
+    "expert": "gpt-6.1-sol"
+  },
+  "budget": {
+    "max_attempts": 20,
+    "max_formal_failures": 3,
+    "max_seconds": 600
+  },
+  "flows": [
+    {
+      "id": "shipping",
+      "write_paths": [
+        "shipping.py",
+        "tests"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "id": "fee-at-10000",
+      "flow": "shipping",
+      "requirement": "R1: total 10000 returns 0",
+      "depends_on": [],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    },
+    {
+      "id": "fee-at-9999",
+      "flow": "shipping",
+      "requirement": "R2: total 9999 returns 500",
+      "depends_on": [
+        "fee-at-10000"
+      ],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    },
+    {
+      "id": "negative-total",
+      "flow": "shipping",
+      "requirement": "R3: total -1 raises ValueError",
+      "depends_on": [
+        "fee-at-9999"
+      ],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    }
+  ],
+  "gates": []
+}

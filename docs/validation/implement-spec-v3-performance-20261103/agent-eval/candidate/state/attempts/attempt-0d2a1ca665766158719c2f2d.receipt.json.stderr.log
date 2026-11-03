@@ -1,0 +1,9 @@
+test_currency_is_usd (test_regression.CurrencyRegression.test_currency_is_usd) ... ok
+test_shipping_costs_500_at_9999_cents (test_shipping_below.ShippingBelowTest.test_shipping_costs_500_at_9999_cents) ... ok
+test_negative_total_raises_value_error (test_shipping_negative.ShippingNegativeTest.test_negative_total_raises_value_error) ... ok
+test_shipping_is_free_at_10000_cents (test_shipping_threshold.ShippingThresholdTest.test_shipping_is_free_at_10000_cents) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK

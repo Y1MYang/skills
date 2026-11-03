@@ -1,0 +1,35 @@
+{
+  "review_id": "candidate-code-standards-aa2aad4",
+  "role": "Standards reviewer",
+  "model": "gpt-6.1-sol",
+  "reviewed_at_utc": "2026-11-03T08:27:59.6069751Z",
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "clean_status": "clean: git status --porcelain produced no output",
+  "direct_comparison": "git diff 874982f1f83cfb1f38bf673416920be5bbf4d993 aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "scope": [
+    "shipping.py",
+    "tests/test_shipping_below.py",
+    "tests/test_shipping_negative.py",
+    "tests/test_shipping_threshold.py",
+    "README.md",
+    "tests/test_regression.py"
+  ],
+  "standards_sources": [
+    "README.md authoritative public contract; no tracked CONTRIBUTING.md, CODING_STANDARDS.md, or AGENTS.md",
+    "code-review smell baseline",
+    "pstack laziness protocol and prove-it-works"
+  ],
+  "verdict": "pass",
+  "findings": [],
+  "rationale": "The minimal pure function uses an explicit negative-input guard and one threshold decision. Names communicate the public contract; no unnecessary abstraction, duplication, scope expansion, or changed-code defect was found. New tests use observable public behavior and follow existing unittest conventions. Unchanged formatting was not flagged.",
+  "execution": "No product execution; static exact-HEAD review only.",
+  "own_counts": {
+    "wait": 0,
+    "dispatch": 0,
+    "followup": 0
+  },
+  "limitations": [
+    "Standards axis only; independent spec review and formal execution remain separate evidence."
+  ]
+}

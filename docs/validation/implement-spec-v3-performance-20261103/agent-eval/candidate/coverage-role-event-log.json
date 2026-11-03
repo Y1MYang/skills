@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-03T08:29:07.8432433Z",
+  "role": "Coverage audit",
+  "actual_model": "gpt-6.1-sol",
+  "spawn_calls": 2,
+  "followup_calls": 0,
+  "wait_calls": 3,
+  "send_handoff_calls": 4,
+  "calls": [
+    "send_message parent prepared",
+    "wait_agent 120000",
+    "spawn_agent spec_axis gpt-6.1-sol fork none",
+    "spawn_agent standards_axis gpt-6.1-sol fork none",
+    "send_message parent dispatched",
+    "wait_agent 120000",
+    "wait_agent 120000",
+    "list_agents recipient discovery (boundary incident)",
+    "send_message parent boundary disclosure",
+    "send_message Integrator final handoff (scheduled next)"
+  ],
+  "qualification": "Both axis pass; coordinator whole-spec blessing unverified pending clean reconciliation"
+}

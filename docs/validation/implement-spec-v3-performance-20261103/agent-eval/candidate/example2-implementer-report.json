@@ -1,0 +1,12 @@
+{
+  "example": 2,
+  "input": 9999,
+  "owner": "Implementer",
+  "model": "gpt-6.1-sol",
+  "utc": "2026-11-03T08:24:47.2693427Z",
+  "red_judgment_seq": 11,
+  "diff_summary": "Added below-threshold fee 500, retaining zero at/above 10000; no negative validation added. CURRENCY and signature preserved.",
+  "product_sha256": "1AC4C18EC59021FD5F80206059F2D367BEED7E94D4AFEDB9B9C5411526897F74",
+  "tests_executed": false,
+  "verification_owner": "Runner prescribes; Integrator executes"
+}

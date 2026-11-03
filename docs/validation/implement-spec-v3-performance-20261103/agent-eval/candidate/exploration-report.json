@@ -1,0 +1,23 @@
+{
+  "project": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+  "baseline_head": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "baseline_regression_exit": 0,
+  "clean": true,
+  "model": "gpt-6.1-sol",
+  "first_dispatch_preclock_utc": "2026-11-03 08:18:40 UTC",
+  "exploration_completed_utc": "2026-11-03T08:19:49.260380+00:00",
+  "clock_precision": "clock tool seconds; no subsecond precision for dispatch start",
+  "runtime_skill": "C:/Users/admin/AppData/Local/Temp/implement-spec-v3-candidate-9fgw2e6t/implement-spec-v3",
+  "runtime_sha": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+  "dependencies": {
+    "test_review": "C:/Users/admin/.codex/skills/test-review/SKILL.md",
+    "acceptance_contract": "C:/Users/admin/.codex/skills/test-review/references/acceptance-contract.md",
+    "tdd": "C:/Users/admin/.codex/skills/tdd/SKILL.md",
+    "pstack": "C:/Users/admin/.codex/skills/pstack-principles/SKILL.md"
+  },
+  "principles": [
+    "explain-the-number",
+    "sequence-verifiable-units",
+    "prove-it-works"
+  ]
+}

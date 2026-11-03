@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T07:19:50.619503+00:00",
+  "resume_observed_at_utc": "2026-11-03T07:19:50.619503+00:00",
+  "resume_note": "Coordinator reported usage interruption; existing completed containment receipt inspected, no duplicate execution. Pause bounds are unknown.",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "receipt": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment.receipt.json",
+  "argv": [
+    "python",
+    "-B",
+    "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/windows-containment-harness.py"
+  ],
+  "cwd": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline",
+  "timeout_seconds": 30.0,
+  "started_at": "2026-11-03T07:06:48.064109+00:00",
+  "ended_at": "2026-11-03T07:06:51.723107+00:00",
+  "exit_code": 0,
+  "outcome": "exited",
+  "cleanup_complete": true,
+  "tests_run": 2,
+  "tests_passed": 2,
+  "inner_receipts": [
+    {
+      "test": "test_normal_target_exit_cleans_still_running_descendant",
+      "receipt": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment-artifacts\\test_normal_target_exit_cleans_still_running_descendant\\receipt.json",
+      "outcome": "exited",
+      "exit_code": 0,
+      "cleanup_complete": true,
+      "owner": {
+        "kind": "job",
+        "pid": 36920,
+        "platform": "windows",
+        "token": "c897ce6170034c77875a1914db9475bf"
+      }
+    },
+    {
+      "test": "test_timeout_stops_owned_tree_and_preserves_unrelated_process",
+      "receipt": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment-artifacts\\test_timeout_stops_owned_tree_and_preserves_unrelated_process\\receipt.json",
+      "outcome": "timeout",
+      "exit_code": null,
+      "cleanup_complete": true,
+      "owner": {
+        "kind": "job",
+        "pid": 22388,
+        "platform": "windows",
+        "token": "0674022bae804abfb7ec1256a1ba0b1b"
+      }
+    }
+  ],
+  "logs": {
+    "stderr": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment.receipt.json.stderr.log",
+      "sha256": "46e021473c7db57304ca0a2b9917e5078b5087b91f032ffc31149eeda9768ba6",
+      "size": 407
+    },
+    "stdout": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment.receipt.json.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "method": "Executed the two exact frozen test methods through a subclass that only copies fixture files in tearDown before original cleanup. Assertions unchanged. Tests verify owned parent/child termination and unrelated process survival on timeout and normal target exit.",
+  "product_edits": false
+}

@@ -1,0 +1,134 @@
+{
+  "review_id": "baseline-full-standards-head412a10d-20261103",
+  "schema_version": 1,
+  "scope": "full",
+  "axis": "validity/standards",
+  "utc": "2026-11-03T07:20:47.1213586Z",
+  "model": "gpt-6.1-sol",
+  "base": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "head": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+  "comparison": "direct base-to-head; explicit allowed test paths; no merge-base",
+  "candidate": "HEAD verified; git status --porcelain empty",
+  "allowed_inventory": [
+    "README.md",
+    "tests/test_regression.py",
+    "tests/test_shipping_threshold.py",
+    "tests/test_shipping_below.py",
+    "tests/test_shipping_negative.py"
+  ],
+  "pins": [
+    {
+      "path": "README.md",
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7",
+      "matched": true
+    },
+    {
+      "path": "tests/test_regression.py",
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE",
+      "matched": true
+    },
+    {
+      "path": "tests/test_shipping_threshold.py",
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F",
+      "matched": true
+    },
+    {
+      "path": "tests/test_shipping_below.py",
+      "sha256": "960ACA21F1D8FCFDCB24A9D495D550557F8C5CED0A15A0DE47007862534BAB86",
+      "matched": true
+    },
+    {
+      "path": "tests/test_shipping_negative.py",
+      "sha256": "2F83EB522C7A20548CCF9D9215C579F061EC143072134BF9C68597EF367E52F9",
+      "matched": true
+    }
+  ],
+  "contract_version": "shipping-public-v1",
+  "contract_digests": {
+    "architect_test_safe_package_sha256": "6C414DE4583B0D9A8460788A32481F093D8D493FA9E8336222E1C9F436D5F788",
+    "final_blind_pin_packet_sha256": "743B8D85417F5F0EF5AA5AAB41B2A9E1ADB0BB3EF0224565F6E29BB5BE9BF263",
+    "test_review_skill_sha256": "939E2A91BF6B533685B5040F6AF599C090DC0A9A9902A6DCC2871362CAEF2C9F",
+    "acceptance_contract_sha256": "ECE535A7EC797AAA2A00A321A14F0106D434246B67BA4561BF5C22AB778BC59C"
+  },
+  "independence": {
+    "implementation_blind": true,
+    "read_boundary": "Only listed README and four tests, frozen review skill/reference, test-safe packet and pin packet; Git HEAD/status and explicitly constrained test-side diff.",
+    "production_read": false,
+    "product_import_or_collection": false,
+    "project_edits": false,
+    "sanitization": "Architect owns test-safe package; provenance states README and test inventory only, excluding implementation-bearing inputs."
+  },
+  "dependency_closure": "All four test modules inspected. Only unittest and named public shipping imports. No fixtures, shared helpers, mocks, clocks, async ordering, cleanup or external dependencies in allowed tests; absence of extra configuration based on supplied test-safe inventory.",
+  "prior_evidence_reused": [],
+  "validity_standards": {
+    "status": "pass",
+    "basis": "Direct synchronous public calls feed assertEqual or assertRaises; expected literals come from README. Existing public constant assertion preserved. Exactly three new methods, one per requested example, in three added files. unittest naming and TestCase discovery conventions are valid."
+  },
+  "spec_coverage": {
+    "status": "unverified",
+    "basis": "Separate reviewer axis, not adjudicated here; validity links below support coordinator reconciliation. Three samples do not prove universal integer-domain correctness or serial authoring chronology."
+  },
+  "mapping": [
+    {
+      "criterion": "R1",
+      "location": "tests/test_shipping_threshold.py:8",
+      "action": "shipping_fee(10000)",
+      "evidence": "assertEqual return to 0",
+      "validity": "pass"
+    },
+    {
+      "criterion": "R2",
+      "location": "tests/test_shipping_below.py:8",
+      "action": "shipping_fee(9999)",
+      "evidence": "assertEqual return to 500",
+      "validity": "pass"
+    },
+    {
+      "criterion": "R3",
+      "location": "tests/test_shipping_negative.py:8",
+      "action": "shipping_fee(-1) inside assertRaises(ValueError)",
+      "evidence": "ValueError raised by sole scoped action",
+      "validity": "pass"
+    },
+    {
+      "criterion": "existing regression",
+      "location": "tests/test_regression.py:7",
+      "action": "observe public CURRENCY",
+      "evidence": "assertEqual to USD",
+      "validity": "pass"
+    }
+  ],
+  "counterfactual_reasoning": [
+    "Compliant returns 0 at 10000 and 500 at 9999 pass. Wrong threshold inclusivity, swapped fee, always-zero, always-500 and missing returns fail at least one relevant direct assertion. Unexpected exceptions fail those positive tests.",
+    "At -1, no exception and wrong exception class fail; ValueError or its subclass passes as normal unittest contract semantics. No unrelated action inside assertion context can supply a false success.",
+    "CURRENCY changed from USD fails existing assertion. No stale asynchronous observations, mocks or computed expected values can replace public evidence.",
+    "A hardcoded implementation matching only these examples could pass; that is finite requested example coverage, not evidence for every integer. Numeric equality follows unittest and does not independently enforce exact return type. No separately requested exact-type test or extra example is inferred."
+  ],
+  "findings": [],
+  "actual_checks": [
+    "Read allowed material and constrained direct test diff.",
+    "Verified resolved HEAD and clean working tree using metadata.",
+    "Computed and compared all five SHA256 pins; all match.",
+    "Counted exactly three new behavior tests and unchanged existing regression.",
+    "Static decision-mechanism and counterfactual reasoning only."
+  ],
+  "isolated_mechanism_execution": "none; simple synchronous assertion semantics assessed by reasoning",
+  "runner_observations": "none",
+  "product_execution": {
+    "status": "unverified",
+    "basis": "Not evaluated; no execution, imports or collection performed."
+  },
+  "timing": "No timing limits in reviewed tests; no performance or SLA claim.",
+  "workflow_event": {
+    "reported_prior_event": "Prior dispatch ended usage-limit error before report, as supplied by coordinator.",
+    "coordinator_resume_utc": "2026-11-03 07:19:36 UTC",
+    "interruption_start": "unknown; not inferred",
+    "history_reset": false
+  },
+  "remaining_gaps": [
+    "Serial authoring and Green checkpoint chronology cannot be verified from final test snapshot and are not validity assertions.",
+    "Product execution remains separate runner gate."
+  ],
+  "ownership": "No confirmed test defect; coordinator owns reconciliation, separate runner owns product execution.",
+  "next_action": "Reconcile independent spec/coverage report against this standards pass; retain product execution as a separate gate."
+}

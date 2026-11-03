@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T07:01:18.098926+00:00",
+  "started_at_utc": "2026-11-03T07:01:08.912336+00:00",
+  "ended_at_utc": "2026-11-03T07:01:09.106654+00:00",
+  "first_red_started_at_utc": "2026-11-03T06:55:29.326421+00:00",
+  "attempt_id": "attempt-079f5704f7125bfd21aceefb",
+  "classification": "green",
+  "receipt": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-079f5704f7125bfd21aceefb.receipt.json",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "cwd": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "exit_code": 0,
+  "outcome": "exited",
+  "cleanup_complete": true,
+  "snapshots_unchanged": true,
+  "test_count": 3,
+  "result": "pass",
+  "regression_scope": "Full unittest discovery: current below-threshold test, threshold test, and CURRENCY regression.",
+  "logs": {
+    "stderr": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-079f5704f7125bfd21aceefb.receipt.json.stderr.log",
+      "sha256": "9cbdc3c8cd073314ab9b5bab2f7587cbc526d3b35bfd40dcdfe7694d423b4c13",
+      "size": 433
+    },
+    "stdout": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-079f5704f7125bfd21aceefb.receipt.json.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "edits": "No product or test edits."
+}

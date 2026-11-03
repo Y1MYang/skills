@@ -1,0 +1,20 @@
+{
+  "standards_review": {
+    "review_id": "candidate-test-standards-axis",
+    "independent_context": "/root/v3_perf_agent_eval/candidate_coverage/standards_validity",
+    "source": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/test-standards-axis.json; full reconciliation E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/test-review-full.json",
+    "verdict": "pass"
+  },
+  "op_id": "final-qualify",
+  "op": "qualify",
+  "spec_review": {
+    "review_id": "candidate-test-spec-axis",
+    "independent_context": "/root/v3_perf_agent_eval/candidate_coverage/spec_coverage",
+    "source": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/test-spec-axis.json; full reconciliation E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/test-review-full.json",
+    "verdict": "pass"
+  },
+  "scope": {
+    "final": true
+  },
+  "schema": 1
+}

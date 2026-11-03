@@ -1,0 +1,105 @@
+
+Hash : AD858E5BC5DD9458FC93ECD2865AE36004DDCBA06E657C1FC131CFCD98D317B5
+Path : E:\Repos\skills\skills\engineering\implement-spec-v3\scripts\cycle.py
+
+Hash : 5B726580139693D62BD0EE2021473A2E14E0E30D6D19D42DBEB6EA0E294C22F1
+Path : E:\Repos\skills\skills\engineering\implement-spec-v3\tests\test_cycle_performance.py
+
+test_accepted_revision_preserves_downstream_history_but_requires_new_gate_proof_at_unchanged_bytes (test_cycle_performance.CyclePerformanceTests.test_accepted_revision_preserves_downstream_history_but_requires_new_gate_proof_at_unchanged_bytes)
+PERF-S17 (��4): affected gate evidence expires without resetting unlisted historical close. ... ok
+test_another_execute_cannot_reserve_an_already_bound_record_identity (test_cycle_performance.CyclePerformanceTests.test_another_execute_cannot_reserve_an_already_bound_record_identity)
+PERF-E16 (��3 rev1): conflicting execute IDs reject before another preparation. ... ok
+test_apply_cannot_consume_the_record_identity_of_a_waiting_execution (test_cycle_performance.CyclePerformanceTests.test_apply_cannot_consume_the_record_identity_of_a_waiting_execution)
+PERF-E14 (��3 rev1): a bound record identity is reserved through target execution. ... ok
+test_batch_changed_committed_event_rejects_at_its_index_and_keeps_new_prefix (test_cycle_performance.CyclePerformanceTests.test_batch_changed_committed_event_rejects_at_its_index_and_keeps_new_prefix)
+PERF-B06 (��2): changed replay content cannot replace an original durable event. ... ok
+test_batch_open_prepare_replay_keeps_original_events_and_single_reservation (test_cycle_performance.CyclePerformanceTests.test_batch_open_prepare_replay_keeps_original_events_and_single_reservation)
+PERF-B01 (��2): an ordered batch has ordinary event identity and replay. ... ok
+test_batch_operation_field_failure_preserves_the_successful_prefix (test_cycle_performance.CyclePerformanceTests.test_batch_operation_field_failure_preserves_the_successful_prefix)
+PERF-B04 (��2): operation fields are checked at their own boundary. ... ok
+test_batch_record_identity_conflict_preserves_prefix_and_original_execution (test_cycle_performance.CyclePerformanceTests.test_batch_record_identity_conflict_preserves_prefix_and_original_execution)
+PERF-E15 (��2/��3 rev1): a reserved-ID collision is a durable-prefix rejection. ... ok
+test_batch_state_rejection_keeps_prefix_and_retries_repaired_suffix (test_cycle_performance.CyclePerformanceTests.test_batch_state_rejection_keeps_prefix_and_retries_repaired_suffix)
+PERF-B02 (��2): a rejected item consumes neither its ID nor later work. ... ok
+test_batch_unknown_envelope_field_rejects_without_consuming_any_event (test_cycle_performance.CyclePerformanceTests.test_batch_unknown_envelope_field_rejects_without_consuming_any_event)
+PERF-B05 (��2): malformed outer input rejects before all otherwise valid items. ... ok
+test_batch_unknown_later_operation_rejects_before_any_mutation (test_cycle_performance.CyclePerformanceTests.test_batch_unknown_later_operation_rejects_before_any_mutation)
+PERF-B03 (��2): all common headers are validated before the first item. ... ok
+test_execute_adopts_a_matching_complete_receipt_without_relaunch (test_cycle_performance.CyclePerformanceTests.test_execute_adopts_a_matching_complete_receipt_without_relaunch)
+PERF-E08 (��3): the durable prepare/receipt prefix resumes at record only. ... ok
+test_execute_cannot_adopt_an_unbound_apply_preparation (test_cycle_performance.CyclePerformanceTests.test_execute_cannot_adopt_an_unbound_apply_preparation)
+PERF-E04 (��3): an ordinary preparation is never retroactively executable. ... ok
+test_execute_canonical_replay_returns_original_facts_without_a_second_launch (test_cycle_performance.CyclePerformanceTests.test_execute_canonical_replay_returns_original_facts_without_a_second_launch)
+PERF-E02 (��3): a formatting-only retry preserves one actual target effect. ... ok
+test_execute_changed_argv_cannot_reuse_a_bound_preparation (test_cycle_performance.CyclePerformanceTests.test_execute_changed_argv_cannot_reuse_a_bound_preparation)
+PERF-E03 (��3): preparation identity binds the exact command permanently. ... ok
+test_execute_reaudits_old_receipt_bytes_after_the_acknowledged_target_finishes (test_cycle_performance.CyclePerformanceTests.test_execute_reaudits_old_receipt_bytes_after_the_acknowledged_target_finishes)
+PERF-H02 (��1/��3): a pre-launch audit cannot authorize record after evidence changes. ... ok
+test_execute_records_a_real_timeout_and_replays_without_relaunch (test_cycle_performance.CyclePerformanceTests.test_execute_records_a_real_timeout_and_replays_without_relaunch)
+PERF-E18 (��3): a published timeout receipt is a recorded failure, not helper failure. ... ok
+test_execute_records_actual_snapshot_drift_as_ineligible_and_replays_the_failure (test_cycle_performance.CyclePerformanceTests.test_execute_records_actual_snapshot_drift_as_ineligible_and_replays_the_failure)
+PERF-E13 (��1/��3): a zero exit cannot hide real before/after input drift. ... ok
+test_execute_records_real_nonzero_probe_without_automatic_red (test_cycle_performance.CyclePerformanceTests.test_execute_records_real_nonzero_probe_without_automatic_red)
+PERF-E01 (��3): execution records facts; only an explicit judge permits Green. ... ok
+test_execute_refuses_a_real_unrecorded_receipt_with_different_argv (test_cycle_performance.CyclePerformanceTests.test_execute_refuses_a_real_unrecorded_receipt_with_different_argv)
+PERF-E10 (��3): an actual successful different command is not the bound execution. ... ok
+test_execute_replay_distinguishes_canonical_integer_and_decimal_requests (test_cycle_performance.CyclePerformanceTests.test_execute_replay_distinguishes_canonical_integer_and_decimal_requests)
+PERF-E09 (��3): numeric equality does not replace exact JSON request identity. ... ok
+test_execute_unknown_envelope_field_rejects_before_preparation_and_leaves_ids_usable (test_cycle_performance.CyclePerformanceTests.test_execute_unknown_envelope_field_rejects_before_preparation_and_leaves_ids_usable)
+PERF-E17 (��3): a malformed outer request cannot reserve or launch work. ... ok
+test_execute_unknown_ownership_preserves_live_work_and_requires_recovery (test_cycle_performance.CyclePerformanceTests.test_execute_unknown_ownership_preserves_live_work_and_requires_recovery)
+PERF-E07 (��3): incomplete claim identity grants no retry or cancellation. ... ok
+test_extend_allows_an_unrelated_pending_ancestor_and_preserves_its_preparation (test_cycle_performance.CyclePerformanceTests.test_extend_allows_an_unrelated_pending_ancestor_and_preserves_its_preparation)
+PERF-S01 (��4): adding a dependent does not pull its active ancestor into impact. ... ok
+test_extend_cannot_change_scope_while_a_final_attempt_is_pending (test_cycle_performance.CyclePerformanceTests.test_extend_cannot_change_scope_while_a_final_attempt_is_pending)
+PERF-S11 (��4): every pending final attempt protects final membership. ... ok
+test_formal_refresh_with_hardlink_equivalent_test_paths_preserves_unrelated_next_work (test_cycle_performance.CyclePerformanceTests.test_formal_refresh_with_hardlink_equivalent_test_paths_preserves_unrelated_next_work)
+PERF-S15 (��4): refreshed proofs follow actual file identity across different path depths. ... ok
+test_include_allows_unrelated_pending_work_and_preserves_its_preparation (test_cycle_performance.CyclePerformanceTests.test_include_allows_unrelated_pending_work_and_preserves_its_preparation)
+PERF-S02 (��4): a disjoint dependency addition does not stop another flow. ... ok
+test_include_cannot_change_dependencies_while_a_final_attempt_is_pending (test_cycle_performance.CyclePerformanceTests.test_include_cannot_change_dependencies_while_a_final_attempt_is_pending)
+PERF-S12 (��4): pending final evidence cannot receive a new dependency declaration. ... ok
+test_include_overlapping_cross_group_dependency_blocks_affected_pending_flow (test_cycle_performance.CyclePerformanceTests.test_include_overlapping_cross_group_dependency_blocks_affected_pending_flow)
+PERF-S04 (��4): new dependency impact uses real path overlap across groups. ... ok
+test_interrupted_execute_requires_recovery_and_cannot_relaunch_after_settlement (test_cycle_performance.CyclePerformanceTests.test_interrupted_execute_requires_recovery_and_cannot_relaunch_after_settlement)
+PERF-E06 (��3): a dead owned runner retains its charge and cannot be retried. ... ok
+test_record_cannot_settle_a_bound_execution_using_a_real_different_command (test_cycle_performance.CyclePerformanceTests.test_record_cannot_settle_a_bound_execution_using_a_real_different_command)
+PERF-E11 (��1/��3): ordinary record cannot bypass the immutable execution binding. ... ok
+test_recover_cannot_adopt_a_bound_execution_receipt_from_different_argv (test_cycle_performance.CyclePerformanceTests.test_recover_cannot_adopt_a_bound_execution_receipt_from_different_argv)
+PERF-E12 (��1/��3): recovery preserves the same exact command evidence boundary. ... ok
+test_revise_blocks_a_pending_gate_consumer_without_an_ordinary_dependency (test_cycle_performance.CyclePerformanceTests.test_revise_blocks_a_pending_gate_consumer_without_an_ordinary_dependency)
+PERF-S10 (��4): gate edges propagate impact to their already admitted consumers. ... ok
+test_revise_blocks_a_pending_ordinary_downstream_dependent (test_cycle_performance.CyclePerformanceTests.test_revise_blocks_a_pending_ordinary_downstream_dependent)
+PERF-S09 (��4): ordinary downstream closure protects pending consumer work. ... ok
+test_revise_cannot_reset_completion_while_a_final_attempt_is_pending (test_cycle_performance.CyclePerformanceTests.test_revise_cannot_reset_completion_while_a_final_attempt_is_pending)
+PERF-S13 (��4): pending final membership cannot be revised underneath its proof. ... ok
+test_revise_checks_a_pending_formal_baseline_even_when_historical_inputs_match_again (test_cycle_performance.CyclePerformanceTests.test_revise_checks_a_pending_formal_baseline_even_when_historical_inputs_match_again)
+PERF-S07 (��4): pending formal captures remain applicable impact baselines. ... ok
+test_revise_detects_changed_criterion_in_an_unlisted_pending_preparation (test_cycle_performance.CyclePerformanceTests.test_revise_detects_changed_criterion_in_an_unlisted_pending_preparation)
+PERF-S05 (��4): the prepared snapshot exposes affected work absent from caller IDs. ... ok
+test_revise_detects_changed_inputs_of_an_unlisted_open_example_without_receipts (test_cycle_performance.CyclePerformanceTests.test_revise_detects_changed_inputs_of_an_unlisted_open_example_without_receipts)
+PERF-S08 (��4): an opening snapshot protects active work before its first prepare. ... ok
+test_revise_propagates_through_an_ordinary_then_gate_edge_to_pending_terminal_work (test_cycle_performance.CyclePerformanceTests.test_revise_propagates_through_an_ordinary_then_gate_edge_to_pending_terminal_work)
+PERF-S16 (��4): impact closure repeats across mixed edge kinds, not only one hop. ... ok
+test_revise_resets_only_the_named_active_flow_while_unrelated_attempt_records (test_cycle_performance.CyclePerformanceTests.test_revise_resets_only_the_named_active_flow_while_unrelated_attempt_records)
+PERF-S03 (��4): unchanged shared read dependencies do not make revision global. ... ok
+test_revise_uses_a_successful_formal_refresh_before_preserving_unrelated_next_work (test_cycle_performance.CyclePerformanceTests.test_revise_uses_a_successful_formal_refresh_before_preserving_unrelated_next_work)
+PERF-S14 (��4): an adopted formal proof refreshes the completed example's baseline. ... ok
+test_revise_uses_refreshed_adopted_inputs_before_preserving_an_unrelated_next_attempt (test_cycle_performance.CyclePerformanceTests.test_revise_uses_refreshed_adopted_inputs_before_preserving_an_unrelated_next_attempt)
+PERF-S06 (��4): accepted regression replaces the old incomplete dependency baseline. ... ok
+test_same_size_restored_timestamp_log_tampering_is_reaudited_on_every_entry (test_cycle_performance.CyclePerformanceTests.test_same_size_restored_timestamp_log_tampering_is_reaudited_on_every_entry)
+PERF-H01 (��1): old evidence is checked again across transitions and replay. ... ok
+test_waiting_execute_releases_state_and_excludes_concurrent_duplicate_launch (test_cycle_performance.CyclePerformanceTests.test_waiting_execute_releases_state_and_excludes_concurrent_duplicate_launch)
+PERF-E05 (��3): independent state work completes while one target waits. ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 78.799s
+
+OK
+
+Hash : AD858E5BC5DD9458FC93ECD2865AE36004DDCBA06E657C1FC131CFCD98D317B5
+Path : E:\Repos\skills\skills\engineering\implement-spec-v3\scripts\cycle.py
+
+Hash : 5B726580139693D62BD0EE2021473A2E14E0E30D6D19D42DBEB6EA0E294C22F1
+Path : E:\Repos\skills\skills\engineering\implement-spec-v3\tests\test_cycle_performance.py
+

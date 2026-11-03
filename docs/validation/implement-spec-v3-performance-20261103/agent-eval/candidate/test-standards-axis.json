@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "role": "Validity/standards reviewer",
+  "actual_model": "gpt-6.1-sol",
+  "completed_utc": "2026-11-03T08:28:03.3553408Z",
+  "scope": "full",
+  "contract": "shipping-v1",
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "comparison": "direct base-to-head, explicit README.md and four allowed test paths only",
+  "candidate_verification": {
+    "head_resolved": true,
+    "base_resolved": true,
+    "working_allowed_paths_clean": true,
+    "all_five_sha256_match_packet": true,
+    "diff": "Exactly three added test files, one example each; README and currency regression unchanged",
+    "test_tree": "Four allowed test files; no additional test-side paths"
+  },
+  "input_digests": {
+    "final-blind-pin-packet.json": "e1c3701572a57a4dfd9613e3f3fb853d932293ba4ecf556e9138ba562a057428",
+    "architect-test-safe-package.json": "9be913b7458b28cd3a3817bdcff3548ba71103779625cf5d70ec4f801bfaa092",
+    "test-review/SKILL.md": "4c072a2dbfdc19eb15888ab238f69d5f0dcbd71797ff17860e517ac18d4b3557",
+    "acceptance-contract.md": "2fed8fb5b8123ea9c8e2e781c35aa2934811f07a61d8358849b895bbea4c98f4"
+  },
+  "allowed_input_file_sha256": {
+    "README.md": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+    "tests/test_regression.py": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+    "tests/test_shipping_threshold.py": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+    "tests/test_shipping_below.py": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+    "tests/test_shipping_negative.py": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297"
+  },
+  "independence": {
+    "fresh_context": true,
+    "production_source_read": false,
+    "production_execution": false,
+    "imports_or_collection": false,
+    "history_or_raw_logs_read": false,
+    "source_owner": "Integrator",
+    "sanitization_scope": "Packet permits authoritative contract, test inventory, Git version metadata and public assertion outcomes only",
+    "limitations": "No product execution inferred; serial authoring chronology is not proved by final snapshot or reviewed here."
+  },
+  "dependency_closure": {
+    "status": "pass",
+    "basis": "All four test files use only standard-library unittest and public shipping imports. No shared fixtures/helpers, mocks, setup/cleanup, async ordering or timing. Packet explicitly declares no extra configuration. Test-tree inventory matches."
+  },
+  "validity_standards": {
+    "status": "pass",
+    "basis": "Concrete public API calls are evaluated inside direct assertEqual assertions or the narrow assertRaises context. Independent expected values come from README and the public package. Currency compares public exported value to specified USD. Tests use established unittest convention, no private seams or implementation-dependent assertions."
+  },
+  "counterfactuals": [
+    {
+      "test": "tests/test_shipping_threshold.py:8",
+      "compliant": "shipping_fee(10000) returns 0 and satisfies equality",
+      "broken": "500 or another unequal result fails; exceptions fail/error",
+      "causal_chain": "Call result is directly compared to sourced 0"
+    },
+    {
+      "test": "tests/test_shipping_below.py:8",
+      "compliant": "shipping_fee(9999) returns 500",
+      "broken": "0 or another unequal result fails; exceptions fail/error",
+      "causal_chain": "Call result is directly compared to sourced 500"
+    },
+    {
+      "test": "tests/test_shipping_negative.py:8",
+      "compliant": "The sole call shipping_fee(-1) raises ValueError",
+      "broken": "Returning normally fails assertRaises; TypeError, RuntimeError, or another unrelated exception errors rather than passing",
+      "causal_chain": "Only required public call is inside exception context; no unrelated action can supply success. ValueError subclasses are appropriately accepted; no exact-type or message restriction is sourced."
+    },
+    {
+      "test": "tests/test_regression.py:6",
+      "compliant": "CURRENCY equals USD",
+      "broken": "Changed currency fails equality; missing export fails import",
+      "causal_chain": "Public exported currency is compared with independently specified USD"
+    }
+  ],
+  "mechanism_check_method": "Static reasoning only; simple synchronous predicates do not require synthetic clock/event execution.",
+  "numeric_provenance": "10000, 9999, 500, 0 and -1 derive from authoritative README/package. No deadlines, waits or performance assertions. Type validation and unspecified exception text are not asserted.",
+  "findings": [],
+  "failure_ownership": "none",
+  "spec_coverage_axis": "not run by this reviewer; independently assigned sibling axis",
+  "whole_spec_blessing": "reserved for parent full reconciliation",
+  "product_execution_success": {
+    "status": "unverified",
+    "basis": "Neutral four-assertion pass claim received but not independently executed; test validity does not establish product success."
+  },
+  "next_action": "Coordinator reconcile this passing validity axis with independent Spec/coverage report and separate execution gate.",
+  "prior_evidence_reused": []
+}

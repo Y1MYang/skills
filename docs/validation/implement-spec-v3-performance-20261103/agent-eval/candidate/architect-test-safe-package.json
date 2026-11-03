@@ -1,0 +1,79 @@
+{
+  "role": "Architect",
+  "model": "gpt-6.1-sol",
+  "completed_utc": "2026-11-03T08:20:49.894Z",
+  "baseline": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "contract": {
+    "id": "shipping-v1",
+    "authority": "README.md at 874982f1f83cfb1f38bf673416920be5bbf4d993",
+    "signature": "from shipping import shipping_fee; shipping_fee(total_cents: int) -> int",
+    "domain": "integer cents",
+    "rules": [
+      "For nonnegative integer totals below 10000, return 500.",
+      "For integer totals at least 10000, return 0.",
+      "Negative totals raise ValueError.",
+      "Type validation is out of scope.",
+      "CURRENCY remains USD."
+    ],
+    "error_message": "Unspecified; do not assert a message."
+  },
+  "classification": "test-safe requirements and public contract only",
+  "input_inventory": [
+    "Authoritative user task",
+    "README.md at baseline",
+    "tests/test_regression.py metadata: unittest CurrencyRegression.test_currency_is_usd asserts CURRENCY equals USD"
+  ],
+  "allowed_inventory": [
+    "README.md",
+    "tests/test_regression.py",
+    "architect-test-safe-package.json",
+    "exploration-test-safe-package.json"
+  ],
+  "forbidden_inputs": [
+    "shipping.py",
+    "implementation history/diffs/logs",
+    "architect-report.json",
+    "exploration-report.json"
+  ],
+  "examples": [
+    {
+      "id": "threshold",
+      "input": 10000,
+      "expected": 0,
+      "depends_on": [],
+      "covers": "Inclusive free-shipping threshold"
+    },
+    {
+      "id": "below",
+      "input": 9999,
+      "expected": 500,
+      "depends_on": [
+        "threshold"
+      ],
+      "covers": "Immediately below threshold charges fixed fee"
+    },
+    {
+      "id": "negative",
+      "input": -1,
+      "expected_exception": "ValueError",
+      "depends_on": [
+        "below"
+      ],
+      "covers": "Negative input rejection"
+    }
+  ],
+  "authoring": "Exactly three new examples, serially threshold -> below -> negative. Author only current example after previous current Green plus affected regression. Never execute imports/collection on blind side.",
+  "test_framework": "Python 3.12 standard-library unittest; no additional dependencies, fixtures or helpers required.",
+  "test_command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "coverage": "Three mandated examples cover all changed behavior partitions and both sides of threshold. Existing CurrencyRegression retains compatibility coverage. No new zero/high-value/type-validation examples permitted by exact-three constraint.",
+  "provenance": "Every expected answer derives solely from README.md and user task. No observed product behavior or implementation-derived answer is included."
+}

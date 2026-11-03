@@ -1,0 +1,48 @@
+{
+  "utc": "2026-11-03T07:05:54.2358958Z",
+  "scope": "full",
+  "contract": "shipping-public-v1",
+  "base": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "head": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+  "comparison": "direct base-to-head, allowed test paths only; all candidate test changes and existing CURRENCY regression",
+  "root": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103",
+  "allowed_read": [
+    "README.md",
+    "tests/test_regression.py",
+    "tests/test_shipping_threshold.py",
+    "tests/test_shipping_below.py",
+    "tests/test_shipping_negative.py"
+  ],
+  "pins": [
+    {
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7",
+      "path": "README.md"
+    },
+    {
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "960ACA21F1D8FCFDCB24A9D495D550557F8C5CED0A15A0DE47007862534BAB86",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "2F83EB522C7A20548CCF9D9215C579F061EC143072134BF9C68597EF367E52F9",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "criteria": [
+    "R1:10000 returns0",
+    "R2:9999 returns500",
+    "R3:-1 raisesValueError",
+    "Existing CURRENCY USD regression"
+  ],
+  "dependencies": "stdlib unittest; no fixtures/shared helper/config",
+  "test_safe_package": "architect-test-safe-package.json",
+  "forbidden": "Production source/diffs/history/commit descriptions, architect-report, raw runtime logs",
+  "freeze": "Clean committed candidate; no edits permitted through formal and final code reviews"
+}

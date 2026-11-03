@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "record_op_id": "final-formal-record",
+  "schema": 1,
+  "prepare": {
+    "timeout_seconds": 20,
+    "scope": {
+      "final": true
+    },
+    "schema": 1,
+    "op": "prepare-formal",
+    "op_id": "final-formal-prepare"
+  }
+}

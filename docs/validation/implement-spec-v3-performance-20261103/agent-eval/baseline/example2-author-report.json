@@ -1,0 +1,55 @@
+{
+  "role": "Test author",
+  "model": "gpt-6.1-sol",
+  "model_provenance": "Explicit parent assignment",
+  "utc": "2026-11-03T06:58:29.3555794Z",
+  "flow": "shipping",
+  "example": "fee-at-9999",
+  "requirement": "R2",
+  "contract": "shipping-public-v1",
+  "prerequisite": "Parent reports example1 closed redgreen seq7",
+  "test_path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_below.py",
+  "unittest_target": "test_shipping_below.ShippingBelowTests.test_shipping_costs_500_below_threshold",
+  "requirement_source": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md",
+  "input": 9999,
+  "observation": "Returned value of public shipping_fee(total_cents)",
+  "expected": 500,
+  "independent_derivation": "README requires 500 for nonnegative integer totals below 10000. 9999 is nonnegative and below 10000.",
+  "concrete_expected_failure": "Equality assertion fails on a result unequal to 500; Runner must distinguish target behavior failure from unrelated environment/import/harness problems.",
+  "counterfactual": "Returning 0 fails; an internal refactor preserving 500 passes. Reasoned predicate check only, no product execution.",
+  "dependencies": [
+    "Python standard-library unittest",
+    "Public shipping.shipping_fee interface, no implementation inspection"
+  ],
+  "fixtures_helpers_config": "None introduced",
+  "dependency_digests": [
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_below.py",
+      "sha256": "960ACA21F1D8FCFDCB24A9D495D550557F8C5CED0A15A0DE47007862534BAB86"
+    },
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_threshold.py",
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F"
+    },
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_regression.py",
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE"
+    },
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md",
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7"
+    }
+  ],
+  "allowed_inputs": [
+    "Previously read frozen workflow/TDD/acceptance references and installed principles",
+    "architect-test-safe-package.json",
+    "README.md",
+    "Own prior/current tests",
+    "tests/test_regression.py",
+    "Neutral parent prerequisite status"
+  ],
+  "implementation_blind": true,
+  "tests_run": false,
+  "red_status": "Not claimed; independent Runner required",
+  "next_example_authored": false
+}

@@ -1,0 +1,53 @@
+{
+  "role": "Test author",
+  "model": "gpt-6.1-sol",
+  "model_provenance": "Explicit parent role assignment; no independent runtime model introspection",
+  "utc": "2026-11-03T06:54:27.5950382Z",
+  "flow": "shipping",
+  "example": "fee-at-10000",
+  "requirement": "R1",
+  "contract": "shipping-public-v1",
+  "baseline": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "test_path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_threshold.py",
+  "unittest_target": "test_shipping_threshold.ShippingThresholdTests.test_shipping_is_free_at_10000_cents",
+  "requirement_source": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md",
+  "input": 10000,
+  "observation": "Returned value of public shipping_fee(total_cents)",
+  "expected": 0,
+  "independent_derivation": "README requires fee 0 for totals at least 10000; 10000 equals this inclusive threshold.",
+  "concrete_expected_failure": "Assertion fails if shipping_fee(10000) returns a value unequal to 0; absence of the precisely required public function may also be target Red. Runner must distinguish unrelated import or harness faults.",
+  "counterfactual": "A returned fee of 500 fails the equality assertion; preserving public result 0 under internal refactoring passes. This is a reasoned mechanism check, not product execution.",
+  "dependencies": [
+    "Python standard-library unittest",
+    "Public module shipping and shipping_fee interface; implementation not read"
+  ],
+  "fixtures_helpers_config": "None introduced; existing tests/test_regression.py unchanged",
+  "dependency_digests": [
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_threshold.py",
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F"
+    },
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_regression.py",
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE"
+    },
+    {
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md",
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7"
+    }
+  ],
+  "allowed_inputs": [
+    "Frozen implement-spec-v3 SKILL.md and tdd-loop/execution-and-recovery references",
+    "Frozen tdd SKILL.md/tests.md/mocking.md",
+    "Frozen test-review acceptance contract",
+    "Installed pstack-principles index and test-behavior-not-implementation/sequence-verifiable-units/build-the-lever",
+    "architect-test-safe-package.json",
+    "README.md",
+    "tests/test_regression.py",
+    "Own current test file"
+  ],
+  "provenance_exception": "Read architect-report.json before parent revoked its original explicit allowlist inclusion. It contained architecture/ownership/budget/baseline metadata, but no shipping.py source, diffs, raw runtime outputs, or observed implementation behavior. No expected value derived from it.",
+  "tests_run": false,
+  "red_status": "Not claimed; independent Runner required",
+  "later_examples_authored": false
+}

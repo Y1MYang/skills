@@ -1,0 +1,11 @@
+{
+  "receipt": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/containment.receipt.json",
+  "model": "gpt-6.1-sol",
+  "role": "Runner",
+  "skipped": 0,
+  "verdict": "pass",
+  "recorded_utc": "2026-11-03T08:22:48.6949985Z",
+  "actual_tests": 2,
+  "proof": "Runner inspected two named tests ok; outer receipt exited0 cleanup_complete true windows/job duration3.609s. Timeout owned-tree cleanup/unrelated survival and normal descendant cleanup assertions ran against frozen candidate.",
+  "scope": "Windows containment prerequisite"
+}

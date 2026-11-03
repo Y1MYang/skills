@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T06:57:34.1421905Z",
+  "example": "fee-at-10000",
+  "attempt_id": "attempt-3da79ed546a119c9651bae89",
+  "classification": "green",
+  "receipt": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-3da79ed546a119c9651bae89.receipt.json",
+  "started_at_utc": "2026-11-03T06:57:25.0000000Z",
+  "ended_at_utc": "2026-11-03T06:57:25.0000000Z",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "cwd": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "test_count": 2,
+  "result": "pass",
+  "exit_code": 0,
+  "outcome": "exited",
+  "cleanup_complete": true,
+  "snapshots_unchanged": true,
+  "regression_scope": "Full unittest discovery: current shipping threshold test and existing CURRENCY regression.",
+  "logs": {
+    "stderr": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-3da79ed546a119c9651bae89.receipt.json.stderr.log",
+      "sha256": "9b4ea3113f67f6ef3d2ad7a8becb694837aa07f7c056280ad31fdb10985a062a",
+      "size": 304
+    },
+    "stdout": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-3da79ed546a119c9651bae89.receipt.json.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "edits": "No product or test edits."
+}

@@ -1,0 +1,12 @@
+{
+  "role": "Implementer",
+  "model": "gpt-6.1-sol",
+  "utc": "2026-11-03T06:56:49.0781330Z",
+  "example": "fee-at-10000",
+  "valid_red_unlock": "Coordinator cites ex1-probe-record.json seq3 and ex1-probe-judge.json seq4",
+  "owned_file": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/shipping.py",
+  "diff_summary": "Replace NotImplementedError with return 0; preserve CURRENCY and signature. No future behaviors implemented.",
+  "tests_changed": false,
+  "tests_executed": false,
+  "next": "Integrator prepare green; Runner execute current and affected regressions"
+}

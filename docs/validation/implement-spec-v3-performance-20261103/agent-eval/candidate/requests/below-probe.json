@@ -1,0 +1,22 @@
+{
+  "prepare": {
+    "timeout_seconds": 20,
+    "op": "prepare",
+    "schema": 1,
+    "example": "below",
+    "purpose": "probe",
+    "op_id": "below-probe-prepare"
+  },
+  "schema": 1,
+  "record_op_id": "below-probe-record",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "op": "prepare-formal",
+  "timeout_seconds": 20,
+  "schema": 1,
+  "scope": {
+    "final": true
+  },
+  "op_id": "final-formal-prepare"
+}

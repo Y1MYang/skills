@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "op_id": "ex1-open",
+  "op": "open",
+  "example": "fee-at-10000",
+  "light_check": {
+    "source": "example1-author-report.json; README.md shipping-public-v1",
+    "expected_failure": "Unequal return assertion or precisely missing required public function; unrelated harness/import faults excluded",
+    "independent_context": "Fresh blind author selected gpt-6.1-sol, authoritative README-derived oracle. Provenance exception archived in author report: architecture metadata read, no production observations/source/diffs used.",
+    "observation": "shipping_fee(10000) returns exactly0 per inclusive threshold"
+  }
+}

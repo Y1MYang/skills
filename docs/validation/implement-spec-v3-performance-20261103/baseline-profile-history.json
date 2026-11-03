@@ -1,0 +1,787 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_count": 32,
+  "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1",
+  "baseline": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+  "candidate": "None",
+  "results": [
+    {
+      "label": "baseline",
+      "scenario": "history_logs",
+      "mode": "legacy",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single",
+      "skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+      "examples": 12,
+      "trace_bytes_per_test": 32768,
+      "elapsed_seconds": 24.607020799972815,
+      "phase_totals_seconds": {
+        "git": 0.14568719998351298,
+        "ledger": 14.331875499890884,
+        "runner": 9.871020199963823
+      },
+      "other_seconds": 0.2584379001345951,
+      "phases": [
+        {
+          "phase": "fixture-git-init",
+          "seconds": 0.02915779998875223,
+          "exit": 0
+        },
+        {
+          "phase": "init",
+          "seconds": 0.15185259998543188,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-open",
+          "seconds": 0.10860430001048371,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-prepare",
+          "seconds": 0.11087510001379997,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-run",
+          "seconds": 0.3270139000087511,
+          "exit": 1
+        },
+        {
+          "phase": "fee-1-probe-record",
+          "seconds": 0.10442499999771826,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-judge",
+          "seconds": 0.11787790001835674,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-prepare",
+          "seconds": 0.11926050001056865,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-run",
+          "seconds": 0.33361149998381734,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-record",
+          "seconds": 0.10834170001908205,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-close",
+          "seconds": 0.11361329999635927,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-open",
+          "seconds": 0.1152814999804832,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-prepare",
+          "seconds": 0.11412480002036318,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "seconds": 0.33919430000241846,
+          "exit": 1
+        },
+        {
+          "phase": "fee-2-probe-record",
+          "seconds": 0.12003660001209937,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-judge",
+          "seconds": 0.1095770999963861,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-prepare",
+          "seconds": 0.11505459999898449,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-run",
+          "seconds": 0.33400620002066717,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-record",
+          "seconds": 0.10916059999726713,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-close",
+          "seconds": 0.11030090000713244,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-open",
+          "seconds": 0.11945289999130182,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-probe-prepare",
+          "seconds": 0.11718920001294464,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-probe-run",
+          "seconds": 0.328143100021407,
+          "exit": 1
+        },
+        {
+          "phase": "fee-3-probe-record",
+          "seconds": 0.11414740001782775,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-judge",
+          "seconds": 0.11757279999437742,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-prepare",
+          "seconds": 0.12474070000462234,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-run",
+          "seconds": 0.28358010001829825,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-record",
+          "seconds": 0.11238460001186468,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-close",
+          "seconds": 0.11687040000106208,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-open",
+          "seconds": 0.11942479998106137,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-probe-prepare",
+          "seconds": 0.11980299997958355,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-probe-run",
+          "seconds": 0.3357028999889735,
+          "exit": 1
+        },
+        {
+          "phase": "fee-4-probe-record",
+          "seconds": 0.12584419999620877,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-judge",
+          "seconds": 0.1227651999797672,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-prepare",
+          "seconds": 0.13237090001348406,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-run",
+          "seconds": 0.3307601999840699,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-record",
+          "seconds": 0.12707670000963844,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-close",
+          "seconds": 0.13191150000784546,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-open",
+          "seconds": 0.13024960001348518,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-probe-prepare",
+          "seconds": 0.12992279999889433,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-probe-run",
+          "seconds": 0.33014099998399615,
+          "exit": 1
+        },
+        {
+          "phase": "fee-5-probe-record",
+          "seconds": 0.1229555000027176,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-judge",
+          "seconds": 0.13131090000388213,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-prepare",
+          "seconds": 0.1318629999877885,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-run",
+          "seconds": 0.35473500000080094,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-record",
+          "seconds": 0.20991949999006465,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-close",
+          "seconds": 0.13318340000114404,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-open",
+          "seconds": 0.17975809998461045,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-probe-prepare",
+          "seconds": 0.15375629998743534,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-probe-run",
+          "seconds": 0.38805529999081045,
+          "exit": 1
+        },
+        {
+          "phase": "fee-6-probe-record",
+          "seconds": 0.15321799999219365,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-judge",
+          "seconds": 0.16819299999042414,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-prepare",
+          "seconds": 0.1527502000099048,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-run",
+          "seconds": 0.4497176999866497,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-record",
+          "seconds": 0.1344297000032384,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-close",
+          "seconds": 0.1671918999927584,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-open",
+          "seconds": 0.16787209999165498,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-probe-prepare",
+          "seconds": 0.1485472999920603,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-probe-run",
+          "seconds": 0.3990206999878865,
+          "exit": 1
+        },
+        {
+          "phase": "fee-7-probe-record",
+          "seconds": 0.13833739998517558,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-judge",
+          "seconds": 0.13774730000295676,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-prepare",
+          "seconds": 0.20233440000447445,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-run",
+          "seconds": 0.36698019999312237,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-record",
+          "seconds": 0.1489714999916032,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-close",
+          "seconds": 0.1735247999895364,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-open",
+          "seconds": 0.16044169999076985,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-probe-prepare",
+          "seconds": 0.15242070000385866,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-probe-run",
+          "seconds": 0.4366279999958351,
+          "exit": 1
+        },
+        {
+          "phase": "fee-8-probe-record",
+          "seconds": 0.14007110000238754,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-judge",
+          "seconds": 0.19106930002453737,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-prepare",
+          "seconds": 0.15983679998316802,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-run",
+          "seconds": 0.39595080001163296,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-record",
+          "seconds": 0.14869659999385476,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-close",
+          "seconds": 0.144131799985189,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-open",
+          "seconds": 0.20177389998571016,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-probe-prepare",
+          "seconds": 0.17024439998203889,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-probe-run",
+          "seconds": 0.4034281999920495,
+          "exit": 1
+        },
+        {
+          "phase": "fee-9-probe-record",
+          "seconds": 0.1517112999863457,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-judge",
+          "seconds": 0.1719333000073675,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-prepare",
+          "seconds": 0.18703289999393746,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-run",
+          "seconds": 0.35566889998153783,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-record",
+          "seconds": 0.16438269999343902,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-close",
+          "seconds": 0.1808434999838937,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-open",
+          "seconds": 0.16804709998541512,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-probe-prepare",
+          "seconds": 0.15537679998669773,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-probe-run",
+          "seconds": 0.422973800014006,
+          "exit": 1
+        },
+        {
+          "phase": "fee-10-probe-record",
+          "seconds": 0.15764570000465028,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-judge",
+          "seconds": 0.20109670000965707,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-prepare",
+          "seconds": 0.2211883999989368,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-run",
+          "seconds": 0.3391140000021551,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-record",
+          "seconds": 0.2039941999828443,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-close",
+          "seconds": 0.1691372999921441,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-open",
+          "seconds": 0.19122400000924245,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-probe-prepare",
+          "seconds": 0.23831459999200888,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-probe-run",
+          "seconds": 0.3888174000021536,
+          "exit": 1
+        },
+        {
+          "phase": "fee-11-probe-record",
+          "seconds": 0.20263069999055006,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-judge",
+          "seconds": 0.16653519999817945,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-prepare",
+          "seconds": 0.22481149999657646,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-run",
+          "seconds": 0.3839844999893103,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-record",
+          "seconds": 0.22617790001095273,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-close",
+          "seconds": 0.1775420999911148,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-open",
+          "seconds": 0.21359699999447912,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-probe-prepare",
+          "seconds": 0.18424930001492612,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-probe-run",
+          "seconds": 0.4570684999926016,
+          "exit": 1
+        },
+        {
+          "phase": "fee-12-probe-record",
+          "seconds": 0.20872210001107305,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-judge",
+          "seconds": 0.1729644000006374,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-prepare",
+          "seconds": 0.20917409998946823,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-run",
+          "seconds": 0.35586089998832904,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-record",
+          "seconds": 0.23857909999787807,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-close",
+          "seconds": 0.20033620001049712,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-add",
+          "seconds": 0.048087700008181855,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-commit",
+          "seconds": 0.04662619999726303,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-head",
+          "seconds": 0.021815499989315867,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-final",
+          "seconds": 0.1659632000082638,
+          "exit": 0
+        },
+        {
+          "phase": "prepare-final",
+          "seconds": 0.2501083000097424,
+          "exit": 0
+        },
+        {
+          "phase": "formal-run",
+          "seconds": 1.0308631000225432,
+          "exit": 0
+        },
+        {
+          "phase": "record-final",
+          "seconds": 0.22623850000672974,
+          "exit": 0
+        },
+        {
+          "phase": "finish",
+          "seconds": 0.2565203999984078,
+          "exit": 0
+        },
+        {
+          "phase": "inspect",
+          "seconds": 0.1253877000126522,
+          "exit": 0
+        },
+        {
+          "phase": "verify",
+          "seconds": 0.20574549998855218,
+          "exit": 0
+        }
+      ],
+      "receipts": [
+        {
+          "phase": "fee-1-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-e3c1490b0be351bac04530a7.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "f107b4c8534314fb34d5f4316d6f0634c737d7387aeeaeafbf53f1208cdcfa5e"
+        },
+        {
+          "phase": "fee-1-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-0ec6bae58d33e1c1eaee3d53.receipt.json",
+          "duration_seconds": 0.21899999998277053,
+          "sha256": "38222d91c35e63e4a6d3e46eae5ef0a8209b6691d5ab0910e322f583e0fc6df6"
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-1131d06b255b87ff23069db9.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "aaca788ed31150c1c1aa8949d1ab27268bf637bda60c752a918b083f5c7b3c43"
+        },
+        {
+          "phase": "fee-2-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-2be6b88de3a99743c79ba9c7.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "4052f09ce6e1eeb41447eb9fca4751119308a2943bd7817c876afe0a130b2b34"
+        },
+        {
+          "phase": "fee-3-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-d4843202b95b497c46263830.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "5706e081ef1e08a51480483aca69eb6f88e78b76c9ac862888ae11c3686a533b"
+        },
+        {
+          "phase": "fee-3-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-2623aaca8c4660f380566136.receipt.json",
+          "duration_seconds": 0.1870000000053551,
+          "sha256": "5e8605b75cf8572664b3e8964789db705d613e661a1371dc333eaca07d47a06f"
+        },
+        {
+          "phase": "fee-4-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-f9bb7763d07ddf921018d760.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "8498771cfa725ca2b791b98e6bdc3ee7012230414ce87d33f13996c52a27f14a"
+        },
+        {
+          "phase": "fee-4-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-a9af0bf2ea2a94756e93e838.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "86142d0dd540fc99031690ffc5341f38b70dc286d1dc13b79ae161c75fec3488"
+        },
+        {
+          "phase": "fee-5-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-0dd246b77abb050672436154.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "e12a0e7c8c6e9e0db2a39ab05ebdaad7ad0020f0dca5d874e9730c71640593f6"
+        },
+        {
+          "phase": "fee-5-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-f0b32cae77ccebca70925d00.receipt.json",
+          "duration_seconds": 0.26600000000325963,
+          "sha256": "113d8fc3e593da96f2e15fd1c13fc6de3c3863d194e2c04970eba5523fcd8c9f"
+        },
+        {
+          "phase": "fee-6-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-a1ecb1f1957b4f8b72a07b40.receipt.json",
+          "duration_seconds": 0.26500000001396984,
+          "sha256": "ecdcbc31722a98cc2f7a5e2498e63985fbf57f1b857d378c2b6a024f68846b71"
+        },
+        {
+          "phase": "fee-6-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-01a16e20952f34ef2c6fd9eb.receipt.json",
+          "duration_seconds": 0.32800000000861473,
+          "sha256": "f35acfa01125b618e219aacd651b8f5653ec491f8efe403bb4ea4f49d72a7696"
+        },
+        {
+          "phase": "fee-7-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-3aff8c0454b47dcf7dab69c2.receipt.json",
+          "duration_seconds": 0.29699999999138527,
+          "sha256": "bdf41c6081fbdefb8e089023bcdb65095aa707b8371253221255855f6da4c1a9"
+        },
+        {
+          "phase": "fee-7-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-5cf2d78dfbde06cdc78d5a29.receipt.json",
+          "duration_seconds": 0.26600000000325963,
+          "sha256": "5590db2d02434392e6721e3804c36995082db76044bdab4e4f982c41d35f54f2"
+        },
+        {
+          "phase": "fee-8-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-d760a0a2575f366be9475182.receipt.json",
+          "duration_seconds": 0.2960000000020955,
+          "sha256": "8db6b61fc95cbeb32ff1e730839107a4c24431b8386d60c0d481911f417704c4"
+        },
+        {
+          "phase": "fee-8-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-d46e875384b8e00bf2d69bc6.receipt.json",
+          "duration_seconds": 0.29699999999138527,
+          "sha256": "db01c1ead0720baaf70998f39e683887cbbd9c89ec7f49d1ed44e8740e0d3a72"
+        },
+        {
+          "phase": "fee-9-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-765c0deaed059ebe8968048b.receipt.json",
+          "duration_seconds": 0.3120000000053551,
+          "sha256": "5eefec74525688f4c5e84e5a7a07007aba75ef1dd11e4f7a57d38dc6ebfdd028"
+        },
+        {
+          "phase": "fee-9-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-79e2e24816b3f8853213b38c.receipt.json",
+          "duration_seconds": 0.2340000000258442,
+          "sha256": "b2a37828ffe42971aaab5502281eb0f6564b20154a66dd873055518817d12903"
+        },
+        {
+          "phase": "fee-10-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-33395a30cf55849b02ebef28.receipt.json",
+          "duration_seconds": 0.29699999999138527,
+          "sha256": "9eab278fc46f33422d4d84080819466689c06f498182e983d021b6c9a15731f5"
+        },
+        {
+          "phase": "fee-10-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-9d256b91fc7a9864580a9dcc.receipt.json",
+          "duration_seconds": 0.25,
+          "sha256": "ce62f0fb9051b0019a4ce3f26797b96495b36ed183a37d6771b69099aacc72e3"
+        },
+        {
+          "phase": "fee-11-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-548d4e3912953f3fb6f11411.receipt.json",
+          "duration_seconds": 0.29699999999138527,
+          "sha256": "e90165c0b9b0d1bb51a1aa05ec42a011fb626fd177fadc5a3828866d7c6cdce0"
+        },
+        {
+          "phase": "fee-11-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-60d86b746433c41924af41ca.receipt.json",
+          "duration_seconds": 0.26600000000325963,
+          "sha256": "1ff3f7902ec5d850bbe054249bdf73405e6a22ef67b82ca1bce4d2f046ec52db"
+        },
+        {
+          "phase": "fee-12-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-743d07ec1992006ec5cd7d28.receipt.json",
+          "duration_seconds": 0.3590000000258442,
+          "sha256": "477af04a7d6138358a34f818250a0d9166b9b0effe25c1fb730692cf0d8d472f"
+        },
+        {
+          "phase": "fee-12-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-6907b6475d9aab4b5d58e455.receipt.json",
+          "duration_seconds": 0.264999999984866,
+          "sha256": "a7d6e0e21f0727c81cb91629d43015d3e28baf915b5237ad5aa595aa7f939aa3"
+        },
+        {
+          "phase": "formal-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-2diyj6f1\\single\\state\\attempts\\attempt-7013a28b2990980384228c46.receipt.json",
+          "duration_seconds": 0.9219999999913853,
+          "sha256": "3708dbc4356209f4e51730efa985eff5be2e53c440c7cb7d557c1b02e2975a3a"
+        }
+      ],
+      "status": "ready",
+      "attempts": 25,
+      "profiled": true,
+      "retained_bytes": 18711030,
+      "pair": 0
+    }
+  ],
+  "summary": {}
+}

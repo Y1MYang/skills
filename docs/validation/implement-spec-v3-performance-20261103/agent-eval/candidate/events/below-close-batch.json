@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "events": [
+    {
+      "schema": 1,
+      "regression_scope": "Full unittest discovery: below9999->500, threshold10000->0 and currency USD; Runner confirmed3 ok stable inputs.",
+      "example": "below",
+      "regression_attempt_id": "attempt-a0f9e4e76f4cfc3f8a360023",
+      "op": "close",
+      "op_id": "below-close"
+    }
+  ]
+}

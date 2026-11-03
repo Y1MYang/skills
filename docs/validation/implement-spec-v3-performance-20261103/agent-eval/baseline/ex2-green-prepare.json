@@ -1,0 +1,8 @@
+{
+  "purpose": "green",
+  "op_id": "ex2-green-prepare",
+  "timeout_seconds": 20,
+  "op": "prepare",
+  "example": "fee-at-9999",
+  "schema": 1
+}

@@ -1,0 +1,8 @@
+{
+  "example": "fee-at-10000",
+  "op_id": "ex1-close",
+  "regression_scope": "python -B -m unittest discover -s tests -v: all2 current tests, shipping10000 threshold and CURRENCY USD regression, pass",
+  "schema": 1,
+  "op": "close",
+  "regression_attempt_id": "attempt-3da79ed546a119c9651bae89"
+}

@@ -1,0 +1,8 @@
+{
+  "op_id": "ex3-green-prepare",
+  "schema": 1,
+  "purpose": "green",
+  "example": "negative-total",
+  "op": "prepare",
+  "timeout_seconds": 20
+}

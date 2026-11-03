@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-02",
+  "scope": "local diagnostic budget policy revision; no runtime changes",
+  "files": {
+    "skills/engineering/implement-spec-v3/SKILL.md": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1",
+    "skills/engineering/implement-spec-v3/references/architecture-and-flow.md": "0c99378f0beb9a9df1c0bb2b2270e8285558b140d0490e39bcace965879b5a41",
+    "skills/engineering/implement-spec-v3/references/diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+    "skills/engineering/implement-spec-v3/references/dispatch-and-isolation.md": "1a7e5acb2c4ef05cd83382ae484d6653901dda74e02f2cc732ca987df5ebf863",
+    "skills/engineering/implement-spec-v3/references/execution-and-recovery.md": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef",
+    "skills/engineering/implement-spec-v3/references/runtime-ledger.md": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148"
+  },
+  "archived_evidence": {
+    "forward-replay.json": {
+      "source": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\verification\\replay-and-hashes.json",
+      "sha256": "782fe12c0996bed4be2d76526f5df5e39145646eee0d984bec699c8c66f994ee"
+    },
+    "forward-receipt.json": {
+      "source": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1\\receipts\\C.json",
+      "sha256": "f1d51bec91ef7b1ecccb1cc259497ea8302a41286693f189e5047e7de4184367"
+    }
+  },
+  "source_fixture": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-local-budget-forward-ughranh1"
+}

@@ -1,0 +1,34 @@
+---
+name: implement-spec-v3
+description: Implement an agreed specification through small TDD examples with independent tests and a final whole-spec PR. Use for executing a spec, not for discussing or drafting an implementation plan.
+---
+
+# Implement Spec v3
+
+Deliver the entire specification on one branch and, by default, one PR. Tickets track requirements; **one new behavior example** is the development unit. Use the same independently authored tests for development feedback and formal acceptance.
+
+## Start each invocation
+
+Before exploration or any delegation, obtain explicit model selections for all ten responsibilities: **Exploration, Architect, Test author, Implementer, Runner, Integrator, Coverage audit, Spec reviewer, Standards reviewer, Expert**. Present them together with the runtime's supported models when known. A single user answer may assign one model to several or all roles. Leave missing choices unset: elapsed time, runtime defaults, the main model, and previous invocations do not supply them.
+
+Check that each selection is supported and can be passed through the actual dispatch tool's `model` parameter or equivalent. If it cannot, explain the limitation and request a supported choice or workflow adjustment. Once resolved, show the mapping and proceed. Every instance, retry, replacement, and nested reviewer uses that mapping; a model name in a prompt is insufficient. Read [dispatch and isolation](references/dispatch-and-isolation.md) before delegating.
+
+Resolve [test-review](../test-review/SKILL.md), its [acceptance contract](../test-review/references/acceptance-contract.md), [tdd](../tdd/SKILL.md), and [pstack-principles](../../principles/pstack-principles/SKILL.md), locating the installed skill by name if a relative path is unavailable. Retain resolved pointers and load each at its relevant stage. Report a missing dependency before its affected stage; code-review is not a substitute for test-review. Consult the applicable pstack principles at task start.
+
+## Non-negotiable boundaries
+
+- **One-way isolation:** Test author, test-review participants, Coverage audit, and test-side Expert remain implementation blind. Create their contexts without inherited conversation history and supply only an explicit allowed-input inventory. Implementers may read current independent tests; all test changes, including fixtures, shared helpers, repairs, and refactors, belong to the blind test side.
+- **Dispatch only:** During test authoring, implementation, checkpoints, final review, and repairs, the main agent only delegates, consumes structured reports, coordinates contracts, and communicates with the user. Delegate every file read/write, including code, documents, diffs, raw logs, state, and resources. Failures and resource alerts do not create an exception.
+- **Independent evidence:** Expected answers come from authoritative requirements and public contracts. Implementation observations, even rewritten as a contract or a neutral output, cannot supply the intended answer. New worktrees do not establish context isolation.
+
+## Run the specification
+
+1. **Prepare the graph.** Exploration separates implementation facts from a test-safe package. Architect establishes global external boundaries, critical contracts, and integration constraints; refine the current public interface immediately before its example. Read [architecture and flow](references/architecture-and-flow.md). Finish with complete requirement coverage planning, acyclic dependencies, explicit checkpoint prerequisites and blocked consumers, isolated write ownership, and finite run budgets. Agent-defined local diagnostic limits are renewable allocations under the evidence-based policy below.
+2. **Assign ready flows.** Delegate a ready flow's planned sequence, role authorities, owned targets, budgets, and stopping conditions together. Keep compatible role contexts working across its sequential examples; the main agent coordinates milestones and exceptions rather than individual evidence events. Independent flows may run concurrently within capacity and budgets. Isolate workcopies and evidence writes, and use Integrator as the single shared-target writer. Critical-contract consumers wait for qualification and a passed formal checkpoint; its own prerequisite examples advance through ordinary Green. Integration requires affected-behavior verification.
+3. **Repeat one-example cycles.** Read [the TDD loop](references/tdd-loop.md). A blind Test author writes one main test and records a lightweight oracle check. Runner confirms actual, target-specific Red on a known baseline before Implementer starts the minimal change. First-run Green follows the existing-capability path. After Green, refactor only if useful and rerun affected regressions. Persist version-bound evidence as each transition occurs. Complete that cycle before authoring the next example in the flow; an already authorized, ready next cycle needs no new main-agent handoff.
+4. **Qualify at gates.** Read [qualification and delivery](references/qualification-and-delivery.md) at a critical checkpoint, changed test dependency, or final candidate. Use independent `test-review` batch/delta/full scopes; development Green is separate from test qualification and formal product success. Final delivery requires whole-spec reconciliation, complete formal acceptance, and both code-review axes on the same clean, committed, frozen candidate.
+5. **Close the run.** After any repair, rebind evidence to the new candidate and refresh affected qualifications. Mark ready only when current complete acceptance and both review axes support the delivered HEAD, every requirement is accounted for, and no pending attempt or unresolved failure, interruption, or hang remains anywhere in the run. Owners release idle temporary resources and retain delivery artifacts, necessary evidence, and justified failure scenes. Report the PR, verified scope, limitations, and retained resources.
+
+Before allocating resources, executing commands, changing scope/dependency inventories, handling a failure/timeout, or resuming, the responsible owner reads [execution and recovery](references/execution-and-recovery.md). Record justified additions and repairs without replacing old identities, failures, or budgets. Resume only v3's own records. This skill neither changes v2 nor interprets v2 run/cleanup state.
+
+When setting or exhausting a local diagnostic allocation, read [local diagnostic budgets](references/diagnostic-budgets.md). With material new evidence and a bounded distinguishing next check, autonomously extend the allocation and append its history. Count preflight failures separately from diagnostic target executions. An agent-defined local count alone is never grounds to stop the whole repair task.

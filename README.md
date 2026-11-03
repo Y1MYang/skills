@@ -12,6 +12,10 @@
 │   ├── engineering/
 │   │   ├── implement-spec-v2/  # 每个技能一个文件夹
 │   │   │   └── SKILL.md
+│   │   ├── implement-spec-v3/
+│   │   │   └── SKILL.md
+│   │   ├── tdd/
+│   │   │   └── SKILL.md
 │   │   ├── adopt-spec-v2/
 │   │   │   └── SKILL.md
 │   │   ├── cleanup-spec-v2/
@@ -55,6 +59,8 @@ npx skills update                        # 更新已安装的技能
 | 技能 | 说明 |
 | --- | --- |
 | `implement-spec-v2` | 按 spec 实现：按可验证工作单元并行开发，以分批独立测试和关键契约检查点放行依赖，最终在同一固定版本上并行验收与审查，产出单个 PR。需同时安装 `test-review`。 |
+| `implement-spec-v3` | 按单个行为例子执行 Red → Green → Refactor；测试侧不看实现，实现者可读独立测试。关键契约检查点放行消费者，独立开发流并行，最终交付一个 PR。每次显式选择各角色模型，开发与验收阶段主代理只调度。需同时安装 `tdd`、`test-review` 与 `pstack-principles`（插件市场安装需另选 `principles` 插件）；支持恢复自身运行，不接管 v2 状态。 |
+| `tdd` | 通用逐例 TDD：有效 Red、最小实现、Green 后按需重构并复验；已有能力不制造假 Red，通过公开边界验证行为。 |
 | `cleanup-spec-v2` | PR 合并后显式调用 `cleanup-spec-v2 <PR 编号>`，确认完整清单后清理本次开发的本地资源、远端分支和记录。需同时安装 `implement-spec-v2`。 |
 | `adopt-spec-v2` | 主动调用以接管已开工的 spec：按证据复用成果、补齐独立验证，遵循 v2 规则继续到 PR 可供评审。依赖 `implement-spec-v2`。 |
 | `test-review` | 不读取实现的双轴测试审查：需求与覆盖、判定可靠性。支持批次局部资格、全规格覆盖核对、失败诊断和变更复核，检查执行证据及时间预算。 |

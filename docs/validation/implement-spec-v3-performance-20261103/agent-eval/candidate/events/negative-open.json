@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "op_id": "negative-open",
+  "op": "open",
+  "example": "negative",
+  "light_check": {
+    "observation": "assertRaises surrounds only the public shipping_fee(-1) call, directly observing the mandated error type without private behavior or exact-message assumptions.",
+    "independent_context": "/root/v3_perf_agent_eval/candidate_test_author",
+    "source": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/candidate/example3-author-report.json",
+    "expected_failure": "Test fails if shipping_fee(-1) returns normally or raises an exception outside ValueError. Runner must establish actual target-specific causality; author observed no product output."
+  }
+}

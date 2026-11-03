@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "prepare": {
+    "purpose": "green",
+    "example": "below",
+    "timeout_seconds": 20,
+    "schema": 1,
+    "op": "prepare",
+    "op_id": "below-green-prepare"
+  },
+  "record_op_id": "below-green-record",
+  "schema": 1
+}

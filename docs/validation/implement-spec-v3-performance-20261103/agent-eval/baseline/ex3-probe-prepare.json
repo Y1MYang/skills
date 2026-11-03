@@ -1,0 +1,8 @@
+{
+  "timeout_seconds": 20,
+  "purpose": "probe",
+  "op": "prepare",
+  "example": "negative-total",
+  "op_id": "ex3-probe-prepare",
+  "schema": 1
+}

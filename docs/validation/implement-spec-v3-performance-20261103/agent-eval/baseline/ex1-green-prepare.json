@@ -1,0 +1,8 @@
+{
+  "example": "fee-at-10000",
+  "schema": 1,
+  "purpose": "green",
+  "op_id": "ex1-green-prepare",
+  "timeout_seconds": 20,
+  "op": "prepare"
+}

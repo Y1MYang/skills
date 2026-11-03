@@ -1,0 +1,127 @@
+[
+  {
+    "Path": "implement-spec-v3/agents/openai.yaml",
+    "SHA256": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+    "Length": 261
+  },
+  {
+    "Path": "implement-spec-v3/references/architecture-and-flow.md",
+    "SHA256": "1b2cfae1f15e8bc49abdb03014298e156c8f2e976738ca6603ea2b98138635d0",
+    "Length": 5965
+  },
+  {
+    "Path": "implement-spec-v3/references/diagnostic-budgets.md",
+    "SHA256": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+    "Length": 8855
+  },
+  {
+    "Path": "implement-spec-v3/references/dispatch-and-isolation.md",
+    "SHA256": "b03bea81576e87e78a323e8f18598bbcea7378652d22003b04a1d8c525f24220",
+    "Length": 10048
+  },
+  {
+    "Path": "implement-spec-v3/references/execution-and-recovery.md",
+    "SHA256": "535e2c8e42cb90cb6b1d2633dfa4135ad5f8b68f98ab8d9a08250a753fa097ea",
+    "Length": 9753
+  },
+  {
+    "Path": "implement-spec-v3/references/qualification-and-delivery.md",
+    "SHA256": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+    "Length": 7031
+  },
+  {
+    "Path": "implement-spec-v3/references/runtime-ledger.md",
+    "SHA256": "88491ab095eee1b1c89d9a4a898f40c8a67aff37b72a72d7b1440c307a54309f",
+    "Length": 32758
+  },
+  {
+    "Path": "implement-spec-v3/references/tdd-loop.md",
+    "SHA256": "d5b1a294bedc5052eb663ba05e4a5c5793b88ebe91b0bb9c3ca1622749a6ef6f",
+    "Length": 6284
+  },
+  {
+    "Path": "implement-spec-v3/scripts/cycle.py",
+    "SHA256": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+    "Length": 82952
+  },
+  {
+    "Path": "implement-spec-v3/scripts/path_identity.py",
+    "SHA256": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+    "Length": 5091
+  },
+  {
+    "Path": "implement-spec-v3/scripts/run_command.py",
+    "SHA256": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+    "Length": 20606
+  },
+  {
+    "Path": "implement-spec-v3/scripts/windows_job.py",
+    "SHA256": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+    "Length": 4759
+  },
+  {
+    "Path": "implement-spec-v3/SKILL.md",
+    "SHA256": "e4422dc7a7f810ff5b4aeb3c1ac4b61649e26f149a0bae854aee67b2f67eca6c",
+    "Length": 6792
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_cycle.py",
+    "SHA256": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+    "Length": 47263
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_cycle_performance.py",
+    "SHA256": "5b726580139693d62bd0ee2021473a2e14e0e30d6d19d42dbeb6ea0e294c22f1",
+    "Length": 77087
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_cycle_proofs.py",
+    "SHA256": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+    "Length": 33840
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_cycle_recovery.py",
+    "SHA256": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+    "Length": 25585
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_cycle_safety.py",
+    "SHA256": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+    "Length": 14897
+  },
+  {
+    "Path": "implement-spec-v3/tests/test_run_command.py",
+    "SHA256": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5",
+    "Length": 76722
+  },
+  {
+    "Path": "tdd/agents/openai.yaml",
+    "SHA256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+    "Length": 87
+  },
+  {
+    "Path": "tdd/mocking.md",
+    "SHA256": "052036b53d819ae8a49ba120c04a9bc0af9b53ef7191b40d6351540e552b1465",
+    "Length": 1877
+  },
+  {
+    "Path": "tdd/SKILL.md",
+    "SHA256": "10cf99be22eafeb8822e5bcd7c86392cc87794d5f7f0c950d314db2853baf78a",
+    "Length": 3412
+  },
+  {
+    "Path": "tdd/tests.md",
+    "SHA256": "219466e68591aab4f76782a1751a7d8fd028c0b999fe0143de033f7360ac0dc9",
+    "Length": 2486
+  },
+  {
+    "Path": "test-review/references/acceptance-contract.md",
+    "SHA256": "ece535a7ec797aaa2a00a321a14f0106d434246b67ba4561bf5c22ab778bc59c",
+    "Length": 6832
+  },
+  {
+    "Path": "test-review/SKILL.md",
+    "SHA256": "939e2a91bf6b533685b5040f6af599c090dc0a9a9902a6dcc2871362caef2c9f",
+    "Length": 10768
+  }
+]

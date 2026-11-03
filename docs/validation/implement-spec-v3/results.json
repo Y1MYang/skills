@@ -1,0 +1,70 @@
+{
+  "verified_at_utc": "2026-11-01T01:51:34.746175+00:00",
+  "runtime_suite": {
+    "tests": 90,
+    "passed": 89,
+    "skipped": 1,
+    "seconds": 116.041,
+    "cycle_sha256": "4e42ab29dbf53e1e4f620d4af9194341ce0ccd09d5b51b97b84be29811e2b9bf",
+    "log": "runtime-tests.txt"
+  },
+  "final_delta": {
+    "scope": "formal scope path union",
+    "cycle_sha256": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+    "public_cli_red_to_green": true,
+    "affected_regression_tests_passed": 12,
+    "evidence": "scope-union-delta.json"
+  },
+  "e2e": {
+    "head": "a9cf2350f11bd715254412c714d22a4ec81ecfbb",
+    "clean": true,
+    "formal_tests_passed": 8,
+    "red_green_examples": 5,
+    "existing_examples": 3,
+    "status": "ready",
+    "last_seq": 73,
+    "pending": [],
+    "all_failures_resolved": true,
+    "ten_selected_models": "gpt-6.1-sol",
+    "budget_used": {
+      "attempts_used": 20,
+      "formal_failures_used": 0,
+      "seconds_reserved": 0,
+      "seconds_used": 4.248999999997977
+    },
+    "final_source_verify": {
+      "ok": true,
+      "valid": true,
+      "last_seq": 73
+    },
+    "receipt_sha256": "31d144370f49428a339b42a6b8d055848bfe6810d0c03ff57d969cdd87ae4efd",
+    "handoff_path": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-forward-e0__fzkv\\preparation\\final-handoff-manifest-v2.json",
+    "handoff_sha256": "e587332dd630ad01116369c990f7cd6872a68c723b54f0e4a728b32c1958d907"
+  },
+  "tdd_sync": [
+    {
+      "path": "mocking.md",
+      "sha256": "052036b53d819ae8a49ba120c04a9bc0af9b53ef7191b40d6351540e552b1465",
+      "installed_matches": true
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "10cf99be22eafeb8822e5bcd7c86392cc87794d5f7f0c950d314db2853baf78a",
+      "installed_matches": true
+    },
+    {
+      "path": "tests.md",
+      "sha256": "219466e68591aab4f76782a1751a7d8fd028c0b999fe0143de033f7360ac0dc9",
+      "installed_matches": true
+    },
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+      "installed_matches": true
+    }
+  ],
+  "limitations": [
+    "POSIX adapter not executed on this Windows host.",
+    "The 90-test suite preceded the final scope-union-only cycle delta; that delta received a real CLI reproduction, 12 affected regressions, final code review, and verification of the completed E2E state."
+  ]
+}

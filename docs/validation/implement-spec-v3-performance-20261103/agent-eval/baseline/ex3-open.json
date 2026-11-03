@@ -1,0 +1,12 @@
+{
+  "op_id": "ex3-open",
+  "light_check": {
+    "observation": "public shipping_fee(-1) raises ValueError",
+    "source": "example3-author-report.json; README.md shipping-public-v1",
+    "expected_failure": "assertRaises(ValueError) fails if no ValueError or incorrect exception",
+    "independent_context": "Blind author gpt-6.1-sol, README-derived negative-input requirement, pinned dependency hashes in report; no implementation inputs"
+  },
+  "op": "open",
+  "example": "negative-total",
+  "schema": 1
+}

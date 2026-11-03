@@ -1,0 +1,14 @@
+test_shipping_costs_500_below_threshold (test_shipping_below.ShippingBelowTests.test_shipping_costs_500_below_threshold) ... FAIL
+
+======================================================================
+FAIL: test_shipping_costs_500_below_threshold (test_shipping_below.ShippingBelowTests.test_shipping_costs_500_below_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\admin\AppData\Local\Temp\v3-perf-baseline-20261103\tests\test_shipping_below.py", line 8, in test_shipping_costs_500_below_threshold
+    self.assertEqual(shipping_fee(9999), 500)
+AssertionError: 0 != 500
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "example": "fee-at-9999",
+  "op_id": "ex2-close",
+  "regression_scope": "Full unittest discovery all3 current tests:9999 exact500,10000 exact0,CURRENCY USD regression",
+  "op": "close",
+  "regression_attempt_id": "attempt-079f5704f7125bfd21aceefb"
+}

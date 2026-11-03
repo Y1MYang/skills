@@ -1,0 +1,232 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_count": 32,
+  "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd",
+  "baseline": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+  "candidate": "None",
+  "results": [
+    {
+      "label": "baseline",
+      "scenario": "small",
+      "mode": "legacy",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single",
+      "skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+      "examples": 2,
+      "trace_bytes_per_test": 0,
+      "elapsed_seconds": 4.415556499996455,
+      "phase_totals_seconds": {
+        "git": 0.12648620002437383,
+        "ledger": 2.183976000029361,
+        "runner": 2.059117199998582
+      },
+      "other_seconds": 0.0459770999441389,
+      "phases": [
+        {
+          "phase": "fixture-git-init",
+          "seconds": 0.03133779999916442,
+          "exit": 0
+        },
+        {
+          "phase": "init",
+          "seconds": 0.13731230000848882,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-open",
+          "seconds": 0.1043305000057444,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-prepare",
+          "seconds": 0.09568090000539087,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-run",
+          "seconds": 0.3071429999836255,
+          "exit": 1
+        },
+        {
+          "phase": "fee-1-probe-record",
+          "seconds": 0.09127870001248084,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-judge",
+          "seconds": 0.09597860000212677,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-prepare",
+          "seconds": 0.10193199999048375,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-run",
+          "seconds": 0.30754850001540035,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-record",
+          "seconds": 0.09234209998976439,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-close",
+          "seconds": 0.09561739998753183,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-open",
+          "seconds": 0.09752689997549169,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-prepare",
+          "seconds": 0.09838909999234602,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "seconds": 0.3058835999981966,
+          "exit": 1
+        },
+        {
+          "phase": "fee-2-probe-record",
+          "seconds": 0.09241280000424013,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-judge",
+          "seconds": 0.09246620000340044,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-prepare",
+          "seconds": 0.10102530001313426,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-run",
+          "seconds": 0.30643520000739954,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-record",
+          "seconds": 0.09455999999772757,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-close",
+          "seconds": 0.09591299999738112,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-add",
+          "seconds": 0.02702920002047904,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-commit",
+          "seconds": 0.04424560000188649,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-head",
+          "seconds": 0.023873600002843887,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-final",
+          "seconds": 0.09486879999167286,
+          "exit": 0
+        },
+        {
+          "phase": "prepare-final",
+          "seconds": 0.10013149998849258,
+          "exit": 0
+        },
+        {
+          "phase": "formal-run",
+          "seconds": 0.8321068999939598,
+          "exit": 0
+        },
+        {
+          "phase": "record-final",
+          "seconds": 0.14313530002254993,
+          "exit": 0
+        },
+        {
+          "phase": "finish",
+          "seconds": 0.14126310002757236,
+          "exit": 0
+        },
+        {
+          "phase": "inspect",
+          "seconds": 0.08941660000709817,
+          "exit": 0
+        },
+        {
+          "phase": "verify",
+          "seconds": 0.1283949000062421,
+          "exit": 0
+        }
+      ],
+      "receipts": [
+        {
+          "phase": "fee-1-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single\\state\\attempts\\attempt-e3c1490b0be351bac04530a7.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "bd067ea1ab4d35b1a3404d58295c892d9935cb31be7055b88754ea5e55e4b763"
+        },
+        {
+          "phase": "fee-1-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single\\state\\attempts\\attempt-0ec6bae58d33e1c1eaee3d53.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "f0622c2231b6394c00348e8469422f9228f97669233ac6bc01401deb351b7147"
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single\\state\\attempts\\attempt-1131d06b255b87ff23069db9.receipt.json",
+          "duration_seconds": 0.2340000000258442,
+          "sha256": "29bbe7cebf8444af66c605b491a8d0c1835f63c332d39bf03ecd4e9c87ee3491"
+        },
+        {
+          "phase": "fee-2-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single\\state\\attempts\\attempt-2be6b88de3a99743c79ba9c7.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "sha256": "27fce502e40c02face29a2672356a1b21723196906cd5b6f1c18527812e6a313"
+        },
+        {
+          "phase": "formal-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-z6jjkccd\\single\\state\\attempts\\attempt-7013a28b2990980384228c46.receipt.json",
+          "duration_seconds": 0.7660000000032596,
+          "sha256": "62794161eaf52b7d2b3873cfc156aabd8f5eee80ea002c86150761e2bd00f83b"
+        }
+      ],
+      "status": "ready",
+      "attempts": 5,
+      "profiled": false,
+      "retained_bytes": 127209,
+      "pair": 0
+    }
+  ],
+  "summary": {
+    "small": {
+      "arms": {
+        "baseline": {
+          "n": 1,
+          "median_seconds": 4.415556499996455,
+          "min_seconds": 4.415556499996455,
+          "max_seconds": 4.415556499996455,
+          "mean_seconds": 4.415556499996455,
+          "stdev_seconds": null
+        }
+      },
+      "paired_saved_seconds": [],
+      "median_paired_saved_seconds": null
+    }
+  }
+}

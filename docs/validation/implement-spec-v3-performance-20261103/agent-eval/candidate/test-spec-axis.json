@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "axis": "Spec/coverage",
+  "model": "gpt-6.1-sol",
+  "completed_utc": "2026-11-03T08:28:21.7084916Z",
+  "scope": "full",
+  "target_qualification": "shipping-v1 exact mandated examples plus CURRENCY compatibility",
+  "base": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375",
+  "comparison": "direct base-to-head; explicit README.md and four allowed test paths only",
+  "snapshot_verification": "Resolved HEAD and base match supplied SHAs; all five working-file SHA256 digests match packet; allowed-path status clean and head-to-working diff empty.",
+  "input_digests": {
+    "architect-test-safe-package.json": "9be913b7458b28cd3a3817bdcff3548ba71103779625cf5d70ec4f801bfaa092",
+    "final-blind-pin-packet.json": "e1c3701572a57a4dfd9613e3f3fb853d932293ba4ecf556e9138ba562a057428"
+  },
+  "allowed_inventory": [
+    {
+      "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "independence": {
+    "boundary": "Fresh delegated reviewer; read only two supplied safe packets, installed test-review/acceptance reference and relevant pstack, README and four named test files, allowed-path Git metadata/diffs. No production source, unrestricted diffs, history explanations, raw logs, reports, execution, collection, or imports.",
+    "source_owner": "Integrator",
+    "sanitization": "Only authoritative contract,test inventory,Git version metadata,public assertion outcomes; excludes production source,diffs,algorithms,implementation reports,private logs",
+    "status": "pass"
+  },
+  "dependency_closure": {
+    "authoring_order": "threshold -> below -> negative is supplied authoring constraint; final static diff cannot establish historical Green checkpoints, which are outside this coverage verdict.",
+    "basis": "Packet explicitly declares complete test dependency inventory and no fixtures/helpers/extra configuration. Read tests use only standard unittest and public shipping imports. No custom fixture, helper, environment, or cross-test state dependency appears.",
+    "public_seams": "shipping_fee(total_cents: int) -> int; shipping.CURRENCY",
+    "status": "pass"
+  },
+  "spec_coverage": {
+    "basis": "All four supplied full-qualification obligations have direct observable assertions; exactly three new behavior example tests, existing currency assertion unchanged; type validation and error wording correctly absent.",
+    "status": "pass"
+  },
+  "coverage_mapping": [
+    {
+      "observable": "ShippingThresholdTest.test_shipping_is_free_at_10000_cents invokes shipping_fee(10000), assertEqual result 0; detects exclusive-boundary or charged threshold.",
+      "location": "tests/test_shipping_threshold.py:7-8",
+      "provenance": "README shipping threshold and exact example; shipping-v1 safe contract threshold",
+      "status": "covered",
+      "requirement": "10000 -> 0"
+    },
+    {
+      "observable": "ShippingBelowTest.test_shipping_costs_500_at_9999_cents invokes shipping_fee(9999), assertEqual result 500; detects free or wrong fixed fee immediately below threshold.",
+      "location": "tests/test_shipping_below.py:7-8",
+      "provenance": "README fixed-fee rule and exact example; shipping-v1 safe contract below",
+      "status": "covered",
+      "requirement": "9999 -> 500"
+    },
+    {
+      "observable": "ShippingNegativeTest.test_negative_total_raises_value_error invokes shipping_fee(-1) inside assertRaises(ValueError); rejects a normal return or unrelated exception without constraining wording.",
+      "location": "tests/test_shipping_negative.py:7-9",
+      "provenance": "README negative-total rule and exact example; shipping-v1 safe contract negative",
+      "status": "covered",
+      "requirement": "-1 raises ValueError"
+    },
+    {
+      "observable": "CurrencyRegression.test_currency_is_usd compares public imported CURRENCY with USD; existing test unchanged in direct diff.",
+      "location": "tests/test_regression.py:5-6",
+      "provenance": "README compatibility rule; safe public contract",
+      "status": "covered",
+      "requirement": "CURRENCY USD preserved"
+    }
+  ],
+  "numeric_provenance": {
+    "timing": "No test deadline, wait, polling, performance bound, or new numeric restriction.",
+    "limits": "Three examples do not mathematically establish behavior for every integer. Contract explicitly limits new examples; broader sampling would violate scope. This pass qualifies required example coverage, not universal runtime correctness.",
+    "inputs_and_expected": "10000, 0, 9999, 500 and -1 all explicitly authorized in README and safe packet examples; no implementation-derived oracle.",
+    "example_count": "Exactly three new examples from README and safe authoring contract; direct diff adds only three test methods/files."
+  },
+  "test_side_diff": "Three new files implementing threshold, below, negative assertions; README and regression unchanged. No acceptance strengthening or removal.",
+  "validity_standards": {
+    "basis": "Separate assigned axis; no overall validity blessing issued here. Simple assertion causal reasoning used only for coverage mapping.",
+    "status": "unverified"
+  },
+  "findings": [],
+  "methods": {
+    "static_reasoning": "performed",
+    "neutral_runner_facts": "Packet reports four named assertions passing discovery; retained as supplied neutral facts, not independently verified or used to infer product acceptance.",
+    "product_execution": "not performed",
+    "isolated_mechanism_execution": "not performed or necessary for these synchronous direct predicates"
+  },
+  "prior_evidence_reused": [],
+  "product_success": "unverified; no product-success or performance inference",
+  "next_action": "Coverage coordinator reconcile this axis with independent Validity/standards report and keep product acceptance separate."
+}

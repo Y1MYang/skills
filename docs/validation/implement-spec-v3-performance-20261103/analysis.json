@@ -1,0 +1,478 @@
+{
+  "environment": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_count": 32
+  },
+  "trial_root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4vsj5gll",
+  "measured_runs": 24,
+  "warmup_runs": 4,
+  "failed_trials": [],
+  "failed_comparisons": [],
+  "summary": {
+    "small": {
+      "arms": {
+        "baseline": {
+          "n": 6,
+          "median_seconds": 5.215270050015533,
+          "min_seconds": 5.161945400002878,
+          "max_seconds": 5.294321800000034,
+          "mean_seconds": 5.222613766673021,
+          "stdev_seconds": 0.058895982260695784
+        },
+        "candidate": {
+          "n": 6,
+          "median_seconds": 4.339418699993985,
+          "min_seconds": 4.265209499979392,
+          "max_seconds": 4.421138799982145,
+          "mean_seconds": 4.341641149992938,
+          "stdev_seconds": 0.05928177331221747
+        }
+      },
+      "paired_saved_seconds": [
+        0.9496816000319086,
+        0.7674478000262752,
+        0.8967359000234865,
+        0.9301880999992136,
+        0.9019324999826495,
+        0.8398498000169639
+      ],
+      "paired_saved_percent": [
+        18.11694056476857,
+        14.791076244637214,
+        17.37205318024066,
+        17.60544756080826,
+        17.03584583737701,
+        16.259297771176247
+      ],
+      "median_paired_saved_seconds": 0.899334200003068,
+      "median_paired_saved_percent": 17.203949508808833
+    },
+    "history_logs": {
+      "arms": {
+        "baseline": {
+          "n": 6,
+          "median_seconds": 18.173664550005924,
+          "min_seconds": 18.077630199986743,
+          "max_seconds": 18.553081599995494,
+          "mean_seconds": 18.230661949996527,
+          "stdev_seconds": 0.1767060744612333
+        },
+        "candidate": {
+          "n": 6,
+          "median_seconds": 14.472066649992485,
+          "min_seconds": 14.330936199985445,
+          "max_seconds": 14.633064399997238,
+          "mean_seconds": 14.469081233328325,
+          "stdev_seconds": 0.1015579827701733
+        }
+      },
+      "paired_saved_seconds": [
+        3.7466940000012983,
+        3.8152397999947425,
+        3.7108082000049762,
+        3.6711309000093024,
+        4.149389500002144,
+        3.4762218999967445
+      ],
+      "paired_saved_percent": [
+        20.725581608611762,
+        20.852128377947118,
+        20.373977509491873,
+        20.244619740269425,
+        22.364961193310073,
+        19.195797351759243
+      ],
+      "median_paired_saved_seconds": 3.7287511000031373,
+      "median_paired_saved_percent": 20.549779559051817
+    }
+  },
+  "details": {
+    "small": {
+      "baseline": {
+        "n": 6,
+        "totals": {
+          "elapsed_seconds": 31.335682600038126,
+          "target_body_seconds": 1.8756582999776583,
+          "receipt_managed_seconds": 11.188000000081956,
+          "execution_pipeline_seconds": 21.060101900075097,
+          "pipeline_outside_receipt_seconds": 9.87210189999314,
+          "other_ledger_seconds": 9.21905029998743,
+          "git_seconds": 0.7436962999927346,
+          "harness_other_seconds": 0.31283409998286515
+        },
+        "medians": {
+          "elapsed_seconds": 5.215270050015533,
+          "target_body_seconds": 0.31190880002395716,
+          "receipt_managed_seconds": 1.867500000022119,
+          "execution_pipeline_seconds": 3.5067579499736894,
+          "pipeline_outside_receipt_seconds": 1.6400369999464601,
+          "other_ledger_seconds": 1.5399767499766313,
+          "git_seconds": 0.12425924999115523,
+          "harness_other_seconds": 0.05218554999737535
+        },
+        "outer_process_invocations_per_trial": [
+          37
+        ],
+        "events_per_trial": [
+          24
+        ],
+        "target_executions_per_trial": [
+          6
+        ],
+        "assertion_cases_per_trial": [
+          10
+        ]
+      },
+      "candidate": {
+        "n": 6,
+        "totals": {
+          "elapsed_seconds": 26.04984689995763,
+          "target_body_seconds": 1.8966762999189086,
+          "receipt_managed_seconds": 11.248999999981606,
+          "execution_pipeline_seconds": 15.75718179991236,
+          "pipeline_outside_receipt_seconds": 4.508181799930753,
+          "other_ledger_seconds": 9.41856779975933,
+          "git_seconds": 0.7591437998926267,
+          "harness_other_seconds": 0.11495350039331242
+        },
+        "medians": {
+          "elapsed_seconds": 4.339418699993985,
+          "target_body_seconds": 0.3163143500132719,
+          "receipt_managed_seconds": 1.882499999992433,
+          "execution_pipeline_seconds": 2.6266252499917755,
+          "pipeline_outside_receipt_seconds": 0.740049049971276,
+          "other_ledger_seconds": 1.572422249999363,
+          "git_seconds": 0.1206864999840036,
+          "harness_other_seconds": 0.01921540012699552
+        },
+        "outer_process_invocations_per_trial": [
+          25
+        ],
+        "events_per_trial": [
+          24
+        ],
+        "target_executions_per_trial": [
+          6
+        ],
+        "assertion_cases_per_trial": [
+          10
+        ]
+      }
+    },
+    "history_logs": {
+      "baseline": {
+        "n": 6,
+        "totals": {
+          "elapsed_seconds": 109.38397169997916,
+          "target_body_seconds": 8.425642400077777,
+          "receipt_managed_seconds": 39.211999999999534,
+          "execution_pipeline_seconds": 81.58770239976002,
+          "pipeline_outside_receipt_seconds": 42.375702399760485,
+          "other_ledger_seconds": 25.85031960014021,
+          "git_seconds": 0.7946448001021054,
+          "harness_other_seconds": 1.1513048999768216
+        },
+        "medians": {
+          "elapsed_seconds": 18.173664550005924,
+          "target_body_seconds": 1.4030655999522423,
+          "receipt_managed_seconds": 6.48349999995844,
+          "execution_pipeline_seconds": 13.553869249895797,
+          "pipeline_outside_receipt_seconds": 7.076401349972002,
+          "other_ledger_seconds": 4.301999300019816,
+          "git_seconds": 0.13249200000427663,
+          "harness_other_seconds": 0.19150939995597582
+        },
+        "outer_process_invocations_per_trial": [
+          120
+        ],
+        "events_per_trial": [
+          88
+        ],
+        "target_executions_per_trial": [
+          25
+        ],
+        "assertion_cases_per_trial": [
+          168
+        ]
+      },
+      "candidate": {
+        "n": 6,
+        "totals": {
+          "elapsed_seconds": 86.81448739996995,
+          "target_body_seconds": 8.42536289957934,
+          "receipt_managed_seconds": 38.73299999997835,
+          "execution_pipeline_seconds": 59.433248899906175,
+          "pipeline_outside_receipt_seconds": 20.70024889992783,
+          "other_ledger_seconds": 26.2147967001074,
+          "git_seconds": 0.7921576999651734,
+          "harness_other_seconds": 0.3742840999912005
+        },
+        "medians": {
+          "elapsed_seconds": 14.472066649992485,
+          "target_body_seconds": 1.406663000001572,
+          "receipt_managed_seconds": 6.4385000000329455,
+          "execution_pipeline_seconds": 9.914167000009911,
+          "pipeline_outside_receipt_seconds": 3.4636616500356467,
+          "other_ledger_seconds": 4.366878899963922,
+          "git_seconds": 0.13030504998459946,
+          "harness_other_seconds": 0.06134614998882171
+        },
+        "outer_process_invocations_per_trial": [
+          70
+        ],
+        "events_per_trial": [
+          88
+        ],
+        "target_executions_per_trial": [
+          25
+        ],
+        "assertion_cases_per_trial": [
+          168
+        ]
+      }
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "result_file": "baseline-profile-instrumented.json",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\single",
+      "profiled_elapsed_seconds": 21.910669899982167,
+      "selected_functions": [
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\run_command.py",
+          "line": 229,
+          "function": "run_owned",
+          "primitive_calls": 29,
+          "calls": 29,
+          "self_seconds": 0.0028991000000000004,
+          "cumulative_seconds": 5.361239200000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method time.sleep>",
+          "primitive_calls": 106,
+          "calls": 106,
+          "self_seconds": 5.319584100000001,
+          "cumulative_seconds": 5.319584100000001
+        },
+        {
+          "file": "<frozen importlib._bootstrap>",
+          "line": 1349,
+          "function": "_find_and_load",
+          "primitive_calls": 1212,
+          "calls": 5075,
+          "self_seconds": 0.019099799999999997,
+          "cumulative_seconds": 4.2696561
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\cycle.py",
+          "line": 199,
+          "function": "atomic_json",
+          "primitive_calls": 114,
+          "calls": 114,
+          "self_seconds": 0.0020838000000000007,
+          "cumulative_seconds": 2.0100527000000006
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\cycle.py",
+          "line": 987,
+          "function": "save_state",
+          "primitive_calls": 89,
+          "calls": 89,
+          "self_seconds": 0.0006668000000000004,
+          "cumulative_seconds": 1.9937774999999998
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\cycle.py",
+          "line": 927,
+          "function": "audit_history",
+          "primitive_calls": 90,
+          "calls": 90,
+          "self_seconds": 0.014657200000000002,
+          "cumulative_seconds": 0.7801257000000007
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\cycle.py",
+          "line": 439,
+          "function": "check_receipt",
+          "primitive_calls": 1171,
+          "calls": 1171,
+          "self_seconds": 0.028569300000000002,
+          "cumulative_seconds": 0.6263550999999998
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\run_command.py",
+          "line": 94,
+          "function": "capture",
+          "primitive_calls": 50,
+          "calls": 50,
+          "self_seconds": 0.004440800000000001,
+          "cumulative_seconds": 0.3124950000000001
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-4xuaet03\\baseline-skill\\scripts\\cycle.py",
+          "line": 61,
+          "function": "capture",
+          "primitive_calls": 70,
+          "calls": 70,
+          "self_seconds": 0.0027344000000000014,
+          "cumulative_seconds": 0.22533340000000007
+        }
+      ]
+    },
+    "candidate": {
+      "result_file": "candidate-profile.json",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single",
+      "profiled_elapsed_seconds": 18.095646600006148,
+      "selected_functions": [
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\run_command.py",
+          "line": 229,
+          "function": "run_owned",
+          "primitive_calls": 29,
+          "calls": 29,
+          "self_seconds": 0.003042000000000001,
+          "cumulative_seconds": 5.6769951
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method time.sleep>",
+          "primitive_calls": 109,
+          "calls": 109,
+          "self_seconds": 5.4821943000000015,
+          "cumulative_seconds": 5.4821943000000015
+        },
+        {
+          "file": "<frozen importlib._bootstrap>",
+          "line": 1349,
+          "function": "_find_and_load",
+          "primitive_calls": 712,
+          "calls": 3025,
+          "self_seconds": 0.012293100000000003,
+          "cumulative_seconds": 2.7471179000000006
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\cycle.py",
+          "line": 1092,
+          "function": "save_state",
+          "primitive_calls": 89,
+          "calls": 89,
+          "self_seconds": 0.0007027000000000001,
+          "cumulative_seconds": 2.11319
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\cycle.py",
+          "line": 228,
+          "function": "atomic_json",
+          "primitive_calls": 114,
+          "calls": 114,
+          "self_seconds": 0.002049600000000001,
+          "cumulative_seconds": 2.0968639000000002
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\cycle.py",
+          "line": 468,
+          "function": "check_receipt",
+          "primitive_calls": 1171,
+          "calls": 1171,
+          "self_seconds": 0.031244400000000012,
+          "cumulative_seconds": 0.7696077999999998
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\cycle.py",
+          "line": 1031,
+          "function": "audit_history",
+          "primitive_calls": 90,
+          "calls": 90,
+          "self_seconds": 0.011749200000000001,
+          "cumulative_seconds": 0.7613987999999999
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\run_command.py",
+          "line": 94,
+          "function": "capture",
+          "primitive_calls": 50,
+          "calls": 50,
+          "self_seconds": 0.004540999999999999,
+          "cumulative_seconds": 0.3086771
+        },
+        {
+          "file": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill\\scripts\\cycle.py",
+          "line": 90,
+          "function": "capture",
+          "primitive_calls": 66,
+          "calls": 66,
+          "self_seconds": 0.0026547000000000007,
+          "cumulative_seconds": 0.20099180000000005
+        }
+      ]
+    }
+  },
+  "source_pins": {
+    "baseline": {
+      "agents/openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references/architecture-and-flow.md": "0c99378f0beb9a9df1c0bb2b2270e8285558b140d0490e39bcace965879b5a41",
+      "references/diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references/dispatch-and-isolation.md": "1a7e5acb2c4ef05cd83382ae484d6653901dda74e02f2cc732ca987df5ebf863",
+      "references/execution-and-recovery.md": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef",
+      "references/qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references/runtime-ledger.md": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148",
+      "references/tdd-loop.md": "f60b35d2137a928fb8b1c3658cb514cf15ed4cb38d81da22a24e2eaea97a1441",
+      "scripts/cycle.py": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+      "scripts/path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts/run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts/windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1",
+      "tests/test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests/test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests/test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests/test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests/test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    },
+    "candidate": {
+      "agents/openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references/architecture-and-flow.md": "1b2cfae1f15e8bc49abdb03014298e156c8f2e976738ca6603ea2b98138635d0",
+      "references/diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references/dispatch-and-isolation.md": "b03bea81576e87e78a323e8f18598bbcea7378652d22003b04a1d8c525f24220",
+      "references/execution-and-recovery.md": "535e2c8e42cb90cb6b1d2633dfa4135ad5f8b68f98ab8d9a08250a753fa097ea",
+      "references/qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references/runtime-ledger.md": "88491ab095eee1b1c89d9a4a898f40c8a67aff37b72a72d7b1440c307a54309f",
+      "references/tdd-loop.md": "d5b1a294bedc5052eb663ba05e4a5c5793b88ebe91b0bb9c3ca1622749a6ef6f",
+      "scripts/cycle.py": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+      "scripts/path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts/run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts/windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "e4422dc7a7f810ff5b4aeb3c1ac4b61649e26f149a0bae854aee67b2f67eca6c",
+      "tests/test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests/test_cycle_performance.py": "5b726580139693d62bd0ee2021473a2e14e0e30d6d19d42dbeb6ea0e294c22f1",
+      "tests/test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests/test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests/test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests/test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    }
+  },
+  "artifact_sha256": {
+    "benchmark.py": "718b371e898649f527661b70377d1c9c6c829512164985d4a367f2808f1a0954",
+    "matched-results.json": "f43caafdd92c584435a8b50f23fb95fee1e459710b8d37b52703281b9a811675",
+    "baseline-source.zip": "40a13fbd61f3e2af1a4bcc0a2a05a4ba6e6a61efe20ccb39a79312a0d8174cfb",
+    "baseline-sha256.json": "0070d9776344c32fd3aaa8db60a5f98326f215b70ce5cb0658df32598becc714",
+    "candidate-source.zip": "6ecf887b34885875170efddf2fb80dd63cef8c7e7cf9cbd3a7c233316ed5aa3d",
+    "candidate-sha256.json": "af56002356909f1305fd630560704e41658dc3b6309c613033e2a70c5d20975c",
+    "candidate-freeze.json": "f52b0b60b31be786ca95e8ac63a4f3155f40d8179ce963f1c6f611aa165c3aa5",
+    "candidate-freeze-metadata-correction.json": "123c871dbd5981246c9dad140aa7a269a259fd9df9337bb07b89d4ba8534a15a",
+    "candidate-profile.json": "ea80764eefe484016d71ecca717ae8e439ab03472bbce5a8bffa5604c7caf46d",
+    "baseline-profile-instrumented.json": "1e2ece99fc70cebd145bf29cffd68ef339199aa94d84182f2f035de37fc6a38c",
+    "equivalence-audit.json": "b8158a5550cd23f0360543f3a6d6d59bf204a08916e95a86b650c19d351ec418",
+    "audit_equivalence.py": "9e0f67b7bcc5b525ffe2606f9518ac07f1db005b324b46d8feb6713399ef6755",
+    "diagnostic-failures.json": "8b5f6b6e8f12fda1296050209da8d64f9b60467f5f9a3821f000a06e5de00844",
+    "README.md": "90b24424e61aa94dba067c6e877e185de49989d8a1eecd0938821aef9c754be8",
+    "baseline-profile-instrumented-summary.txt": "355b0c1dc55b86c798220399d101d71c40e122d7eddf27dc28674a00da8c8f19",
+    "candidate-profile-summary.txt": "d7d42f4498df7cf97511b8c51cc910673d1321db2d81b1cd2a07f45e55ea2d21"
+  },
+  "equivalence_audit": "equivalence-audit.json",
+  "contract_sha256": "b6ede11f51d5c3a0f509d97e9026a0caadcb2900fb8cc14d10c223c5d2a48d0b"
+}

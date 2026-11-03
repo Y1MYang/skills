@@ -1,0 +1,51 @@
+{
+  "authority": "README.md in initial clean commit",
+  "baseline_head": "874982f1f83cfb1f38bf673416920be5bbf4d993",
+  "project": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+  "public_contract": {
+    "signature": "shipping_fee(total_cents: int) -> int",
+    "requirement": "Nonnegative integer total <10000 =>500; >=10000 =>0; negative => ValueError; types out of scope; CURRENCY USD"
+  },
+  "examples": [
+    {
+      "id": "threshold",
+      "observation": "10000 -> 0",
+      "depends_on": []
+    },
+    {
+      "id": "below",
+      "observation": "9999 -> 500",
+      "depends_on": [
+        "threshold"
+      ]
+    },
+    {
+      "id": "negative",
+      "observation": "-1 raises ValueError",
+      "depends_on": [
+        "below"
+      ]
+    }
+  ],
+  "allowed_inventory": [
+    "README.md",
+    "tests/test_regression.py"
+  ],
+  "test_command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "test_dependencies": "Python 3.12 standard library unittest only; no fixtures/config/helpers beyond test source",
+  "new_test_authoring": "Exactly one current example at a time; no product reads; no imports/collection execution by blind participants",
+  "sanitization": {
+    "owner": "Exploration / gpt-6.1-sol",
+    "source": "User task plus README.md authoritative specification",
+    "scope": "Public contract, requirement values, paths, baseline identity; excludes product contents, algorithms, implementation history"
+  }
+}

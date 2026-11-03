@@ -1,0 +1,104 @@
+{
+  "role": "Architect",
+  "receipt_utc": "2026-11-03T06:51:40Z (approximate first task receipt; no event-clock supplied)",
+  "end_utc": "2026-11-03T06:53:12.884784+00:00",
+  "actual_model_parameter_packet": {
+    "model": "gpt-6.1-sol",
+    "fork_turns": "none",
+    "source": "Parent task explicitly identifies actual dispatch; runtime does not expose independent model introspection."
+  },
+  "run_id": "v3-perf-baseline-20261103",
+  "baseline": "412287aaa226bf4a3ad15e7b452c03a50b99beab",
+  "status": "architecture approved with test-safe wording refinement",
+  "principles": [
+    "sequence-verifiable-units",
+    "separate-before-serializing-shared-state",
+    "test-behavior-not-implementation"
+  ],
+  "inputs": [
+    "frozen SKILL.md",
+    "architecture-and-flow.md",
+    "execution-and-recovery.md",
+    "dispatch-and-isolation.md",
+    "README.md",
+    "coordinator-handoff.md",
+    "proposed-plan.json",
+    "test-safe-package.json",
+    "requirements-coverage.json"
+  ],
+  "public_contract_version": "shipping-public-v1",
+  "plan": "Adopt existing proposed-plan.json unchanged; its runtime schema and serial dependency graph suffice. Coverage mapping includes all three requirement classes using exactly mandated representatives, with existing CURRENCY USD regression. No implementation design prescribed.",
+  "graph": {
+    "ordinary_edges": [
+      [
+        "fee-at-10000",
+        "fee-at-9999"
+      ],
+      [
+        "fee-at-9999",
+        "negative-total"
+      ]
+    ],
+    "critical_checkpoints": [],
+    "checkpoint_prerequisites": [],
+    "blocked_checkpoint_consumers": [],
+    "final_prerequisites": [
+      "all three examples closed with eligible version-bound Green and affected regression evidence",
+      "independent full test qualification",
+      "complete formal acceptance and two code-review axes on same frozen clean committed HEAD"
+    ],
+    "acyclic": true,
+    "rationale": "Single public function and no downstream consumers; no artificial intermediate checkpoint. Final gate follows all three examples."
+  },
+  "ownership": {
+    "Architect": [
+      "architect-report.json",
+      "architect-test-safe-package.json"
+    ],
+    "Test author": [
+      "tests only, current phase only, fresh blind allowlist context"
+    ],
+    "Implementer": [
+      "shipping.py only after valid target Red or eligible existing-capability decision"
+    ],
+    "Integrator": [
+      "state directory outside tested tree",
+      "Git index/commits/integration target; sole writer"
+    ],
+    "Runner": [
+      "owned command receipts/logs/process trees, no product/test mutation"
+    ],
+    "coordinator": [
+      "dispatch and structured report consumption only after test stage starts"
+    ]
+  },
+  "budgets": {
+    "max_attempts": 20,
+    "max_seconds": 600,
+    "max_formal_failures": 3,
+    "per_command_deadline_seconds": 20,
+    "nominal_commands": 7,
+    "nominal_deadline_sum_seconds": 140,
+    "estimate_basis": "Three serial probes plus three affected-regression Greens plus final formal run for tiny standard-library unittest project; reserves within total budget. Not a measured SLA.",
+    "progress": "best-effort ~1 second status; return control bounded",
+    "stop_scope": "only owned command process/job descendants; Runner must validate Windows containment before formal reliance",
+    "termination_seconds": 5,
+    "local_diagnostics": "Create only on issue, renew on material evidence per frozen diagnostic-budgets; never reset run budget."
+  },
+  "next_actions": [
+    "Integrator adopts unchanged proposed-plan.json and initializes external state using handoff command; preserve exclusive state ownership.",
+    "Dispatch blind Test author model gpt-6.1-sol fork_turns none with architect-test-safe-package.json and only allowed references/tests; begin fee-at-10000 only.",
+    "Integrator pins exact contract/test snapshots and opens current example with author lightweight oracle; Runner confirms target-specific actual Red before Implementer.",
+    "After minimal implementation, Runner runs current plus all previous tests and CURRENCY regression; Integrator records/closes before next authoring. Repeat 9999 then -1.",
+    "After third closure, independent blind full test-review axes and coverage reconciliation qualify pinned tests; Integrator freezes clean committed candidate, Runner executes complete formal unittest acceptance, and fresh implementation-visible code-review axes review same HEAD. Finish/verify only with current matching evidence."
+  ],
+  "constraints": [
+    "No new tests or implementation authored by Architect.",
+    "No critical consumer waits on its own prerequisite checkpoint.",
+    "Do not forward this implementation-side report to blind reviewers; forward only architect-test-safe-package.json plus pinned allowed material.",
+    "No PR required: local evaluation handoff.",
+    "All role dispatches use explicit model gpt-6.1-sol; Expert only for concrete blocker."
+  ],
+  "resources": "No processes or workcopies allocated; only two owned evidence outputs. No tests executed.",
+  "unresolved": "Windows process containment qualification belongs to Runner; architecture does not assert execution support."
+}

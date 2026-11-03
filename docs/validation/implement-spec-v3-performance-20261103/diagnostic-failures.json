@@ -1,0 +1,13 @@
+[
+  {
+    "kind": "excluded harness development profile attempt",
+    "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-d19lxb_d\\single",
+    "retained_commands": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-d19lxb_d\\single\\commands.jsonl",
+    "reason": "Standard-library python -m cProfile returned exit 0 for a profiled runner whose real receipt reported exited/nonzero (1), so the harness rejected its expected exit check.",
+    "product_fault": false,
+    "repair": "profile_cli.py preserves SystemExit while dumping profile stats.",
+    "included_in_matched_comparison": false,
+    "comparison_replacement": false,
+    "raw_evidence_exists": true
+  }
+]

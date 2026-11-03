@@ -1,0 +1,12 @@
+{
+  "light_check": {
+    "expected_failure": "Assertion fails when return differs from500 for9999; Runner excludes unrelated faults",
+    "observation": "public shipping_fee(9999) exact return500",
+    "independent_context": "Blind author gpt-6.1-sol, allowed README/tests, oracle derived from nonnegative9999 below10000, dependency digests in author report",
+    "source": "example2-author-report.json; README.md shipping-public-v1"
+  },
+  "op_id": "ex2-open",
+  "op": "open",
+  "schema": 1,
+  "example": "fee-at-9999"
+}

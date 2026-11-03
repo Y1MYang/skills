@@ -1,0 +1,8 @@
+{
+  "regression_attempt_id": "attempt-f45feb82558c9abe2b536d74",
+  "example": "negative-total",
+  "regression_scope": "Full unittest discovery all4 tests:negative -1 raisesValueError,9999 exact500,10000 exact0,CURRENCY USD",
+  "op_id": "ex3-close",
+  "schema": 1,
+  "op": "close"
+}

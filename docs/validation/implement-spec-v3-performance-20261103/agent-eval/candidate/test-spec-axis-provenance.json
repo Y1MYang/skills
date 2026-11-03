@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "purpose": "Provenance audit only; no new review or qualification",
+  "model": "gpt-6.1-sol",
+  "audit_utc": "2026-11-03T08:31:23.1242796Z",
+  "original_completion_utc": "2026-11-03T08:28:21.7084916Z",
+  "original_artifact": "test-spec-axis.json",
+  "original_artifact_sha256": "cac296ecb354f87b693067a1815cd6d9d24a82fea3ad95992ebbf22637f3101c",
+  "allowed_input_inventory": [
+    "final-blind-pin-packet.json",
+    "architect-test-safe-package.json",
+    "C:/Users/admin/.codex/skills/test-review/SKILL.md",
+    "C:/Users/admin/.codex/skills/test-review/references/acceptance-contract.md",
+    "C:/Users/admin/.codex/skills/pstack-principles/SKILL.md",
+    "C:/Users/admin/.codex/skills/pstack-principles/principles/principle-explain-the-number.md",
+    "C:/Users/admin/.codex/skills/pstack-principles/principles/principle-test-behavior-not-implementation.md",
+    "README.md",
+    "tests/test_regression.py",
+    "tests/test_shipping_threshold.py",
+    "tests/test_shipping_below.py",
+    "tests/test_shipping_negative.py",
+    "Explicit allowed-path Git metadata/direct diff/status only"
+  ],
+  "original_input_digests": {
+    "architect-test-safe-package.json": "9be913b7458b28cd3a3817bdcff3548ba71103779625cf5d70ec4f801bfaa092",
+    "final-blind-pin-packet.json": "e1c3701572a57a4dfd9613e3f3fb853d932293ba4ecf556e9138ba562a057428"
+  },
+  "allowed_project_digests": [
+    {
+      "sha256": "228e9476f82641d3bcb2a804ddfd7dbf13f0b1777ddab1a3b8cd66f52058ec2f",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d88dbe15716707b613592cba20b4f7ebb90278493f86d89ead5b96fa124159cd",
+      "path": "tests/test_regression.py"
+    },
+    {
+      "sha256": "12a5feb0349b64db9bf2615a989aff7c9c9219559f41ce67ba5d884dbf451acb",
+      "path": "tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "719823df44a328003670c0f18fb26e939bec147f049fb2c21705f2f83d560a37",
+      "path": "tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "8214a2eb508ece4383650e6ee6a014d526146c5871de7cd0104f533691881297",
+      "path": "tests/test_shipping_negative.py"
+    }
+  ],
+  "incoming_messages_since_original_completion": [
+    {
+      "content": "Provenance audit ONLY in same blind context; report original UTC/artifact SHA/inventory and all postcompletion messages; forbid global inventory and other reports; save provenance artifact; send to coordinator only.",
+      "sender": "/root/v3_perf_agent_eval",
+      "type": "NEW_TASK",
+      "classification": "Audit instructions only; contains no product status, source, implementation observation, or other reviewer conclusions."
+    }
+  ],
+  "unallowlisted_status_source_or_implementation_observation_received": false,
+  "assertion_limitations": "Based only on this agent conversation and own saved report. No global inventory or other agent report queried. Original SHA computed during audit, not historically recorded at completion; no intervening edit by this agent. This audit does not establish facts outside this context or requalify tests.",
+  "product_execution": "None in original review or audit",
+  "review_reopened": false
+}

@@ -1,0 +1,60 @@
+{
+  "role": "Test author",
+  "model": "gpt-6.1-sol",
+  "model_provenance": "Explicit parent assignment",
+  "utc": "2026-11-03T07:02:19.9971328Z",
+  "utc_semantics": "Report creation after test write, not task receipt/start",
+  "flow": "shipping",
+  "example": "negative-total",
+  "requirement": "R3",
+  "contract": "shipping-public-v1",
+  "prerequisite": "Parent reports example2 closed redgreen seq14",
+  "test_path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_negative.py",
+  "unittest_target": "test_shipping_negative.ShippingNegativeTests.test_negative_total_raises_value_error",
+  "requirement_source": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md",
+  "input": -1,
+  "observation": "Exception raised at public shipping_fee(total_cents) call",
+  "expected_error": "ValueError",
+  "independent_derivation": "README requires negative integer totals to raise ValueError. -1 is a negative integer.",
+  "concrete_expected_failure": "assertRaises fails if the call returns normally; a different exception causes test failure. Runner must classify target causality separately from unrelated harness/environment/import failures.",
+  "counterfactual": "Returning any fee for -1 fails because ValueError was not raised; raising ValueError passes independent of internal structure or error-message wording. Reasoned mechanism check, no product execution.",
+  "dependencies": [
+    "Python standard-library unittest",
+    "Public shipping.shipping_fee interface; no implementation inspection"
+  ],
+  "fixtures_helpers_config": "None introduced",
+  "dependency_digests": [
+    {
+      "sha256": "2F83EB522C7A20548CCF9D9215C579F061EC143072134BF9C68597EF367E52F9",
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_negative.py"
+    },
+    {
+      "sha256": "960ACA21F1D8FCFDCB24A9D495D550557F8C5CED0A15A0DE47007862534BAB86",
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_below.py"
+    },
+    {
+      "sha256": "3579FF23B2325DB5310C744248EAB22115E43831A50D7394C95E348C6BD19C0F",
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_shipping_threshold.py"
+    },
+    {
+      "sha256": "7514DA48D939BF5D08D0EF1889F7E1F7D0A89CCF094EB4F39EC032A9900A97BE",
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/tests/test_regression.py"
+    },
+    {
+      "sha256": "72889EBA3CD95E78627A94797F26451DE2269353107F65B8AE82BA94CE8F8EA7",
+      "path": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103/README.md"
+    }
+  ],
+  "allowed_inputs": [
+    "Previously read frozen workflow/TDD/acceptance references and installed principles",
+    "architect-test-safe-package.json",
+    "README.md",
+    "Own prior/current tests",
+    "tests/test_regression.py",
+    "Neutral parent prerequisite status"
+  ],
+  "implementation_blind": true,
+  "tests_run": false,
+  "red_status": "Not claimed; independent Runner required",
+  "tests_authored_this_step": 1
+}

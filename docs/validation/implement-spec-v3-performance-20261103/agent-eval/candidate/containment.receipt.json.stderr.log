@@ -1,0 +1,7 @@
+test_timeout_stops_owned_tree_and_preserves_unrelated_process (test_run_command.RunCommandTests.test_timeout_stops_owned_tree_and_preserves_unrelated_process) ... ok
+test_normal_target_exit_cleans_still_running_descendant (test_run_command.RunCommandTests.test_normal_target_exit_cleans_still_running_descendant) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.385s
+
+OK

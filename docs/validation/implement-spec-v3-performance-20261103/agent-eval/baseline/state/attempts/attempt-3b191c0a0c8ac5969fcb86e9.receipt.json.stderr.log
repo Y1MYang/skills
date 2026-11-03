@@ -1,0 +1,17 @@
+test_shipping_is_free_at_10000_cents (test_shipping_threshold.ShippingThresholdTests.test_shipping_is_free_at_10000_cents) ... ERROR
+
+======================================================================
+ERROR: test_shipping_is_free_at_10000_cents (test_shipping_threshold.ShippingThresholdTests.test_shipping_is_free_at_10000_cents)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\admin\AppData\Local\Temp\v3-perf-baseline-20261103\tests\test_shipping_threshold.py", line 8, in test_shipping_is_free_at_10000_cents
+    self.assertEqual(shipping_fee(10000), 0)
+                     ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\AppData\Local\Temp\v3-perf-baseline-20261103\shipping.py", line 5, in shipping_fee
+    raise NotImplementedError
+NotImplementedError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

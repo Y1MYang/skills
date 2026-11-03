@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "record_op_id": "threshold-probe-record",
+  "prepare": {
+    "timeout_seconds": 20,
+    "example": "threshold",
+    "op": "prepare",
+    "schema": 1,
+    "purpose": "probe",
+    "op_id": "threshold-probe-prepare"
+  }
+}

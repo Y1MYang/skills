@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T06:59:35.0405267Z",
+  "started_at_utc": "2026-11-03T06:59:20.0000000Z",
+  "ended_at_utc": "2026-11-03T06:59:20.0000000Z",
+  "attempt_id": "attempt-2e00e05e18b8440cb1d42183",
+  "classification": "valid-red",
+  "receipt": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-2e00e05e18b8440cb1d42183.receipt.json",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_shipping_below.py",
+    "-v"
+  ],
+  "cwd": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "exit_code": 1,
+  "outcome": "exited",
+  "cleanup_complete": true,
+  "snapshots_unchanged": true,
+  "test_count": 1,
+  "target_test": "test_shipping_costs_500_below_threshold",
+  "requirement_source": "Authoritative parent-provided spec: shipping_fee(9999) returns 500.",
+  "actual_cause": "Target test called shipping_fee(9999). Actual result 0 differed from independently specified expected 500. AssertionError: 0 != 500. This directly identifies incorrect target public behavior, not setup/import/environment failure.",
+  "logs": {
+    "stderr": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-2e00e05e18b8440cb1d42183.receipt.json.stderr.log",
+      "sha256": "fc2f5e437b80e21963531ad4a67efe8275323010853c157c6a8a24d913ef4caf",
+      "size": 784
+    },
+    "stdout": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-2e00e05e18b8440cb1d42183.receipt.json.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "edits": "No product or test edits."
+}

@@ -1,0 +1,299 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_count": 32,
+  "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc",
+  "baseline": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+  "candidate": "None",
+  "source_sha256": {
+    "baseline": {
+      "agents\\openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references\\architecture-and-flow.md": "0c99378f0beb9a9df1c0bb2b2270e8285558b140d0490e39bcace965879b5a41",
+      "references\\diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references\\dispatch-and-isolation.md": "1a7e5acb2c4ef05cd83382ae484d6653901dda74e02f2cc732ca987df5ebf863",
+      "references\\execution-and-recovery.md": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef",
+      "references\\qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references\\runtime-ledger.md": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148",
+      "references\\tdd-loop.md": "f60b35d2137a928fb8b1c3658cb514cf15ed4cb38d81da22a24e2eaea97a1441",
+      "scripts\\cycle.py": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+      "scripts\\path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts\\run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts\\windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1",
+      "tests\\test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests\\test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests\\test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests\\test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests\\test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    }
+  },
+  "results": [
+    {
+      "label": "baseline",
+      "scenario": "small",
+      "mode": "legacy",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single",
+      "skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\baseline-skill",
+      "examples": 2,
+      "trace_bytes_per_test": 0,
+      "elapsed_seconds": 5.200179899984505,
+      "phase_totals_seconds": {
+        "git": 0.12089670001296327,
+        "ledger": 2.733900600025663,
+        "runner": 2.290687299973797
+      },
+      "other_seconds": 0.05469529997208156,
+      "phases": [
+        {
+          "phase": "fixture-git-init",
+          "seconds": 0.029736399999819696,
+          "exit": 0
+        },
+        {
+          "phase": "init",
+          "seconds": 0.13651340000797063,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-open",
+          "seconds": 0.09779959998559207,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-prepare",
+          "seconds": 0.08757489998242818,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-run",
+          "seconds": 0.29848960001254454,
+          "exit": 1
+        },
+        {
+          "phase": "fee-1-probe-record",
+          "seconds": 0.08927659998880699,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-judge",
+          "seconds": 0.09812150002107956,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-prepare",
+          "seconds": 0.10325949999969453,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-run",
+          "seconds": 0.2970107999863103,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-record",
+          "seconds": 0.08421739999903366,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-close",
+          "seconds": 0.09690560001763515,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-open",
+          "seconds": 0.09182150001288392,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-prepare",
+          "seconds": 0.09932680000201799,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "seconds": 0.3063213999848813,
+          "exit": 1
+        },
+        {
+          "phase": "fee-2-probe-record",
+          "seconds": 0.08848100001341663,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-judge",
+          "seconds": 0.09074270000564866,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-failed-green-prepare",
+          "seconds": 0.10135660000378266,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-failed-green-run",
+          "seconds": 0.30501209999783896,
+          "exit": 1
+        },
+        {
+          "phase": "fee-2-failed-green-record",
+          "seconds": 0.09110900000086986,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-implementation-failure",
+          "seconds": 0.0914325000194367,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-diagnose",
+          "seconds": 0.09011819999432191,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-prepare",
+          "seconds": 0.0963962999812793,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-run",
+          "seconds": 0.2975883999897633,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-record",
+          "seconds": 0.09579639998264611,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-close",
+          "seconds": 0.09174300002632663,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-before-refresh",
+          "seconds": 0.09245039999950677,
+          "exit": 0
+        },
+        {
+          "phase": "include-shared-data",
+          "seconds": 0.1069314000196755,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-add",
+          "seconds": 0.027976500015938655,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-commit",
+          "seconds": 0.043991199985612184,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-head",
+          "seconds": 0.01919260001159273,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-final",
+          "seconds": 0.09618100000079721,
+          "exit": 0
+        },
+        {
+          "phase": "prepare-final",
+          "seconds": 0.10335979997762479,
+          "exit": 0
+        },
+        {
+          "phase": "formal-run",
+          "seconds": 0.7862650000024587,
+          "exit": 0
+        },
+        {
+          "phase": "record-final",
+          "seconds": 0.14104119999683462,
+          "exit": 0
+        },
+        {
+          "phase": "finish",
+          "seconds": 0.14577179998741485,
+          "exit": 0
+        },
+        {
+          "phase": "inspect",
+          "seconds": 0.08654819999355823,
+          "exit": 0
+        },
+        {
+          "phase": "verify",
+          "seconds": 0.13962430000538006,
+          "exit": 0
+        }
+      ],
+      "receipts": [
+        {
+          "phase": "fee-1-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-e3c1490b0be351bac04530a7.receipt.json",
+          "duration_seconds": 0.21799999999348074,
+          "sha256": "c80d83ec529a2e9def4d23d8a0e6163e7552d9bf5f03e08610178c28b2cfb3ea"
+        },
+        {
+          "phase": "fee-1-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-0ec6bae58d33e1c1eaee3d53.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "e8b08ad0228eb55df424acdf3064c288d8a8b1bad96fc738bcd694206e7f9e82"
+        },
+        {
+          "phase": "fee-2-probe-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-1131d06b255b87ff23069db9.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "db16b43150dbbbb49ecf59c1ce26990237615ce9174071668da32f0c8c1fa67a"
+        },
+        {
+          "phase": "fee-2-failed-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-83d2daee2ee711699ae7d603.receipt.json",
+          "duration_seconds": 0.21799999999348074,
+          "sha256": "ba594e574b8bf2ae8ecf244b9a05f170675313971e6b7c021cf0f7e338613511"
+        },
+        {
+          "phase": "fee-2-green-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-2be6b88de3a99743c79ba9c7.receipt.json",
+          "duration_seconds": 0.21900000001187436,
+          "sha256": "dbaccca0501c7807daa066ddc6c9af389fc4a60676c0cb159b01c435ded6586d"
+        },
+        {
+          "phase": "formal-run",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-qino_7vc\\single\\state\\attempts\\attempt-7013a28b2990980384228c46.receipt.json",
+          "duration_seconds": 0.7190000000118744,
+          "sha256": "dc92a551a23dd8dc7aea3c00ca3b06bad13d9d09e28f2469cff037fc372790b9"
+        }
+      ],
+      "status": "ready",
+      "attempts": 6,
+      "events": 24,
+      "outer_process_invocations": 37,
+      "profiled": false,
+      "retained_bytes": 157820,
+      "pair": 0
+    }
+  ],
+  "summary": {
+    "small": {
+      "arms": {
+        "baseline": {
+          "n": 1,
+          "median_seconds": 5.200179899984505,
+          "min_seconds": 5.200179899984505,
+          "max_seconds": 5.200179899984505,
+          "mean_seconds": 5.200179899984505,
+          "stdev_seconds": null
+        }
+      },
+      "paired_saved_seconds": [],
+      "paired_saved_percent": [],
+      "median_paired_saved_seconds": null,
+      "median_paired_saved_percent": null
+    }
+  }
+}

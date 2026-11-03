@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "run_id": "v3-perf-candidate-20261103",
+  "workspace": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+  "spec_sources": [
+    "README.md"
+  ],
+  "models": {
+    "exploration": "gpt-6.1-sol",
+    "architect": "gpt-6.1-sol",
+    "test_author": "gpt-6.1-sol",
+    "implementer": "gpt-6.1-sol",
+    "runner": "gpt-6.1-sol",
+    "integrator": "gpt-6.1-sol",
+    "coverage_audit": "gpt-6.1-sol",
+    "spec_reviewer": "gpt-6.1-sol",
+    "standards_reviewer": "gpt-6.1-sol",
+    "expert": "gpt-6.1-sol"
+  },
+  "budget": {
+    "max_attempts": 20,
+    "max_formal_failures": 3,
+    "max_seconds": 600
+  },
+  "flows": [
+    {
+      "id": "shipping",
+      "write_paths": [
+        "shipping.py",
+        "tests"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "id": "threshold",
+      "flow": "shipping",
+      "requirement": "10000 -> 0",
+      "depends_on": [],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    },
+    {
+      "id": "below",
+      "flow": "shipping",
+      "requirement": "9999 -> 500",
+      "depends_on": [
+        "threshold"
+      ],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    },
+    {
+      "id": "negative",
+      "flow": "shipping",
+      "requirement": "-1 raises ValueError",
+      "depends_on": [
+        "below"
+      ],
+      "snapshot": {
+        "schema": 1,
+        "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-candidate-20261103-qhq_ie8t",
+        "tests": [
+          "tests"
+        ],
+        "contract": [
+          "README.md"
+        ],
+        "product": [
+          "shipping.py"
+        ],
+        "binding": null
+      }
+    }
+  ],
+  "gates": []
+}

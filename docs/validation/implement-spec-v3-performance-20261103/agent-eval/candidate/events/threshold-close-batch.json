@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "events": [
+    {
+      "op_id": "threshold-close",
+      "regression_attempt_id": "attempt-d5a630a235a3eb0cb63e055b",
+      "op": "close",
+      "regression_scope": "Full unittest discovery: threshold shipping_fee(10000)==0 and existing currency USD regression; Runner confirmed2 tests ok, stable snapshots/windows cleanup.",
+      "schema": 1,
+      "example": "threshold"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "verdict": "pass",
+  "findings": [],
+  "scope": "Two documentation diffs against candidate-source.zip only. Complete recipient identifiers, return routes, and a known nonblind coordinator make existing isolation actionable; missing-address reporting replaces global inventory discovery. Existing runtime, contract, role authority, and flow rules are unchanged by these diffs. The resume link resolves to the packaged allowlist/routing section; no repository-only dependency is introduced. This clarification does not retroactively qualify the earlier invocation. No runtime or tests executed.",
+  "manifest_sha256": "b356b9e7270e75c586eb3822348a13da82219ac9667d429312337965eb16b84a",
+  "candidate_source_zip_sha256": "6ecf887b34885875170efddf2fb80dd63cef8c7e7cf9cbd3a7c233316ed5aa3d",
+  "files": [
+    {
+      "path": "skills/engineering/implement-spec-v3/references/dispatch-and-isolation.md",
+      "frozen_candidate_sha256": "b03bea81576e87e78a323e8f18598bbcea7378652d22003b04a1d8c525f24220",
+      "reviewed_sha256": "9ed45fc780efa7e7ffc0a7fbde89448512f262da34e4e0f223f1214c165cf0d3",
+      "manifest_snapshot_matches": true
+    },
+    {
+      "path": "skills/engineering/implement-spec-v3/references/execution-and-recovery.md",
+      "frozen_candidate_sha256": "535e2c8e42cb90cb6b1d2633dfa4135ad5f8b68f98ab8d9a08250a753fa097ea",
+      "reviewed_sha256": "5747fe694e863f81c1304a40943026d6b8ac5da146a1418fd342057f0d810870",
+      "manifest_snapshot_matches": true
+    }
+  ]
+}

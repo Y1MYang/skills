@@ -1,0 +1,16 @@
+{
+  "proof": "Actual4 named tests OK; receipt exited0 cleanup_complete true Windows Job; formal requested true; clean before/after; same frozen HEAD before/after; complete snapshots identical",
+  "verdict": "pass",
+  "role": "Runner",
+  "evidence": [
+    "state/attempts/attempt-dff6618966f3a50b851af5c5.receipt.json",
+    "state/attempts/attempt-dff6618966f3a50b851af5c5.receipt.json.stderr.log",
+    "test-review-full.json",
+    "containment.receipt.json"
+  ],
+  "attempt_id": "attempt-dff6618966f3a50b851af5c5",
+  "source": "Actual persistent Runner semantic message",
+  "recorded_utc": "2026-11-03T08:31:24.1041726Z",
+  "model": "gpt-6.1-sol",
+  "head": "aa2aad4be8bd51fb6b8d0739f0b6ef8a2f221375"
+}

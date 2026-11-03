@@ -1,0 +1,15 @@
+test_negative_total_raises_value_error (test_shipping_negative.ShippingNegativeTests.test_negative_total_raises_value_error) ... FAIL
+
+======================================================================
+FAIL: test_negative_total_raises_value_error (test_shipping_negative.ShippingNegativeTests.test_negative_total_raises_value_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\admin\AppData\Local\Temp\v3-perf-baseline-20261103\tests\test_shipping_negative.py", line 8, in test_negative_total_raises_value_error
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

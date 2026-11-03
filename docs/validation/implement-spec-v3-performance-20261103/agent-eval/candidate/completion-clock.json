@@ -1,0 +1,10 @@
+{
+  "includes": "Preparation, all three serial real Red/Green cycles, full independent2-axis test review, two code reviews, boundary incident/recovery/provenance and all review waiting, formal acceptance and artifact assembly",
+  "precision": "seconds",
+  "clock_source": "Actual clock__curr_time call after required artifacts and ready/verify complete",
+  "start_clock_utc": "2026-11-03 08:18:40 UTC",
+  "manifest_sha256": "5c6bd871e2d175a5d5db9d1775db76977f4cdaa30b84f2f0b3b2c06d26bdacf8",
+  "elapsed_seconds_at_second_precision": 811,
+  "handoff_clock_utc": "2026-11-03 08:32:11 UTC",
+  "limitations": "One trial; no baseline gross timing ratio; second-resolution clocks; final communication after clock not included"
+}

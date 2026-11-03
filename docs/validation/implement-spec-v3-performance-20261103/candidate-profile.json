@@ -1,0 +1,1409 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_executable": "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpu_count": 32,
+  "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1",
+  "baseline": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-baseline-20261103-144424-069\\implement-spec-v3",
+  "candidate": "C:\\Users\\admin\\AppData\\Local\\Temp\\implement-spec-v3-candidate-9fgw2e6t\\implement-spec-v3",
+  "source_sha256": {
+    "baseline": {
+      "agents\\openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references\\architecture-and-flow.md": "0c99378f0beb9a9df1c0bb2b2270e8285558b140d0490e39bcace965879b5a41",
+      "references\\diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references\\dispatch-and-isolation.md": "1a7e5acb2c4ef05cd83382ae484d6653901dda74e02f2cc732ca987df5ebf863",
+      "references\\execution-and-recovery.md": "f7f7980782ede3455020cec0da09fb7160ca8c769863119afdc17961231258ef",
+      "references\\qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references\\runtime-ledger.md": "5621430d4fec5f5ae7c75744600260a319e3451ee55cda0faa2b8b48d909c148",
+      "references\\tdd-loop.md": "f60b35d2137a928fb8b1c3658cb514cf15ed4cb38d81da22a24e2eaea97a1441",
+      "scripts\\cycle.py": "1e285ff07f1ff63e74bd9811c350cf081981316a2af85eb8e2609d0aa8c8e9bc",
+      "scripts\\path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts\\run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts\\windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "2bf8e5cdb53579be7a38156690a45d32d6cc647c3bc8c2c6ab320d76953f0ef1",
+      "tests\\test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests\\test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests\\test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests\\test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests\\test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    },
+    "candidate": {
+      "agents\\openai.yaml": "2c467aebed5e3782ca2e4a6c80067f279780ed940bc7892a541985df03b5a358",
+      "references\\architecture-and-flow.md": "1b2cfae1f15e8bc49abdb03014298e156c8f2e976738ca6603ea2b98138635d0",
+      "references\\diagnostic-budgets.md": "1459a0173be6bd5627583b8b8202332b91c8c42f7049769a2b0199fbce06eacf",
+      "references\\dispatch-and-isolation.md": "b03bea81576e87e78a323e8f18598bbcea7378652d22003b04a1d8c525f24220",
+      "references\\execution-and-recovery.md": "535e2c8e42cb90cb6b1d2633dfa4135ad5f8b68f98ab8d9a08250a753fa097ea",
+      "references\\qualification-and-delivery.md": "f13f7d2bd5a28b173c2a24c09f36401ce55cfd317553ab226771d655ab9447d6",
+      "references\\runtime-ledger.md": "88491ab095eee1b1c89d9a4a898f40c8a67aff37b72a72d7b1440c307a54309f",
+      "references\\tdd-loop.md": "d5b1a294bedc5052eb663ba05e4a5c5793b88ebe91b0bb9c3ca1622749a6ef6f",
+      "scripts\\cycle.py": "ad858e5bc5dd9458fc93ecd2865ae36004ddcba06e657c1fc131cfcd98d317b5",
+      "scripts\\path_identity.py": "f6a177a3bf922510719fe418df3e82579407a0b7b1657e5f3487c202dd8c2071",
+      "scripts\\run_command.py": "cc631c7709a000cc8a4641d74f55a8fb055ade7a7d54fed006010898e2aaede4",
+      "scripts\\windows_job.py": "2f9edcfa60c0ce9eaaa2f097526c4d28fdd088570a73f38ef13117b9cdbc57b4",
+      "SKILL.md": "e4422dc7a7f810ff5b4aeb3c1ac4b61649e26f149a0bae854aee67b2f67eca6c",
+      "tests\\test_cycle.py": "c6c7a3ff20fa75ed8c51a6fe677a3e24ca3a43a2cd216ce1b07bcdc6d1debd53",
+      "tests\\test_cycle_performance.py": "5b726580139693d62bd0ee2021473a2e14e0e30d6d19d42dbeb6ea0e294c22f1",
+      "tests\\test_cycle_proofs.py": "5c611692402cc915ae5000a4a64b101249b0f3f672691bbf7061cb02a3696deb",
+      "tests\\test_cycle_recovery.py": "a6ef2b3a81b20499cc8f16aa61de3a38ef869101253e4413ab2e0b5616519245",
+      "tests\\test_cycle_safety.py": "b1c1fcdb4f14bfc4d1981ea8f1abcd8dd2434282b255b736381260d2123e0744",
+      "tests\\test_run_command.py": "12f9afdcb6523d4dfefa7034204b466410f1734d52f8499b512434a7b92445b5"
+    }
+  },
+  "results": [
+    {
+      "label": "candidate",
+      "scenario": "history_logs",
+      "mode": "execute",
+      "root": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single",
+      "skill": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\candidate-skill",
+      "examples": 12,
+      "trace_bytes_per_test": 32768,
+      "elapsed_seconds": 18.095646600006148,
+      "phase_totals_seconds": {
+        "git": 0.13603550000698306,
+        "ledger": 6.14885930006858,
+        "execute": 11.741441599995596
+      },
+      "other_seconds": 0.06931019993498921,
+      "phases": [
+        {
+          "phase": "fixture-git-init",
+          "seconds": 0.03232399999978952,
+          "exit": 0
+        },
+        {
+          "phase": "init",
+          "seconds": 0.20152299999608658,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-open",
+          "seconds": 0.12528320000274107,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-probe-execute",
+          "seconds": 0.39053139998577535,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-judge",
+          "seconds": 0.12893600002280436,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-green-execute",
+          "seconds": 0.39043459997628815,
+          "exit": 0
+        },
+        {
+          "phase": "fee-1-close",
+          "seconds": 0.11130590000539087,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-open",
+          "seconds": 0.11587929999222979,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-probe-execute",
+          "seconds": 0.4009225000045262,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-judge",
+          "seconds": 0.12800590001279488,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-green-execute",
+          "seconds": 0.3514699999941513,
+          "exit": 0
+        },
+        {
+          "phase": "fee-2-close",
+          "seconds": 0.11630180000793189,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-open",
+          "seconds": 0.11773160001030192,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-probe-execute",
+          "seconds": 0.39306020000367425,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-judge",
+          "seconds": 0.12660760001745075,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-green-execute",
+          "seconds": 0.4107170000206679,
+          "exit": 0
+        },
+        {
+          "phase": "fee-3-close",
+          "seconds": 0.13515450002159923,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-open",
+          "seconds": 0.12130869997781701,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-probe-execute",
+          "seconds": 0.4046708999958355,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-judge",
+          "seconds": 0.13662539998767897,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-green-execute",
+          "seconds": 0.4298285999975633,
+          "exit": 0
+        },
+        {
+          "phase": "fee-4-close",
+          "seconds": 0.13124720001360402,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-open",
+          "seconds": 0.1309651999908965,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-probe-execute",
+          "seconds": 0.4137607000011485,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-judge",
+          "seconds": 0.13941000000340864,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-green-execute",
+          "seconds": 0.42797250000876375,
+          "exit": 0
+        },
+        {
+          "phase": "fee-5-close",
+          "seconds": 0.1422276000084821,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-open",
+          "seconds": 0.14012080000247806,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-probe-execute",
+          "seconds": 0.4321048999845516,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-judge",
+          "seconds": 0.14604870000039227,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-green-execute",
+          "seconds": 0.4566708999918774,
+          "exit": 0
+        },
+        {
+          "phase": "fee-6-close",
+          "seconds": 0.13946870001382194,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-open",
+          "seconds": 0.149570199981099,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-probe-execute",
+          "seconds": 0.444796200026758,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-judge",
+          "seconds": 0.13884900000994094,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-green-execute",
+          "seconds": 0.4382097000197973,
+          "exit": 0
+        },
+        {
+          "phase": "fee-7-close",
+          "seconds": 0.13932909999857657,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-open",
+          "seconds": 0.14557880000211298,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-probe-execute",
+          "seconds": 0.4509052000066731,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-judge",
+          "seconds": 0.15070850000483915,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-green-execute",
+          "seconds": 0.46586959998239763,
+          "exit": 0
+        },
+        {
+          "phase": "fee-8-close",
+          "seconds": 0.15771090000635013,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-open",
+          "seconds": 0.16302090001408942,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-probe-execute",
+          "seconds": 0.48427539999829605,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-judge",
+          "seconds": 0.17317219998221844,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-green-execute",
+          "seconds": 0.4908145999943372,
+          "exit": 0
+        },
+        {
+          "phase": "fee-9-close",
+          "seconds": 0.16894430000684224,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-open",
+          "seconds": 0.17153739999048412,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-probe-execute",
+          "seconds": 0.47634630001266487,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-judge",
+          "seconds": 0.1712859999970533,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-green-execute",
+          "seconds": 0.4950043999997433,
+          "exit": 0
+        },
+        {
+          "phase": "fee-10-close",
+          "seconds": 0.1613218999991659,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-open",
+          "seconds": 0.1735579000087455,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-probe-execute",
+          "seconds": 0.5040517000015825,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-judge",
+          "seconds": 0.16807449999032542,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-green-execute",
+          "seconds": 0.4852508000039961,
+          "exit": 0
+        },
+        {
+          "phase": "fee-11-close",
+          "seconds": 0.16179640000336803,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-open",
+          "seconds": 0.1641204000043217,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-probe-execute",
+          "seconds": 0.49614089998067357,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-judge",
+          "seconds": 0.17543449997901917,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-green-execute",
+          "seconds": 0.5016331000078935,
+          "exit": 0
+        },
+        {
+          "phase": "fee-12-close",
+          "seconds": 0.1690791999862995,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-add",
+          "seconds": 0.03796720001264475,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-commit",
+          "seconds": 0.045813400007318705,
+          "exit": 0
+        },
+        {
+          "phase": "fixture-git-head",
+          "seconds": 0.019930899987230077,
+          "exit": 0
+        },
+        {
+          "phase": "qualify-final",
+          "seconds": 0.1773897999955807,
+          "exit": 0
+        },
+        {
+          "phase": "formal-execute",
+          "seconds": 1.10599949999596,
+          "exit": 0
+        },
+        {
+          "phase": "finish",
+          "seconds": 0.23672470002202317,
+          "exit": 0
+        },
+        {
+          "phase": "inspect",
+          "seconds": 0.12362639998900704,
+          "exit": 0
+        },
+        {
+          "phase": "verify",
+          "seconds": 0.1738752000092063,
+          "exit": 0
+        }
+      ],
+      "receipts": [
+        {
+          "phase": "fee-1-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-e3c1490b0be351bac04530a7.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05595919999177568,
+          "tests_run": 1,
+          "sha256": "43be7222477151d41d30d52235cbf6985da419a7d7feed437fb95f4526514bf8"
+        },
+        {
+          "phase": "fee-1-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-0ec6bae58d33e1c1eaee3d53.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.05385160000878386,
+          "tests_run": 1,
+          "sha256": "9c581428f5704f7073753b1857a1efded2c4c6a343d0f9cfd902b3d293fdbb8f"
+        },
+        {
+          "phase": "fee-2-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-1131d06b255b87ff23069db9.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.05460060000768863,
+          "tests_run": 2,
+          "sha256": "d6270ce31c2eb5b3cf55d58e437e40dbea0e5b8ffb4018403a10b39b8d763afc"
+        },
+        {
+          "phase": "fee-2-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-2be6b88de3a99743c79ba9c7.receipt.json",
+          "duration_seconds": 0.1870000000053551,
+          "target_seconds": 0.04978460000711493,
+          "tests_run": 2,
+          "sha256": "dddae4b6983e31415c7ce8a244fc80f890eaf8d7d052f848a840f7e4226901e4"
+        },
+        {
+          "phase": "fee-3-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-d4843202b95b497c46263830.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.05483989999629557,
+          "tests_run": 3,
+          "sha256": "f9128fafed2e40df36ed050ac64b1a7bf024d0636c3b018f926276af33cafd0a"
+        },
+        {
+          "phase": "fee-3-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-2623aaca8c4660f380566136.receipt.json",
+          "duration_seconds": 0.235000000015134,
+          "target_seconds": 0.054025799996452406,
+          "tests_run": 3,
+          "sha256": "cd49810e8d7061f5689710fc94fb732d33e985bb6428c8cabe5f3a6a5b5cf7de"
+        },
+        {
+          "phase": "fee-4-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-f9bb7763d07ddf921018d760.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.05432650001603179,
+          "tests_run": 4,
+          "sha256": "ab7133f90fcc01b28ea15034690558e57541f140ddc44b380118df0ab617b0c8"
+        },
+        {
+          "phase": "fee-4-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-a9af0bf2ea2a94756e93e838.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.058238099998561665,
+          "tests_run": 4,
+          "sha256": "76ba7add381b178c596e84337c91b48ebc01aae567393fd14f8473d773ee3296"
+        },
+        {
+          "phase": "fee-5-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-0dd246b77abb050672436154.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05427880000206642,
+          "tests_run": 5,
+          "sha256": "0c68fc316640e709213ed858940f8379c543e32f61dd7523427e12276cb9aeaf"
+        },
+        {
+          "phase": "fee-5-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-f0b32cae77ccebca70925d00.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05736279999837279,
+          "tests_run": 5,
+          "sha256": "fede84bf6250ced2e042052a96f93c6b37b7e16e5c820cc712ebf5147b2021d3"
+        },
+        {
+          "phase": "fee-6-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-a1ecb1f1957b4f8b72a07b40.receipt.json",
+          "duration_seconds": 0.2340000000258442,
+          "target_seconds": 0.05626979999942705,
+          "tests_run": 6,
+          "sha256": "a3b679bcea79f84f1f8ac77bcb8cc304e90c009359e5953f2ec3f04ced7724e6"
+        },
+        {
+          "phase": "fee-6-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-01a16e20952f34ef2c6fd9eb.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05715300000156276,
+          "tests_run": 6,
+          "sha256": "87123dd24fc58712d30a01e95734e653af715bebcce0d9b93015491bf52eff40"
+        },
+        {
+          "phase": "fee-7-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-3aff8c0454b47dcf7dab69c2.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.059864899987587705,
+          "tests_run": 7,
+          "sha256": "8bfd717b049043d7aa76d783c42d1d7c7e6d58419f3941d94c3357e23e185e9f"
+        },
+        {
+          "phase": "fee-7-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-5cf2d78dfbde06cdc78d5a29.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.0556514999771025,
+          "tests_run": 7,
+          "sha256": "073b27936db8c3e05d2e0409a593722a692af36f08f6acd65decf12a3e03b45b"
+        },
+        {
+          "phase": "fee-8-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-d760a0a2575f366be9475182.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05952339997747913,
+          "tests_run": 8,
+          "sha256": "58b4de8edc742272325c3576b566d0cd9439bebe06801bd2e16d825c180bd73c"
+        },
+        {
+          "phase": "fee-8-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-d46e875384b8e00bf2d69bc6.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.0598318999982439,
+          "tests_run": 8,
+          "sha256": "a2cf4e230cc0ab8c1a97fdf322f86869becb867a0e0704d881fd396d12971d66"
+        },
+        {
+          "phase": "fee-9-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-765c0deaed059ebe8968048b.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.06784679999691434,
+          "tests_run": 9,
+          "sha256": "6b4c8dfd52125937f554800fc81782cb522664bedbafa75b1a9c0ba4b8fa0ff7"
+        },
+        {
+          "phase": "fee-9-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-79e2e24816b3f8853213b38c.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.07730069998069666,
+          "tests_run": 9,
+          "sha256": "ed74fa960ceefe5b1331ef95f40d9733b7e3fea64acf612376cddc9d68d733e9"
+        },
+        {
+          "phase": "fee-10-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-33395a30cf55849b02ebef28.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.06545180000830442,
+          "tests_run": 10,
+          "sha256": "8d6b881ebe3645c344826175e06ba28a15661ecc976564695a29163fa5e3fb7e"
+        },
+        {
+          "phase": "fee-10-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-9d256b91fc7a9864580a9dcc.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05923709998023696,
+          "tests_run": 10,
+          "sha256": "74afe8f2815de1f599526ccaba8c0b9d14e9b13000cb0b8d79aea1bd1c90f852"
+        },
+        {
+          "phase": "fee-11-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-548d4e3912953f3fb6f11411.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.07072359998710454,
+          "tests_run": 11,
+          "sha256": "db645e7fe4b0c2ad1f12bedbe819bdc2d7130456927338600b1b6e891f148574"
+        },
+        {
+          "phase": "fee-11-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-60d86b746433c41924af41ca.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.06215000001247972,
+          "tests_run": 11,
+          "sha256": "a9898a870d35b2743a8aa09fdeb706e3242d6ba717dae12c772cf65484753297"
+        },
+        {
+          "phase": "fee-12-probe-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-743d07ec1992006ec5cd7d28.receipt.json",
+          "duration_seconds": 0.23399999999674037,
+          "target_seconds": 0.0565643000009004,
+          "tests_run": 12,
+          "sha256": "757a45e85e8fcdf599f2ef6dbb27305dbd968f9d82bf09327c0f5f218b592665"
+        },
+        {
+          "phase": "fee-12-green-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-6907b6475d9aab4b5d58e455.receipt.json",
+          "duration_seconds": 0.25,
+          "target_seconds": 0.05971060000592843,
+          "tests_run": 12,
+          "sha256": "d93816e1084ac8c73bf6bb2e501b245da2c45245b9f8928c46d51854e64b1858"
+        },
+        {
+          "phase": "formal-execute",
+          "path": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-matched-bench-za3rhqg1\\single\\state\\attempts\\attempt-7013a28b2990980384228c46.receipt.json",
+          "duration_seconds": 0.7809999999881256,
+          "target_seconds": 0.060388000012608245,
+          "tests_run": 12,
+          "sha256": "80f040d23cf096ca90ac3defe2b50726c6249d9811aaa2b3b4e0e3f044257cf3"
+        }
+      ],
+      "target_body_seconds": 1.4749352999497205,
+      "receipt_managed_seconds": 6.591000000014901,
+      "status": "ready",
+      "attempts": 25,
+      "events": 88,
+      "outer_process_invocations": 70,
+      "work_signature": {
+        "events": [
+          [
+            "fee-1-open",
+            "open"
+          ],
+          [
+            "fee-1-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-1-probe-record",
+            "record"
+          ],
+          [
+            "fee-1-judge",
+            "judge"
+          ],
+          [
+            "fee-1-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-1-green-record",
+            "record"
+          ],
+          [
+            "fee-1-close",
+            "close"
+          ],
+          [
+            "fee-2-open",
+            "open"
+          ],
+          [
+            "fee-2-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-2-probe-record",
+            "record"
+          ],
+          [
+            "fee-2-judge",
+            "judge"
+          ],
+          [
+            "fee-2-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-2-green-record",
+            "record"
+          ],
+          [
+            "fee-2-close",
+            "close"
+          ],
+          [
+            "fee-3-open",
+            "open"
+          ],
+          [
+            "fee-3-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-3-probe-record",
+            "record"
+          ],
+          [
+            "fee-3-judge",
+            "judge"
+          ],
+          [
+            "fee-3-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-3-green-record",
+            "record"
+          ],
+          [
+            "fee-3-close",
+            "close"
+          ],
+          [
+            "fee-4-open",
+            "open"
+          ],
+          [
+            "fee-4-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-4-probe-record",
+            "record"
+          ],
+          [
+            "fee-4-judge",
+            "judge"
+          ],
+          [
+            "fee-4-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-4-green-record",
+            "record"
+          ],
+          [
+            "fee-4-close",
+            "close"
+          ],
+          [
+            "fee-5-open",
+            "open"
+          ],
+          [
+            "fee-5-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-5-probe-record",
+            "record"
+          ],
+          [
+            "fee-5-judge",
+            "judge"
+          ],
+          [
+            "fee-5-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-5-green-record",
+            "record"
+          ],
+          [
+            "fee-5-close",
+            "close"
+          ],
+          [
+            "fee-6-open",
+            "open"
+          ],
+          [
+            "fee-6-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-6-probe-record",
+            "record"
+          ],
+          [
+            "fee-6-judge",
+            "judge"
+          ],
+          [
+            "fee-6-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-6-green-record",
+            "record"
+          ],
+          [
+            "fee-6-close",
+            "close"
+          ],
+          [
+            "fee-7-open",
+            "open"
+          ],
+          [
+            "fee-7-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-7-probe-record",
+            "record"
+          ],
+          [
+            "fee-7-judge",
+            "judge"
+          ],
+          [
+            "fee-7-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-7-green-record",
+            "record"
+          ],
+          [
+            "fee-7-close",
+            "close"
+          ],
+          [
+            "fee-8-open",
+            "open"
+          ],
+          [
+            "fee-8-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-8-probe-record",
+            "record"
+          ],
+          [
+            "fee-8-judge",
+            "judge"
+          ],
+          [
+            "fee-8-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-8-green-record",
+            "record"
+          ],
+          [
+            "fee-8-close",
+            "close"
+          ],
+          [
+            "fee-9-open",
+            "open"
+          ],
+          [
+            "fee-9-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-9-probe-record",
+            "record"
+          ],
+          [
+            "fee-9-judge",
+            "judge"
+          ],
+          [
+            "fee-9-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-9-green-record",
+            "record"
+          ],
+          [
+            "fee-9-close",
+            "close"
+          ],
+          [
+            "fee-10-open",
+            "open"
+          ],
+          [
+            "fee-10-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-10-probe-record",
+            "record"
+          ],
+          [
+            "fee-10-judge",
+            "judge"
+          ],
+          [
+            "fee-10-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-10-green-record",
+            "record"
+          ],
+          [
+            "fee-10-close",
+            "close"
+          ],
+          [
+            "fee-11-open",
+            "open"
+          ],
+          [
+            "fee-11-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-11-probe-record",
+            "record"
+          ],
+          [
+            "fee-11-judge",
+            "judge"
+          ],
+          [
+            "fee-11-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-11-green-record",
+            "record"
+          ],
+          [
+            "fee-11-close",
+            "close"
+          ],
+          [
+            "fee-12-open",
+            "open"
+          ],
+          [
+            "fee-12-probe-prepare",
+            "prepare"
+          ],
+          [
+            "fee-12-probe-record",
+            "record"
+          ],
+          [
+            "fee-12-judge",
+            "judge"
+          ],
+          [
+            "fee-12-green-prepare",
+            "prepare"
+          ],
+          [
+            "fee-12-green-record",
+            "record"
+          ],
+          [
+            "fee-12-close",
+            "close"
+          ],
+          [
+            "qualify-final",
+            "qualify"
+          ],
+          [
+            "prepare-final",
+            "prepare-formal"
+          ],
+          [
+            "record-final",
+            "record"
+          ],
+          [
+            "finish",
+            "finish"
+          ]
+        ],
+        "executions": [
+          {
+            "example": "fee-1",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "255755064c84683cc53eed7842d25c58784ade0cccc3aec8536d29b7cfc8f601",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "55e7d427451a6f8378fc2c247e35b27bb6a499c3f6fe2aa6871f60c41cf95edb"
+            }
+          },
+          {
+            "example": "fee-1",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "255755064c84683cc53eed7842d25c58784ade0cccc3aec8536d29b7cfc8f601",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "0dd92d4753bf3fd24d0106fd82368802f6cd53e401398fd06831e386aef2927c"
+            }
+          },
+          {
+            "example": "fee-2",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "6929be0af52fb9fc13b1b7eecb482a8cd6db6c20c25773c1e296d95fd9024dcc",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "0dd92d4753bf3fd24d0106fd82368802f6cd53e401398fd06831e386aef2927c"
+            }
+          },
+          {
+            "example": "fee-2",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "6929be0af52fb9fc13b1b7eecb482a8cd6db6c20c25773c1e296d95fd9024dcc",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "e8326b7226a9f12efc19662616f3296917f6129fdde2b666da264790000a681e"
+            }
+          },
+          {
+            "example": "fee-3",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "240f75dc632e62ba19cac092e14445759c7d717145386619f99855141e204c55",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "e8326b7226a9f12efc19662616f3296917f6129fdde2b666da264790000a681e"
+            }
+          },
+          {
+            "example": "fee-3",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "240f75dc632e62ba19cac092e14445759c7d717145386619f99855141e204c55",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "1fa6bdec55486462906f738aacc6ab6d0bc8e9b123f7298454bab53196dcb551"
+            }
+          },
+          {
+            "example": "fee-4",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "3697e93ab470b8dc9fb2c345869439a846d18f88bf1b93573bd1adcd02b9989d",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "1fa6bdec55486462906f738aacc6ab6d0bc8e9b123f7298454bab53196dcb551"
+            }
+          },
+          {
+            "example": "fee-4",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "3697e93ab470b8dc9fb2c345869439a846d18f88bf1b93573bd1adcd02b9989d",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "cce66a33775714f5800a3aeb3cea7498bd306cdb2335e0987f309ca11ff31ec7"
+            }
+          },
+          {
+            "example": "fee-5",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "12963eec36deb61c5df13c8fbb62b5b55d983d783c0ab891d145c4d23a3a7836",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "cce66a33775714f5800a3aeb3cea7498bd306cdb2335e0987f309ca11ff31ec7"
+            }
+          },
+          {
+            "example": "fee-5",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "12963eec36deb61c5df13c8fbb62b5b55d983d783c0ab891d145c4d23a3a7836",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4b5d76a75f6a12a49133c166ec5fbf7fd5e26096a047f9aeb816f082e0d078b4"
+            }
+          },
+          {
+            "example": "fee-6",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "a54a933de5901f09627ccacc03162926c2a0c8570de9bf1d749a96f91bee5989",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4b5d76a75f6a12a49133c166ec5fbf7fd5e26096a047f9aeb816f082e0d078b4"
+            }
+          },
+          {
+            "example": "fee-6",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "a54a933de5901f09627ccacc03162926c2a0c8570de9bf1d749a96f91bee5989",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "ccea8c813b96a8f04a3f2b40bd82af0037bf443f8ca07cb5dfde0952a1180f69"
+            }
+          },
+          {
+            "example": "fee-7",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "8f782e166a1f0cc717c51ac20a39fa696db8ca9a355821a730be4413d1e97626",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "ccea8c813b96a8f04a3f2b40bd82af0037bf443f8ca07cb5dfde0952a1180f69"
+            }
+          },
+          {
+            "example": "fee-7",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "8f782e166a1f0cc717c51ac20a39fa696db8ca9a355821a730be4413d1e97626",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "37a270837170181510e4471e7ebfa300f26b218becfeb7e5e61dc4202538ce47"
+            }
+          },
+          {
+            "example": "fee-8",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "c1efaf0529b4862265adea0943ac0f38b5728f9ff3a78dca14c0fd7cea227331",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "37a270837170181510e4471e7ebfa300f26b218becfeb7e5e61dc4202538ce47"
+            }
+          },
+          {
+            "example": "fee-8",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "c1efaf0529b4862265adea0943ac0f38b5728f9ff3a78dca14c0fd7cea227331",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "d67cfa35ce140a3acf05296bae400647ef6a57aa152513743b1b5f9457705c19"
+            }
+          },
+          {
+            "example": "fee-9",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "47d0bc43fb4d9aa62efc6916e28c63ab43798f7388d4804351394a7f5d6336b9",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "d67cfa35ce140a3acf05296bae400647ef6a57aa152513743b1b5f9457705c19"
+            }
+          },
+          {
+            "example": "fee-9",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "47d0bc43fb4d9aa62efc6916e28c63ab43798f7388d4804351394a7f5d6336b9",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "665d8c66bf924f68f4687d4827789de07ce332d959786d797e99fa445de9e41b"
+            }
+          },
+          {
+            "example": "fee-10",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "1458a48ca72750be6dc89f5699a9f3071491d793d3e19f838558a977d3c2bad9",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "665d8c66bf924f68f4687d4827789de07ce332d959786d797e99fa445de9e41b"
+            }
+          },
+          {
+            "example": "fee-10",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "1458a48ca72750be6dc89f5699a9f3071491d793d3e19f838558a977d3c2bad9",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "486bdb3262b9ed2abbb0a72752ff6467ee7f2a11eb5df19bf078e478d097b983"
+            }
+          },
+          {
+            "example": "fee-11",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "16f361f88332f72cbe499853b673ec7abb920f3a4432c6aabc4b76771a12e2e6",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "486bdb3262b9ed2abbb0a72752ff6467ee7f2a11eb5df19bf078e478d097b983"
+            }
+          },
+          {
+            "example": "fee-11",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "16f361f88332f72cbe499853b673ec7abb920f3a4432c6aabc4b76771a12e2e6",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "6962eee1f2a2dffcd154f12b5dfb2f8faa530f66f39ca60575816baa8537aa56"
+            }
+          },
+          {
+            "example": "fee-12",
+            "purpose": "probe",
+            "outcome": "exited",
+            "exit_code": 1,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "c2f02821c7b3d6c269340f15cd8fc5634083e810082d49210434947d4214045e",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "6962eee1f2a2dffcd154f12b5dfb2f8faa530f66f39ca60575816baa8537aa56"
+            }
+          },
+          {
+            "example": "fee-12",
+            "purpose": "green",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "c2f02821c7b3d6c269340f15cd8fc5634083e810082d49210434947d4214045e",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4206dc6e5dbe3134e57d0cc665d44819f8073e61a799490806771bc568738cb5"
+            }
+          },
+          {
+            "example": null,
+            "purpose": "formal",
+            "outcome": "exited",
+            "exit_code": 0,
+            "argv": [
+              "C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "tests/run_acceptance.py"
+            ],
+            "after": {
+              "tests": "c2f02821c7b3d6c269340f15cd8fc5634083e810082d49210434947d4214045e",
+              "contract": "9f47ae0bcc1c79f0f0ad91d29405dd0d1a442d46fd7d958a1dd1a197516d2d00",
+              "product": "4206dc6e5dbe3134e57d0cc665d44819f8073e61a799490806771bc568738cb5"
+            }
+          }
+        ],
+        "final_sources": {
+          "src\\fee.py": "4f5ce0258479b0ddc1c45ad9d25c3b19fdaaeb0ee87dd256066d08521b70e782",
+          "tests\\run_acceptance.py": "e23cce5f6e3b1169fbbeb1de7f5f43bd8c404a3611c5291a54d65a62413579f9",
+          "tests\\test_fee_01.py": "f9d41cfe6dda20259233e06615243c3eb1b81dbc2e54adf698f09f91650bc809",
+          "tests\\test_fee_02.py": "18f028fda8cf762876284d18e12e46854012f2c24a961706540a3fcec15999ae",
+          "tests\\test_fee_03.py": "f5d4d557bf18cd4577cb840db94b000bef9350b52acd160df719bc5f053f9519",
+          "tests\\test_fee_04.py": "925b3c4c1ce2a3f11f951a2a60a1c560013b755cc2ea3d097387c2f2711451f8",
+          "tests\\test_fee_05.py": "c531bd4a498ae7c6400e51bdca10e05f592f40d0e7ca2f34902360862227aff5",
+          "tests\\test_fee_06.py": "f3bbf460c6e262745be26b6e32ccd6cc4d02b7aead38cd019309ef3e75074f50",
+          "tests\\test_fee_07.py": "b94aded1fc248684dda923656dfc14a911cd52ed00f31b5ecbe71d85e53bcc87",
+          "tests\\test_fee_08.py": "a8c7d54060cc3e28be7b3037fa204273eaf18adce1b8bfc0471b5a66c9c9dda0",
+          "tests\\test_fee_09.py": "dc6fff1e7b6a8c9532e7ca204355e4a04a58ff41b8c8dd3a155f5d06e346869c",
+          "tests\\test_fee_10.py": "56bb83ea5e9237a58901c3233824f718c414cdd1af42a2068d26c78d978a6003",
+          "tests\\test_fee_11.py": "3f181ac5686175993468766fe98ac5448d4677963745d62a86fcfd38e26ee9a7",
+          "tests\\test_fee_12.py": "de59a5e9972b305792a5444454b2fe7f97af539816878876e9a36adc47707653",
+          "shared\\oracle.py": "6343b8b572a1d4dbff82fb4dcc7df6e9c19a0b11b534d996b1adb8083047d526"
+        }
+      },
+      "profiled": true,
+      "retained_bytes": 13955060,
+      "pair": 0
+    }
+  ],
+  "summary": {}
+}

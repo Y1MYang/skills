@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "role": "Runner",
+  "model": "gpt-6.1-sol",
+  "created_at_utc": "2026-11-03T07:22:42.284789+00:00",
+  "started_at_utc": "2026-11-03T07:22:33.034614+00:00",
+  "ended_at_utc": "2026-11-03T07:22:33.830022+00:00",
+  "attempt_id": "attempt-19cf56d8373a579ed5c42a8b",
+  "classification": "formal-pass",
+  "receipt": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-19cf56d8373a579ed5c42a8b.receipt.json",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "cwd": "C:\\Users\\admin\\AppData\\Local\\Temp\\v3-perf-baseline-20261103",
+  "exit_code": 0,
+  "outcome": "exited",
+  "cleanup_complete": true,
+  "snapshots_unchanged": true,
+  "test_count": 4,
+  "result": "pass",
+  "formal": {
+    "clean_after": true,
+    "clean_before": true,
+    "head_after": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+    "head_before": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+    "requested": true
+  },
+  "scope": "Full unittest discovery: negative input, below threshold, threshold, and CURRENCY regression.",
+  "logs": {
+    "stderr": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-19cf56d8373a579ed5c42a8b.receipt.json.stderr.log",
+      "sha256": "7768030fa5ae6e786209d898c3f73eb8cfb914b452d425b1e5d0228cf426e002",
+      "size": 566
+    },
+    "stdout": {
+      "path": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\state\\attempts\\attempt-19cf56d8373a579ed5c42a8b.receipt.json.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "windows_containment_report": "E:\\Repos\\skills\\docs\\validation\\implement-spec-v3-performance-20261103\\agent-eval\\baseline\\windows-containment-report.json",
+  "edits": "No product or test edits."
+}

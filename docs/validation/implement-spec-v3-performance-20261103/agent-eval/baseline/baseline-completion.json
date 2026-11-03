@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "role": "Integrator",
+  "model": "gpt-6.1-sol",
+  "run_id": "v3-perf-baseline-20261103",
+  "status": "ready",
+  "head": "412a10d159577f2b05b0acfc4641a4639b0258e6",
+  "branch": "codex/v3-perf-baseline",
+  "clean": true,
+  "formal_test_count": 4,
+  "new_examples": 3,
+  "red_green_cycles": 3,
+  "runtime_budget": {
+    "attempts_used": 7,
+    "formal_failures_used": 0,
+    "seconds_reserved": 0,
+    "seconds_used": 2.1250000000582077
+  },
+  "runtime_last_seq": 25,
+  "pending_attempts": 0,
+  "unresolved_failures": 0,
+  "timing": {
+    "handoff_utc": "2026-11-03T07:23:38.5804395+00:00",
+    "start_utc": "2026-11-03T06:55:29.3264210+00:00",
+    "limits": "Includes usage-limit interruption; interruption start and exact pause bounds unknown. Setup and first test authoring excluded. No net elapsed estimate, inferred dispatch timestamps, or performance claim.",
+    "formal_endpoint_sha256": "89E01AFE3CDF411C9984ACBD023DDCBC7260337A3017256FE2394DAA23B830B1",
+    "start_sha256": "1126154DACFA8587AF3E0DB0594D7419FA6C476F5BB1960016368E0CC83680C2",
+    "start_artifact": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-3b191c0a0c8ac5969fcb86e9.receipt.json",
+    "formal_endpoint_artifact": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/state/attempts/attempt-19cf56d8373a579ed5c42a8b.receipt.json",
+    "definition": "First actual Red receipt started_at to actual final handoff clock after finish, reviews, verify and required artifacts ready",
+    "gross_seconds": 1689.2540185
+  },
+  "qualification": "Full independent blind two-axis reconciliation pass; fresh distinct implementation-visible code axes pass sameHEAD; actualWindows containment2/2 pass",
+  "chronology": "Author reports+ledger sequences prove serial 10000→9999→-1; open/probe record+validRed judge precedes implementation, Green+full regression close precedes next author",
+  "provenance_exception": "Example1 author initially read architecture metadata authorized in original packet; no product source/diff/observations/expected derivation consumed; retained author exception and fresh final blind qualification",
+  "retention": {
+    "evidence": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline",
+    "active_owned_processes": "none reported; all receipts cleanup complete",
+    "reason": "Local delivery branch/commit, replayable runtime state+receipts/logs/reviews and necessary audit artifacts",
+    "remote": "No PR or remote operation",
+    "repo": "C:/Users/admin/AppData/Local/Temp/v3-perf-baseline-20261103",
+    "released": "No idle extra workcopy resources allocated; no deletion needed"
+  },
+  "artifacts": [
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/formal-runner-report.json",
+      "sha256": "33A752987AB919780A9BB661A62D317DEC31BA79225F37A04756E40E3D3DB83E"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/test-review-full.json",
+      "sha256": "CB503CA87448391EA0C8B02D4EB2511B72142101DA600E0AFD995002B9D289C1"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/test-review-spec.json",
+      "sha256": "4C09F666E9B16B801271900B445EA9F4ACBA9841B60C07A01021F37198AB3F5D"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/test-review-standards.json",
+      "sha256": "E1137D9BB7723E78A16C5BBC6A0841146F6BF0B86F84C04771F459B969496AFD"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/code-spec-review.json",
+      "sha256": "5720C71DABA8378ED5B8D17E7A60DD0CA96F2152DD11CBA84E812A9B8595852C"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/code-standards-review.json",
+      "sha256": "4457CE129F79734EA6B780BB7ABA918CFD5CDC44980E5B319E11CF6D765729A1"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/windows-containment-report.json",
+      "sha256": "7517407D5341AA8C5D12C514E24DAB2BEB24897C973CD5020B0AAAF71B11E986"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/final-verify.json",
+      "sha256": "C0D0CD5569D4E08A877CB61057DFE6AE8FE74926F5E65C4CAC68B960EEB4600C"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/final-inspect.json",
+      "sha256": "0FEB94AA1120D415CF02F8D1C2C800FFB85039CA1410BE01A8BBC2F6ACD73A76"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/final-finish.json",
+      "sha256": "B9308E4D6D18657125A5616697873BD7AFDB48D4DA16A3A381B5781334244FBD"
+    },
+    {
+      "path": "E:/Repos/skills/docs/validation/implement-spec-v3-performance-20261103/agent-eval/baseline/final-blind-pin-packet.json",
+      "sha256": "743B8D85417F5F0EF5AA5AAB41B2A9E1ADB0BB3EF0224565F6E29BB5BE9BF263"
+    }
+  ],
+  "timing_correction": "Original completion preserved baseline-completion-initial-timeparse.json. PowerShell automatic JSON date conversion followed by string parsing truncated start subsecond; corrected from raw receipt string. Original actual handoff clock unchanged; no new elapsed endpoint inferred."
+}
