@@ -23,6 +23,7 @@ ROLES = {
 OPERATIONS = {
     "open", "prepare", "record", "judge", "diagnose", "close", "invocation", "recover",
     "qualify", "prepare-formal", "release", "finish", "extend", "revise", "include",
+    "stage", "promote",
 }
 
 
@@ -147,11 +148,17 @@ def validate_plan(plan):
             raise Rejected("invalid-plan", f"{field} must be a declared list.")
     flows, examples, gates, requirements = {}, {}, {}, set()
     for flow in plan["flows"]:
-        if (not isinstance(flow, dict) or set(flow) != {"id", "write_paths"}
+        if (not isinstance(flow, dict) or set(flow) not in ({"id", "write_paths"}, {"id", "write_paths", "root"})
                 or not nonempty(flow["id"]) or flow["id"] in flows
                 or not isinstance(flow["write_paths"], list) or not flow["write_paths"]):
             raise Rejected("invalid-flow", "Flows need unique IDs and nonempty write paths.")
         flow["write_paths"] = sorted({relative_path(path) for path in flow["write_paths"]})
+        if "root" in flow:
+            flow["root"] = str(Path(flow["root"]).resolve())
+            if flow["root"] == plan["workspace"]:
+                raise Rejected("invalid-flow", "A parallel flow's workcopy root must differ from the integration workspace.")
+            if not Path(flow["root"]).is_dir():
+                raise Rejected("invalid-flow", "The flow workcopy root must be an existing prepared worktree.")
         for old in flows.values():
             for left in flow["write_paths"]:
                 for right in old["write_paths"]:
@@ -170,8 +177,8 @@ def validate_plan(plan):
                 or type(snapshot["schema"]) is not int or snapshot["schema"] != 1 or snapshot["binding"] is not None):
             raise Rejected("invalid-snapshot", "Examples require an unbound snapshot declaration.")
         snapshot["root"] = str(Path(snapshot["root"]).resolve())
-        if snapshot["root"] != plan["workspace"]:
-            raise Rejected("invalid-root", "All snapshot roots must be the run workspace.")
+        if snapshot["root"] != flows[example["flow"]].get("root", plan["workspace"]):
+            raise Rejected("invalid-root", "Every snapshot root must be its flow's workcopy root.")
         for group in ("tests", "contract", "product"):
             paths = snapshot[group]
             if not isinstance(paths, list) or not paths:
@@ -215,6 +222,29 @@ def validate_plan(plan):
 
     for node in graph:
         visit(node)
+    # Parallelism is planned, not emergent: examples that are simultaneously
+    # ready must not all sit in one serial flow. Requiring distinct flows per
+    # sibling would forbid legitimate capacity choices, so only the degenerate
+    # all-in-one-flow plan is rejected.
+    memo = {}
+
+    def level_of(identifier):
+        if identifier not in memo:
+            dependencies = examples[identifier]["depends_on"]
+            memo[identifier] = 0 if not dependencies else 1 + max(level_of(item) for item in dependencies)
+        return memo[identifier]
+
+    for identifier in examples:
+        level_of(identifier)
+    by_level = {}
+    for identifier, value in memo.items():
+        by_level.setdefault(value, []).append(identifier)
+    for ready in by_level.values():
+        assigned = {examples[identifier]["flow"] for identifier in ready}
+        if len(ready) > 1 and len(assigned) == 1:
+            raise Rejected("unnamed-parallelism",
+                           f"Simultaneously ready examples {sorted(ready)} cannot share one flow; "
+                           "plan distinct flows so they can advance in parallel.")
     plan["spec_sources"] = sorted({relative_path(path) for path in plan["spec_sources"]})
 
 
@@ -335,6 +365,7 @@ def initial_data(plan):
         "budget": {"attempts_used": 0, "formal_failures_used": 0,
                    "seconds_used": 0, "seconds_reserved": 0},
         "pending_attempts": [], "failures": [],
+        "staged": {},
     }
 
 
@@ -344,6 +375,8 @@ def inspect_state(state):
         "run_id": state["plan"]["run_id"],
         "models": state.get("models", state["plan"]["models"]),
         **state["data"],
+        "staged": state["data"].get("staged", {}),
+        "started_at": state["started_at"],
         "pending_attempts": [
             {"attempt_id": identifier, "example": state["attempts"][identifier]["example"],
              "gate": state["attempts"][identifier]["request"]["binding"]["gate"],
@@ -357,8 +390,70 @@ def inspect_state(state):
     }
 
 
+def stage_test(state, event):
+    """Register a blind prewritten test for one direct successor (depth 1).
+
+    The test lives outside every snapshot's regression scope; the event only
+    records its identity and digest. Promotion binds it as the successor's
+    opening criterion, so prewritten bytes cannot leak into any earlier
+    example's affected-regression evidence.
+    """
+    if set(event) != {"schema", "op_id", "op", "example", "test_digest", "light_check"}:
+        raise Rejected("invalid-event", "Unexpected or missing stage fields.")
+    check = event["light_check"]
+    if not isinstance(check, dict) or set(check) != {
+        "source", "observation", "expected_failure", "independent_context"
+    } or not all(nonempty(value) for value in check.values()):
+        raise Rejected("invalid-light-check", "Record all four independent oracle checks.")
+    if not nonempty(event["test_digest"]):
+        raise Rejected("invalid-stage", "A staged test needs its content digest.")
+    example = next((item for item in state["plan"]["examples"] if item["id"] == event["example"]), None)
+    if example is None:
+        raise Rejected("unknown-example", "The example is not in this run.")
+    data = state["data"]
+    if data["examples"][example["id"]]["state"] != "planned":
+        raise Rejected("invalid-stage", "Only a planned example can receive a staged prewritten test.")
+    prerequisites = example["depends_on"]
+    if not prerequisites or not all(data["examples"][item]["state"] in {"open", "red", "green", "existing", "closed"}
+                                    for item in prerequisites):
+        raise Rejected("stage-not-ready", "Stage only a successor whose prerequisites reached development.")
+    staged_flows = set()
+    for staged_id, staged_entry in data["staged"].items():
+        staged_example = next(item for item in state["plan"]["examples"] if item["id"] == staged_id)
+        if staged_example["flow"] == example["flow"]:
+            staged_flows.add(staged_example["flow"])
+    if staged_flows:
+        raise Rejected("invalid-stage", "Depth 1 staging permits one prewritten test per flow.")
+    data["staged"][example["id"]] = {
+        "test_digest": event["test_digest"], "light_check": check,
+        "staged_seq": len(state["events"]) + 1,
+    }
+    return {"ok": True, "example": example["id"], "staged": True}
+
+
+def promote_test(state, event):
+    """Bind the staged test as the example's opening criterion before its probe."""
+    if set(event) != {"schema", "op_id", "op", "example"}:
+        raise Rejected("invalid-event", "Unexpected or missing promote fields.")
+    example = next((item for item in state["plan"]["examples"] if item["id"] == event["example"]), None)
+    if example is None:
+        raise Rejected("unknown-example", "The example is not in this run.")
+    data = state["data"]
+    progress = data["examples"][example["id"]]
+    staged = data["staged"].get(example["id"])
+    if progress["state"] != "planned":
+        raise Rejected("invalid-stage", "Promotion applies to a planned example.")
+    if staged is None:
+        raise Rejected("invalid-stage", "Promotion requires a staged prewritten test.")
+    if any(data["examples"][dependency]["state"] != "closed" for dependency in example["depends_on"]):
+        raise Rejected("dependency-pending", "Promotion waits for closed prerequisite examples.")
+    staged["promoted_seq"] = len(state["events"]) + 1
+    return {"ok": True, "example": example["id"], "promoted": True}
+
+
 def open_example(state, event):
-    if set(event) != {"schema", "op_id", "op", "example", "light_check"}:
+    if set(event) not in ({"schema", "op_id", "op", "example", "light_check"},
+                          {"schema", "op_id", "op", "example", "light_check", "promoted_from"}):
         raise Rejected("invalid-event", "Unexpected or missing open fields.")
     check = event["light_check"]
     if not isinstance(check, dict) or set(check) != {
@@ -439,9 +534,10 @@ def reserve_attempt(state, event, state_dir, snapshot, current, example, flow, g
         if failure["classification"] in {"unknown", "business-decision"} or not failure["diagnoses"]:
             raise Rejected("diagnosis-required", "Classify the failure and record new diagnostic evidence before retrying.")
     limits, used = state["plan"]["budget"], data["budget"]
+    elapsed = (datetime.now(timezone.utc) - datetime.fromisoformat(state["started_at"])).total_seconds()
     if (used["attempts_used"] >= limits["max_attempts"]
             or used["formal_failures_used"] >= limits["max_formal_failures"]
-            or used["seconds_used"] + used["seconds_reserved"] + timeout > limits["max_seconds"]):
+            or elapsed > limits["max_seconds"]):
         raise Rejected("budget-exhausted", "The declared run budget cannot admit this attempt.")
     identifier = "attempt-" + digest([state["plan"]["run_id"], event["op_id"]])[:24]
     directory = state_dir / "attempts"
@@ -729,6 +825,13 @@ def qualify(state, event):
                 or not all(nonempty(value) for value in review.values()) or review["verdict"] != "pass"):
             raise Rejected("review-required", "Both independent review axes must pass with provenance.")
     key, identifiers, snapshot = scope_details(state, event["scope"])
+    for failure in state["data"]["failures"]:
+        attempt = state["attempts"][failure["attempt_id"]]
+        if (failure["classification"] == "unclassified" and not failure["diagnoses"]
+                and attempt["purpose"] == "formal" and attempt.get("scope_examples")
+                and set(identifiers).issubset(attempt["scope_examples"])):
+            raise Rejected("diagnosis-required",
+                           "Judge and diagnose the failed formal attempt before new qualification of its scope.")
     current = capture(snapshot)
     state.setdefault("qualifications", {})[key] = {
         "examples": identifiers, "snapshot": current, "event": event, "seq": len(state["events"]) + 1,
@@ -889,6 +992,7 @@ def extend(state, event):
     state["plan"] = candidate
     for example in event["examples"]:
         data["examples"][example["id"]] = {"state": "planned", "mode": None, "attempt_ids": []}
+        data.setdefault("staged", {}).pop(example["id"], None)
     for flow in event["flows"]:
         data["active_by_flow"][flow["id"]] = None
     for gate in event["gates"]:
@@ -956,6 +1060,7 @@ def revise(state, event):
                             revision_snapshot=captures[example["id"]])
             if data["active_by_flow"][example["flow"]] == example["id"]:
                 data["active_by_flow"][example["flow"]] = None
+            data.setdefault("staged", {}).pop(example["id"], None)
         elif example["id"] in affected:
             progress["evidence_stale"] = True
     invalidated = {"final"}
@@ -1215,6 +1320,10 @@ def apply_event(state, event, state_dir):
             return previous_event["result"]
     if event.get("op") == "open":
         result = open_example(state, event)
+    elif event.get("op") == "stage":
+        result = stage_test(state, event)
+    elif event.get("op") == "promote":
+        result = promote_test(state, event)
     elif event.get("op") == "prepare":
         result = prepare(state, event, state_dir)
     elif event.get("op") == "record":
@@ -1414,7 +1523,8 @@ def main(argv: list[str] | None = None) -> int:
             else:
                 anchor_path = claim_scope(plan, state_path)
                 state = {"schema": 1, "plan": plan, "events": [], "data": initial_data(plan),
-                         "anchor_path": anchor_path}
+                         "anchor_path": anchor_path,
+                         "started_at": datetime.now(timezone.utc).isoformat()}
                 save_state(state_path, state)
             result = {"ok": True, "run_id": plan["run_id"],
                       "state_dir": str(state_path.parent), "created": created}

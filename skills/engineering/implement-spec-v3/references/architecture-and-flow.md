@@ -18,7 +18,11 @@ The main agent can review architecture during preparation. Once the test/impleme
 
 ## Dependency and checkpoint graph
 
-An example is ready only when its ordinary prerequisite examples have current Green plus affected-regression evidence and its required checkpoint release edges are satisfied. Tickets may contain many serial examples. Assign their ready sequence to persistent role owners under [flow delegation](dispatch-and-isolation.md#persistent-flow-assignments); readiness is checked at each transition without a new main-agent dispatch. Independent flows remain parallel; avoid making an unrelated ticket wait for a checkpoint outside its dependency closure.
+An example is ready only when its ordinary prerequisite examples have current Green plus affected-regression evidence and its required checkpoint release edges are satisfied. Tickets may contain many serial examples. Assign their ready sequence to persistent role owners under [flow delegation](dispatch-and-isolation.md#persistent-flow-assignments); readiness is checked at each transition without a new main-agent dispatch.
+
+**Parallelism is planned, then mechanically checked.** The plan's dependency graph is an example-level DAG. Every set of simultaneously ready examples must sit in distinct flows: the runtime computes ready levels from `depends_on` and rejects a plan that parks siblings in one serial flow (`unnamed-parallelism`), because a sibling waiting behind an unrelated Red/Green cycle is the most expensive idling a run can plan in. Flow assignment is the only serial decision; within a flow the cycle order follows the DAG. A genuinely serial chain stays one flow — do not mint flows to inflate parallelism that dependencies do not offer.
+
+**One workcopy per flow.** Every parallel flow owns a workcopy root distinct from the integration workspace, declared as the flow's `root`; all its examples' snapshot roots point there. Byte-scope evidence is captured inside that workcopy, so concurrent flows cannot corrupt each other's before/after snapshots. The single authoritative workspace remains the integration target: Integrator merges each finished flow there and Runner verifies the combined result in the workspace before any gate or final evidence. Independent flows remain parallel; avoid making an unrelated ticket wait for a checkpoint outside its dependency closure.
 
 A critical checkpoint is a real release gate for its **consumers**: required test scope independently qualified, prerequisites integrated, and formal execution passed on a fixed candidate. A test batch alone does not create a checkpoint.
 
@@ -26,9 +30,9 @@ Keep checkpoint prerequisites and blocked consumers distinct. The checkpoint mus
 
 ## Parallel ownership and integration
 
-Give each independent flow its own workcopy/branch and evidence destination. Within a flow, only its current phase writes its owned target. Give each shared test helper one blind Test author owner; other flows read a pinned revision. Route shared mutations through the owner or an exclusive integration phase. Merely assigning different JSON fields in one mutable state file does not isolate writes.
+Each independent flow's workcopy root (its declared `root`) isolates its writes and evidence. Within a flow, only its current phase writes its owned target. Give each shared test helper one blind Test author owner; other flows read a pinned revision. Route shared mutations through the owner or an exclusive integration phase. Merely assigning different JSON fields in one mutable state file does not isolate writes.
 
-Keep development workcopies separate from the runtime's authoritative snapshot workspace: the current ledger requires evidence roots to match that workspace. Integrate a fixed revision there before taking accepted integrated evidence. Persistent assignments do not create support for cross-worktree evidence or allow overlapping writes while a command observes its snapshot.
+Integrate a fixed revision in the authoritative workspace before taking accepted integrated evidence: per-flow workcopies do not establish accepted run evidence on their own. Persistent assignments do not create support for cross-worktree evidence or allow overlapping writes while a command observes its snapshot.
 
 Integrator alone writes the integration branch/shared index. Admission considers dependency readiness, environment capacity, and declared budgets, not ticket count. Deliver fixed revisions/digests and explicit test/contract dependencies. Integrator verifies the combined result through Runner against affected behaviors; independently Green branches do not prove the merge is Green. Test conflicts or semantic test edits return to blind Test author. Product conflicts return to Implementer when they require implementation judgment.
 

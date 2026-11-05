@@ -338,7 +338,7 @@ class CycleContractTests(unittest.TestCase):
     def test_same_flow_cannot_open_a_second_unfinished_example(self):
         """A flow develops one behavior at a time, even without a dependency."""
         second = dict(self.plan["examples"][0])
-        second.update(id="fee-100", requirement="REQ-1/example-100")
+        second.update(id="fee-100", requirement="REQ-1/example-100", depends_on=["fee-99"])
         self.plan["examples"].append(second)
         self.initialize()
         self.open_example()
@@ -717,6 +717,146 @@ class CycleContractTests(unittest.TestCase):
         )
         self.assertEqual(after["active_by_flow"], before["active_by_flow"])
         self.assertEqual(after["budget"], before["budget"])
+
+    def stage_fixture(self, example="fee-next", digest="staged-test-sha", *, expected_exit=0):
+        return self.apply(
+            f"stage-{example}", "stage", example=example, test_digest=digest,
+            light_check={
+                "source": "spec.md / staged requirement",
+                "observation": f"Public behavior of {example} under its declared requirement",
+                "expected_failure": f"A missing public result violates {example}'s requirement",
+                "independent_context": "test-author-context-with-no-product-input",
+            },
+            expected_exit=expected_exit,
+        )
+
+    def prepare_next_example(self, *, depends_on=("fee-99",), flow="main"):
+        example = dict(self.plan["examples"][0])
+        example.update(id="fee-next", requirement="REQ-2/example-next", depends_on=list(depends_on))
+        self.plan["examples"].append(example)
+        return example
+
+    def test_plan_rejects_sibling_ready_examples_in_one_flow(self):
+        """Simultaneously ready examples must be planned on distinct flows."""
+        sibling = dict(self.plan["examples"][0])
+        sibling.update(id="fee-sibling", requirement="REQ-1/example-sibling")
+        self.plan["examples"].append(sibling)
+        self.write_json(self.plan_path, self.plan)
+
+        rejected = self.cycle("init", "--plan", str(self.plan_path), expected_exit=2)
+
+        self.assertIs(rejected["ok"], False)
+        self.assertEqual(rejected["error"]["code"], "unnamed-parallelism")
+
+    def test_plan_accepts_a_genuinely_serial_chain_in_one_flow(self):
+        """A linear dependency chain has no unnamed parallelism to expose."""
+        child = dict(self.plan["examples"][0])
+        child.update(id="fee-100", requirement="REQ-1/example-100", depends_on=["fee-99"])
+        self.plan["examples"].append(child)
+        self.write_json(self.plan_path, self.plan)
+
+        created = self.cycle("init", "--plan", str(self.plan_path))
+
+        self.assertIs(created["ok"], True)
+
+    def test_stage_requires_development_started_on_the_prerequisite(self):
+        """Prewriting waits until the prerequisite example actually reaches development."""
+        self.prepare_next_example()
+        self.initialize()
+
+        rejected = self.stage_fixture(expected_exit=2)
+
+        self.assertIs(rejected["ok"], False)
+        self.assertEqual(rejected["error"]["code"], "stage-not-ready")
+
+    def test_staged_prewrite_survives_until_promotion_after_prerequisite_closes(self):
+        """Depth-1 prewriting records the blind test before its example is current."""
+        self.prepare_next_example()
+        self.complete_existing_example()
+        staged = self.stage_fixture()
+
+        self.assertIs(staged["ok"], True)
+        observed = self.cycle("inspect")
+        self.assertEqual(observed["staged"]["fee-next"]["test_digest"], "staged-test-sha")
+
+    def test_promotion_binds_the_staged_test_once_the_example_becomes_current(self):
+        """A promoted staged test satisfies the dependency wait and stays promotable."""
+        self.prepare_next_example()
+        self.complete_existing_example()
+        self.stage_fixture()
+
+        promoted = self.apply("promote-next", "promote", example="fee-next")
+
+        self.assertIs(promoted["ok"], True)
+        observed = self.cycle("inspect")
+        self.assertIn("promoted_seq", observed["staged"]["fee-next"])
+        replayed = self.apply("promote-next", "promote", example="fee-next")
+        self.assertEqual(replayed, promoted)
+
+    def test_stage_rejects_a_second_prewrite_on_the_same_flow(self):
+        """Depth 1 allows one prewritten test per flow until it is promoted."""
+        self.prepare_next_example()
+        second = dict(self.plan["examples"][0])
+        second.update(id="fee-third", requirement="REQ-3/example-third", depends_on=["fee-next"])
+        self.plan["flows"].append({"id": "second-flow", "write_paths": ["ui"]})
+        second["flow"] = "second-flow"
+        self.plan["examples"].append(second)
+        self.complete_existing_example()
+        self.stage_fixture()
+        self.initialize()
+
+        rejected = self.apply(
+            "stage-second", "stage", example="fee-third", test_digest="second-test-sha",
+            light_check={
+                "source": "spec.md / third requirement", "observation": "Public behavior of fee-third",
+                "expected_failure": "A missing public result violates fee-third",
+                "independent_context": "test-author-context-with-no-product-input",
+            },
+            expected_exit=2,
+        )
+
+        self.assertIs(rejected["ok"], False)
+        self.assertEqual(rejected["error"]["code"], "stage-not-ready")
+
+    def test_new_formal_failure_requires_diagnosis_before_scope_requalification(self):
+        """Judge and diagnose a failed formal attempt before new qualification."""
+        self.git("init", "--quiet")
+        self.complete_existing_example()
+        self.commit_fixture()
+        self.qualify("qualify-first", {"final": True})
+        # Break the delivered behavior so the frozen-candidate formal run fails.
+        (self.workspace / "src" / "fee.txt").write_text("0", encoding="utf-8")
+        formal = self.apply(
+            "prepare-failing-final", "prepare-formal", scope={"final": True}, timeout_seconds=5,
+        )
+        self.run_prepared(formal, expected_exit=1)
+        self.record("record-failing-final", formal)
+
+        rejected = self.apply(
+            "qualify-after-failure", "qualify", scope={"final": True},
+            spec_review={
+                "review_id": "fixture-spec-review-after-failure", "source": "spec.md / REQ-1",
+                "independent_context": "fixture-spec-oracle", "verdict": "pass",
+            },
+            standards_review={
+                "review_id": "fixture-standards-after-failure", "source": "fixture-test-boundary",
+                "independent_context": "fixture-standards-oracle", "verdict": "pass",
+            },
+            expected_exit=2,
+        )
+
+        self.assertIs(rejected["ok"], False)
+        self.assertEqual(rejected["error"]["code"], "diagnosis-required")
+
+    def test_parallel_flow_requires_a_distinct_workcopy_root(self):
+        """A second flow cannot share the integration workspace as its snapshot root."""
+        self.plan["flows"].append({"id": "ui", "write_paths": ["ui"], "root": str(self.workspace)})
+        self.write_json(self.plan_path, self.plan)
+
+        rejected = self.cycle("init", "--plan", str(self.plan_path), expected_exit=2)
+
+        self.assertIs(rejected["ok"], False)
+        self.assertEqual(rejected["error"]["code"], "invalid-flow")
 
     def test_final_execution_and_both_review_heads_finish_the_same_candidate(self):
         """Ready refers to one real clean candidate after full-scope execution."""

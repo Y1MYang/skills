@@ -21,6 +21,8 @@ Changes to shared helpers, fixtures, configuration, acceptance timing, or public
 
 ## Critical checkpoint release
 
+Plan formal checkpoints by exception. Each one costs a frozen candidate, a full-scope formal run, and dual-axis review, so a checkpoint earns its place only when a **critical contract is consumed by another flow** before final delivery. Examples that merely share a repository do not need a checkpoint between them; the final gate covers them. Declaring zero intermediate checkpoints is the default for a single-flow run.
+
 Before recording a checkpoint release, Integrator and Runner report all of:
 
 1. The checkpoint's prerequisite examples and required integration checks are complete.
@@ -29,6 +31,8 @@ Before recording a checkpoint release, Integrator and Runner report all of:
 4. Runner's bounded formal execution of that scope passes with valid evidence; no relevant unresolved failure or hang remains.
 
 Only then record the release against the checkpoint inputs. Later consumer `open` checks the gate's HEAD and declared dependencies; uncommitted consumer tests or other dirty files outside that dependency closure do not alone invalidate release. Missing qualification or stale execution blocks consumers, not the checkpoint's own remaining prerequisite examples. Repairs use the existing checkpoint history, scope identity, and finite budget; renaming a batch or checkpoint cannot replenish it.
+
+**A failed formal attempt is judged before any repair is dispatched.** Record and classify the failure (and its `diagnose` event when classification needs evidence) first; the repair brief cites that record. The runtime enforces the diagnosis before requalification or retry of the same scope. Dispatching a repair against an unjudged failure repeats the 2026-11-02 spec-issue1-v1 mistake where the fix brief predated the failure's own adjudication.
 
 ## Same-candidate final acceptance and review
 
@@ -41,10 +45,10 @@ If an installed `code-review` skill is used, bind it to the explicit spec and fi
 
 Collect both review axes and full execution before coordinating repairs. Assign product repairs to Implementer, test repairs to blind Test author, environment repairs to the relevant owner, and missing business choices to the user. Failure classification and any neutral test-review package precede repair. Maintain one owner per shared write target.
 
-Every modified candidate has a new binding: Integrator records a new frozen HEAD, Runner performs complete formal acceptance again, and the code-review axes examine changes plus affected scope. Unaffected qualified review evidence may carry forward only with explicit old/new revision links and unchanged inputs. Changed test dependencies also require the appropriate `delta`/`full` test qualification. A passed run or review of a previous HEAD does not support delivery of a different HEAD by itself.
+Every modified candidate has a new binding. Before final readiness, Integrator records the new frozen HEAD and the code-review axes examine changes plus affected scope; the **formal execution scope depends on the delivery stage**: a repair before final readiness reruns formal acceptance over the affected scope (a gate's prerequisites or the repaired examples plus their dependent closure), while a repair after the whole-spec final attempt reruns complete final acceptance, because final is the last chance to prove the whole spec on one HEAD. Unaffected qualified review evidence may carry forward only with explicit old/new revision links and unchanged inputs. Changed test dependencies also require the appropriate `delta`/`full` test qualification. A passed run or review of a previous HEAD does not support delivery of a different HEAD by itself.
 
 ## Ready and handoff
 
 Deliver one PR for the complete spec by default, using the repository's PR conventions. Mark it ready only when whole-spec test qualification, complete valid acceptance, and both final code-review axes all support the exact delivered HEAD, with no pending attempt across any flow or scope. Account for every criterion and resolve material findings through the appropriate authority. Every non-Red execution failure requires diagnosis followed by eligible formal execution covering its scope on the current candidate; diagnosis or acceptance of a finding alone cannot replace that evidence. An interrupted run, unexplained hang, or unknown failure leaves readiness unverified. Preserve historical failures after resolution.
 
-Have owners reconcile and release idle temporary resources under [execution and recovery](execution-and-recovery.md), preserving the delivery branch/commits, compact evidence, and any justified failure scene. Final report gives the PR/head, covered scope, test/execution/review conclusions, real limitations, and released/retained resources with reasons. Publishing and unrelated post-merge cleanup remain subject to the user's actual authorization; v3 resources are not inputs to v2 cleanup tools.
+Have owners reconcile and release idle temporary resources under [execution and recovery](execution-and-recovery.md) — probe work directories, per-flow worktrees, and scratch copies included — preserving the delivery branch/commits, compact evidence, and any justified failure scene. Final report gives the PR/head, covered scope, test/execution/review conclusions, real limitations, and released/retained resources with reasons. Publishing and unrelated post-merge cleanup remain subject to the user's actual authorization; v3 resources are not inputs to v2 cleanup tools.
